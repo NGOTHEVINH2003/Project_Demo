@@ -5,8 +5,8 @@ import com.project.ReservationSystem.Model.Booking;
 import java.util.List;
 
 public interface IBookingService {
-    void cancelBooking(int BookingId);
-    String saveBooking(int RoomId, Booking booking_request);
+    String cancelBooking(int BookingId);
+    String saveBooking(Booking booking_request);
 
     Booking findByConfirmationCode(String ConfirmCode);
 
