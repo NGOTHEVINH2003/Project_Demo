@@ -23,7 +23,7 @@ public class userDetails implements UserDetails {
     private int id;
     private String email;
     private String password;
-    private GrantedAuthority auth;
+    private Collection<GrantedAuthority> auth;
 
     public static userDetails buildUserDetails(User u){
         GrantedAuthority auth = new SimpleGrantedAuthority(u.getRole().getName());
@@ -31,11 +31,11 @@ public class userDetails implements UserDetails {
                 u.getId(),
                 u.getEmail(),
                 u.getPassword(),
-                auth);
+                Collections.singletonList(auth));
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(auth);
+        return auth;
     }
 
     @Override
@@ -47,7 +47,6 @@ public class userDetails implements UserDetails {
     public String getUsername() {
         return email;
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;

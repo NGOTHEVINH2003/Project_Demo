@@ -9,12 +9,13 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Component
 public class jwtUtils {
     private static  final Logger logger = LoggerFactory.getLogger(jwtUtils.class);
     @Value("${auth.token.expirationInMils}")
@@ -38,7 +39,7 @@ public class jwtUtils {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(Secret));
     }
 
-    public String extractName(String token){
+    public String extractEmail(String token){
         return Jwts.parserBuilder()
                 .setSigningKey(key()).build()
                 .parseClaimsJwt(token).getBody().getSubject();
