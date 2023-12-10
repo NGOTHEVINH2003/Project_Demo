@@ -24,6 +24,7 @@ public class jwtUtils {
     @Value("${auth.token.jwtSecret}")
     private String Secret;
 
+    //Generate Jwt token for user information.
     public String generateUserJWT(Authentication auth){
         userDetails userPrincipal = (userDetails) auth.getPrincipal();
         List<String> role = userPrincipal.getAuthorities()
@@ -38,13 +39,13 @@ public class jwtUtils {
     private Key key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(Secret));
     }
-
+    //extract email from the token.
     public String extractEmail(String token){
         return Jwts.parserBuilder()
                 .setSigningKey(key()).build()
                 .parseClaimsJwt(token).getBody().getSubject();
     }
-
+    //validate the generated jwt token
     public boolean validateToken(String token){
         try{
             Jwts.parserBuilder().setSigningKey(key()).build().parse(token);

@@ -25,6 +25,7 @@ public class userDetails implements UserDetails {
     private String password;
     private Collection<GrantedAuthority> auth;
 
+    //Create UserDetails
     public static userDetails buildUserDetails(User u){
         GrantedAuthority auth = new SimpleGrantedAuthority(u.getRole().getName());
         return new userDetails(
