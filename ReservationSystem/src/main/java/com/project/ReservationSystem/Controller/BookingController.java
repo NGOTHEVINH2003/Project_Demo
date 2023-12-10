@@ -19,7 +19,7 @@ public class BookingController {
         return bookingService.findByConfirmationCode(ComfirmationCode);
     }
 
-    @GetMapping("/searchByMail/{emai}")
+    @GetMapping("/searchByMail/{email}")
     public List<Booking>  searchByMail(@PathVariable String email){
         return bookingService.getBookingByEmail(email);
     }
@@ -34,5 +34,8 @@ public class BookingController {
         return bookingService.saveBooking(booking);
     }
 
-
+    @GetMapping("/ViewAllBooking")
+    public List<Booking>  ViewAllBooking(  ){
+        return bookingService.getAllBooking();
+    }
 }
