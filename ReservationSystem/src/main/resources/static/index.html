@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>static</title>
+</head>
+<body>
+
+<div id="roomList"></div>
+<h1>Static</h1>
+<a href="addRoom.html">AddRoom</a>
+<br>
+<a href="updateRoom.html">UpdateRoom</a>
+<br>
+<script>
+    fetch('room/available')
+        .then(response => response.json())
+        .then(data => {
+            const roomListDiv = document.getElementById('roomList');
+            data.forEach(room => {
+                const roomDiv = document.createElement('div');
+                roomDiv.textContent = `Room ID: ${room.id}, Type:${room.roomType}, Price: ${room.price}, Address: ${room.address},
+                 Url: ${room.img_url}, Status: ${room.booked}`;
+                roomListDiv.appendChild(roomDiv);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+</script>
+<br>
+
+<input type="text" id="typeInput">
+<button onclick="callApiAndDisplayRooms()">Search</button>
+
+<div id="result"></div>
+<script>
+    function callApiAndDisplayRooms() {
+        var typeValue = document.getElementById("typeInput").value;
+
+        fetch(`room/search/${typeValue}`)
+            .then(response => response.json())
+            .then(data => {
+                const roomListDiv = document.getElementById('result');
+                roomListDiv.innerHTML = "";
+
+                if (data.length === 0) {
+                    roomListDiv.innerHTML = "<p>No rooms found for the specified type.</p>";
+                } else {
+                    data.forEach(room => {
+                        const roomDiv = document.createElement('div');
+                        roomDiv.textContent = `Room ID: ${room.id}, Type: ${room.roomType}, Price: ${room.price}, Address: ${room.address}, Url: ${room.img_url}, Status: ${room.booked}`;
+                        roomListDiv.appendChild(roomDiv);
+                    });
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+<br>
+<hr>
+<br>
+<input type="text" id="roomType">
+<br>
+<label for="checkin">Check In</label>
+<input type="date" id="checkin">
+<label for="checkout">Check Out</label>
+<input type="date" id="checkout">
+<button onclick="DisplayRooms()">Search</button>
+
+<br>
+<div id="resultContainer"></div>
+
+<script>
+    function DisplayRooms() {
+    var checkin = document.getElementById("checkin").value;
+    var checkout = document.getElementById("checkout").value;
+    var roomType = document.getElementById("roomType").value;
+
+    var searchData = {
+        CheckIn: checkin,
+        CheckOut: checkout,
+        type: roomType
+    };
+
+    fetch('/room/search', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(searchData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Xóa kết quả cũ (nếu có)
+        var resultContainer = document.getElementById("resultContainer");
+        resultContainer.innerHTML = "";
+
+        // Hiển thị kết quả mới
+        data.forEach(room => {
+            var roomDiv = document.createElement('div');
+            roomDiv.textContent = `Room ID: ${room.id}, Type: ${room.roomType}, Price: ${room.price}, Address: ${room.address}, Url: ${room.img_url}, Status: ${room.booked}`;
+
+            // Thêm div vào container
+            resultContainer.appendChild(roomDiv);
+        });
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+</script>
+</body>
+</html>
