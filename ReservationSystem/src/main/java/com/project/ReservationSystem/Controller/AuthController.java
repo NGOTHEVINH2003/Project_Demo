@@ -9,6 +9,7 @@ import com.project.ReservationSystem.Security.userDetails;
 import com.project.ReservationSystem.Service.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,8 +29,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AuthController {
     //login và Register
+    @Autowired
     private final IUserService service;
+    @Autowired
     private final AuthenticationManager authenticationManager;
+    @Autowired
     private final jwtUtils utils;
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user){
@@ -43,6 +47,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> Login(@Valid @RequestBody LoginRequest request){
+        System.out.println(request.toString());
         Authentication auth = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(auth);

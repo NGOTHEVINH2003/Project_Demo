@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 	const handleLogin = (token) => {
 		const decodedUser = jwt_decode(token)
 		localStorage.setItem("userId", decodedUser.sub)
-		localStorage.setItem("userRole", decodedUser.roles)
+		localStorage.setItem("userRole", decodedUser.role)
 		localStorage.setItem("token", token)
 		setUser(decodedUser)
 	}

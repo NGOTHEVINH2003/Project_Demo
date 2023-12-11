@@ -7,6 +7,6 @@ import java.util.List;
 public interface IUserService {
     List<User> getUsers();
     void deleteUser(String email);
-    User findUserByEmail(String email);
+    User findByEmail(String email);
     User registerUser(User user);
 }

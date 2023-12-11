@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const api = axios.create({
-	baseURL: "http://localhost:9192"
+	baseURL: "http://localhost:8080"
 })
 
 export const getHeader = () => {
@@ -143,7 +143,7 @@ export async function getAvailableRooms(checkInDate, checkOutDate, roomType) {
 /* This function register a new user */
 export async function registerUser(registration) {
 	try {
-		const response = await api.post("/auth/register-user", registration)
+		const response = await api.post("/auth/register", registration)
 		return response.data
 	} catch (error) {
 		if (error.reeponse && error.response.data) {

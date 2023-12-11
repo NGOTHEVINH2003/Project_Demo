@@ -23,7 +23,7 @@ const Admin = () => {
     }
   };
 
-  if (user && user.roles && user.roles.includes("admin")) {
+  
     return (
       <RequireAuth>
         <div className="container mt-5">
@@ -60,9 +60,7 @@ const Admin = () => {
         </div>
       </RequireAuth>
     );
-  } else {
-    return <Navigate to="/login" />;
-  }
+ 
 };
 
 export default Admin;

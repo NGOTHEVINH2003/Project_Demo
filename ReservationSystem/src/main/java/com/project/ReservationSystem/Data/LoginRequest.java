@@ -1,5 +1,6 @@
 package com.project.ReservationSystem.Data;
 
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
