@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface RoomRepository extends JpaRepository<Room, Integer> {
     @Query("Select distinct RoomType from Room")
@@ -16,4 +17,6 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
             "(select b.room.id from Booking b " +
             "where((b.CheckIn <= :CheckOut) and (b.CheckOut >= :CheckIn)))")
     List<Room> findAvailableRoomsByDateAndType(String Type,LocalDate CheckIn,LocalDate CheckOut);
+
+    Optional<Room> findByAddress(String address);
 }
