@@ -37,9 +37,14 @@ public class BookingService implements IBookingService {
 
     @Override
     @Transactional
-    public String saveBooking( Booking bookingRequest) {
-        Booking savedBooking = bookingRepository.save(bookingRequest);
-        return "Booking had been saved " ;
+    public Booking saveBooking( Booking bookingRequest) {
+        Booking savedBooking;
+        try {
+             savedBooking = bookingRepository.save(bookingRequest);
+            return savedBooking ;
+        }catch (Exception e){
+            throw new RuntimeException("Failed to save booking", e);
+        }
     }
 
     @Override

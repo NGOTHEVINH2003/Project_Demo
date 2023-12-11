@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IBookingService {
     String cancelBooking(int BookingId);
-    String saveBooking(Booking booking_request);
+    Booking saveBooking(Booking booking_request);
 
     Booking findByConfirmationCode(String ConfirmCode);
 
