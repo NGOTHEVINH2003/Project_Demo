@@ -9,6 +9,5 @@ import java.util.Optional;
 public interface BookingRepository extends JpaRepository<Booking,Integer> {
     List<Booking> findByRoomId(int RoomId);
     Optional<Booking> findByConfirmationCode(String confirmCode);
-
     List<Booking> findByGuestEmail(String email);
 }
