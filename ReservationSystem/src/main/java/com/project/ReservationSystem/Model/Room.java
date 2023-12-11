@@ -21,4 +21,8 @@ public class Room {
     private boolean isBooked = false;
     private String img_url;
     private String address;
+
+    public Room() {
+
+    }
 }
