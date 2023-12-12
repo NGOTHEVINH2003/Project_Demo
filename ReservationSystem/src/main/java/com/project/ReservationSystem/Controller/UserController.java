@@ -3,6 +3,7 @@ package com.project.ReservationSystem.Controller;
 import com.project.ReservationSystem.Model.User;
 import com.project.ReservationSystem.Service.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,10 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class UserController {
+    @Autowired
     private final IUserService userService;
 
-    @GetMapping("/all_user")
+    @GetMapping("/all")
     public ResponseEntity<List<User>> getUsers(){
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.FOUND);
     }

@@ -4,12 +4,15 @@ import com.project.ReservationSystem.Model.Room;
 import com.project.ReservationSystem.Model.User;
 
 import com.project.ReservationSystem.Repository.RoomRepository;
+import io.jsonwebtoken.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class RoomService implements IRoomService{
 
     @Override
@@ -21,9 +24,6 @@ public class RoomService implements IRoomService{
     public List<String> getAllRoomTypes() {
         return null;
     }
-
-@Service
-public class RoomService implements IUserService{
 
     @Autowired
     private RoomRepository roomRepository;
@@ -86,7 +86,7 @@ public class RoomService implements IUserService{
         roomRepository.save(room);
     }
 
-    public Room getRoomById(int id) {
+    public Room GetRoomById(int id) {
         return roomRepository.findById(id).orElse(null);
     }
 

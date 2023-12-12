@@ -23,7 +23,7 @@ public class RoomController {
     private RoomService roomService;
 
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Room> getAllRooms() {
         List<Room> roomList =  roomService.getAllRooms();
         return roomList;
@@ -78,7 +78,7 @@ public class RoomController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateRoom(@PathVariable int id, @RequestBody Room updatedRoom) {
-        Room existingRoom = roomService.getRoomById(id);
+        Room existingRoom = roomService.GetRoomById(id);
 
         if (existingRoom != null) {
             existingRoom.setPrice(updatedRoom.getPrice());

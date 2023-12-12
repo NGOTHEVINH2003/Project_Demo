@@ -60,7 +60,7 @@ public class WebSecurityConfig {
         httpSecurity.csrf(c -> c.disable()).exceptionHandling(exception -> exception.authenticationEntryPoint(Entrypoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
-                        authorization -> authorization.requestMatchers("/auth/**","/booking/**" ,"/room/**").permitAll()
+                        authorization -> authorization.requestMatchers("/auth/**","/booking/**" ,"/room/**","/user/**").permitAll()
                         .requestMatchers("/role/**").hasRole("admin")
                         .anyRequest().authenticated());
         httpSecurity.authenticationProvider(authenticationProvider());
