@@ -12,4 +12,5 @@ public interface BookingRepository extends JpaRepository<Booking,Integer> {
     Optional<Booking> findByConfirmationCode(String confirmationCode);
     @Query("Select b from Booking b where b.guestEmail like %:Email% ")
     List<Booking> findByGuestEmail(String Email);
+
 }
