@@ -20,6 +20,8 @@ export const AuthProvider = ({ children }) => {
 	}
 
 	const handleLogout = () => {
+		console.log("Logging out...");
+
 		localStorage.removeItem("userId")
 		localStorage.removeItem("userRole")
 		localStorage.removeItem("token")

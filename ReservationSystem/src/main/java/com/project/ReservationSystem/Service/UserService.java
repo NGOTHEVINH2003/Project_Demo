@@ -31,7 +31,7 @@ public class UserService implements IUserService{
         user.setRole(userRole);
         return userRepository.save(user);
     }
-
+    
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();

@@ -9,7 +9,7 @@ const Profile = () => {
 		email: "",
 		firstName: "",
 		lastName: "",
-		roles: [{ id: "", name: "" }]
+		role: [{ id: "", name: "" }]
 	})
 
 	const [bookings, setBookings] = useState([
@@ -132,14 +132,12 @@ const Profile = () => {
 											<hr />
 
 											<div className="form-group row">
-												<label className="col-md-2 col-form-label fw-bold">Roles:</label>
+												<label className="col-md-2 col-form-label fw-bold">Role:</label>
 												<div className="col-md-10">
 													<ul className="list-unstyled">
-														{user.roles.map((role) => (
-															<li key={role.id} className="card-text">
-																{role.name}
+															<li key={user.role.id} className="card-text">
+																{user.role.name}
 															</li>
-														))}
 													</ul>
 												</div>
 											</div>

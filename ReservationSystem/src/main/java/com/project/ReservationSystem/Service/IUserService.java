@@ -9,4 +9,5 @@ public interface IUserService {
     void deleteUser(String email);
     User findByEmail(String email);
     User registerUser(User user);
+
 }

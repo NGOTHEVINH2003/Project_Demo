@@ -3,8 +3,10 @@ import { loginUser } from "../utils/ApiFunctions"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "./AuthProvider"
 
+
 const Login = () => {
 	const [errorMessage, setErrorMessage] = useState("")
+		
 	const [login, setLogin] = useState({
 		email: "",
 		password: ""
@@ -14,6 +16,7 @@ const Login = () => {
 	const auth = useAuth()
 	const location = useLocation()
 	const redirectUrl = location.state?.path || "/"
+
 
 	const handleInputChange = (e) => {
 		setLogin({ ...login, [e.target.name]: e.target.value })

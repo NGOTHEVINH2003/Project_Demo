@@ -21,8 +21,8 @@ public class UserController {
     public ResponseEntity<List<User>> getUsers(){
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.FOUND);
     }
-    @GetMapping("/{email}")
-    public ResponseEntity<?> getUserByEmail(@PathVariable("email") String email){
+    @GetMapping("profile/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email){
         try{
             User u = userService.findByEmail(email);
             return ResponseEntity.ok(u);
@@ -30,8 +30,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
     @PostMapping("/delete/{email}")
-    public ResponseEntity<String> deleteUser(@PathVariable("email") String email){
+    public ResponseEntity<String> deleteUser(@PathVariable String email){
         try{
             userService.deleteUser(email);
             return ResponseEntity.ok("delete successfully!");
