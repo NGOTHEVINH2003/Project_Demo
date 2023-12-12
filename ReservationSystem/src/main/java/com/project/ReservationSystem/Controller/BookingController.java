@@ -39,7 +39,7 @@ public class BookingController {
     @GetMapping("/CancelBooking")
     public ResponseEntity<String> cancelBooking(@RequestParam int bookingID) {
         String cancelResult = bookingService.cancelBooking(bookingID);
-        return ResponseEntity.ok().body(cancelResult);
+            return ResponseEntity.ok().body(cancelResult);
     }
 
     @PostMapping("/SaveBooking")
