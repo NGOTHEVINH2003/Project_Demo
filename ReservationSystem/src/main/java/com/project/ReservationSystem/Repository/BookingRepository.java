@@ -2,12 +2,13 @@ package com.project.ReservationSystem.Repository;
 
 import com.project.ReservationSystem.Model.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking,Integer> {
-    List<Booking> findByRoomId(int RoomId);
-    Optional<Booking> findByConfirmationCode(String confirmCode);
-    List<Booking> findByGuestEmail(String email);
+    Optional<Booking> findByConfirmationCode(String confirmationCode);
+    List<Booking> findByGuestEmail(String Email);
+
 }

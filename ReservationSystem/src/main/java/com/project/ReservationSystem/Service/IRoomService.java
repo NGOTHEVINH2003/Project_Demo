@@ -18,6 +18,5 @@ public interface IRoomService {
     Room updateRoom(int roomId, String roomType,float roomPrice, String photoUrl, String address);
 
     Optional<Room> getRoomById(int roomId);
-
     List<Room> getAvailableRoom(LocalDate CheckInDate, LocalDate CheckOutDate, String roomType);
 }

@@ -5,6 +5,7 @@ import com.project.ReservationSystem.Model.User;
 import com.project.ReservationSystem.Repository.RoleRepository;
 import com.project.ReservationSystem.Repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,11 @@ import java.util.List;
 import java.util.*;
 @Service
 public class UserService implements IUserService{
-
+    @Autowired
     private RoleRepository roleRepository;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     @Override
     public User registerUser(User user) {
@@ -28,7 +31,7 @@ public class UserService implements IUserService{
         user.setRole(userRole);
         return userRepository.save(user);
     }
-
+    
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
@@ -36,15 +39,15 @@ public class UserService implements IUserService{
     @Override
     @Transactional
     public void deleteUser(String email) {
-        User user = findUserByEmail(email);
+        User user = findByEmail(email);
         if(user != null){
             userRepository.deleteByEmail(email);
         }
-
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public User findByEmail(String email) {
+        System.out.println(userRepository.findByEmail(email).toString());
         return userRepository.findByEmail(email)
                 .orElseThrow(() ->new RuntimeException("User not found!"));
     }
