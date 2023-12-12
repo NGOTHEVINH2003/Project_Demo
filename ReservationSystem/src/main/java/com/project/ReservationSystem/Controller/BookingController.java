@@ -14,14 +14,13 @@ import java.util.List;
 @RequestMapping("/booking")
 @RequiredArgsConstructor
 public class BookingController {
- @Autowired
+    @Autowired
     BookingService bookingService ;
-    @GetMapping("/searchByComfirmationCode/{ComfirmationCode}")
-    public ResponseEntity<?> searchByComfirmationCode(@PathVariable String ComfirmationCode) {
-        Booking foundBooking = bookingService.findByConfirmationCode(ComfirmationCode);
-
+    @GetMapping("/searchByComfirmationCode/{ConfirmationCode}")
+    public ResponseEntity<?> searchByConfirmationCode(@PathVariable String ConfirmationCode) {
+        Booking foundBooking = bookingService.findByConfirmationCode(ConfirmationCode);
         if (foundBooking != null) {
-            return new ResponseEntity<>(foundBooking, HttpStatus.OK);
+            return ResponseEntity.ok(foundBooking);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -34,12 +33,13 @@ public class BookingController {
         if(bookingList.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
         }
-        return new ResponseEntity<>(bookingList, HttpStatus.FOUND) ;
+        return  new ResponseEntity<>(bookingList, HttpStatus.OK);
     }
 
     @GetMapping("/CancelBooking")
-    public ResponseEntity<?> cancelBooking(@RequestParam int bookingID) {
-        return ResponseEntity.ok().body(bookingService.cancelBooking(bookingID));
+    public ResponseEntity<String> cancelBooking(@RequestParam int bookingID) {
+        String cancelResult = bookingService.cancelBooking(bookingID);
+            return ResponseEntity.ok().body(cancelResult);
     }
 
     @PostMapping("/SaveBooking")
@@ -53,7 +53,12 @@ public class BookingController {
     }
 
     @GetMapping("/ViewAllBooking")
-    public ResponseEntity<List<Booking>>  ViewAllBooking(  ){
-        return new ResponseEntity<>(bookingService.getAllBooking(),HttpStatus.FOUND);
+    public ResponseEntity<List<Booking>> viewAllBooking() {
+        List<Booking> bookings = bookingService.getAllBooking();
+        if (bookings.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(bookings, HttpStatus.FOUND);
+        }
     }
 }
