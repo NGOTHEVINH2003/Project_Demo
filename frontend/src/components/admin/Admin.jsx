@@ -58,7 +58,7 @@ const Admin = () => {
             </div>
           </div>
         </div>
-      </RequireAuth>
+        </RequireAuth>
     );
  
 };

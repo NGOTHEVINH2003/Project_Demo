@@ -24,14 +24,13 @@ public class BookingService implements IBookingService {
     @Override
     @Transactional
     public String cancelBooking(int bookingId) {
-
         Optional<Booking> optionalBooking = bookingRepository.findById(bookingId);
         if (optionalBooking.isPresent()) {
             Booking booking = optionalBooking.get();
             bookingRepository.delete(booking);
-            return "Cancel Successfully";
+            return "Booking with ID " + bookingId + " has been canceled successfully.";
         } else {
-            return "Not Found";
+            return "Booking with ID " + bookingId + " not found.";
         }
     }
 
@@ -40,7 +39,7 @@ public class BookingService implements IBookingService {
     public Booking saveBooking( Booking bookingRequest) {
         Booking savedBooking;
         try {
-             savedBooking = bookingRepository.save(bookingRequest);
+            savedBooking = bookingRepository.save(bookingRequest);
             return savedBooking ;
         }catch (Exception e){
             throw new RuntimeException("Failed to save booking", e);
@@ -48,8 +47,8 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public Booking findByConfirmationCode(String confirmCode) {
-        return bookingRepository.findByConfirmationCode(confirmCode)
+    public Booking findByConfirmationCode(String confirmationCode) {
+        return bookingRepository.findByConfirmationCode(confirmationCode)
                 .orElse(null);
     }
 
@@ -59,7 +58,7 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public List<Booking> getBookingByEmail(String email) {
-        return bookingRepository.findByGuestEmail(email);
+    public List<Booking> getBookingByEmail(String guestEmail) {
+        return bookingRepository.findByGuestEmail(guestEmail);
     }
 }

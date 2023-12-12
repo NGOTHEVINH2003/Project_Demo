@@ -103,7 +103,7 @@ const ManageUser = () => {
                 {users.map((user) => (
                   <tr key={user.id} className="text-center">
                     <td>{user.id}</td>
-                    <td>{user.username}</td>
+                    <td>{user.firstName}  {user.lastName}</td>
                     <td>
                       <div className="btn-group">
                         <button
@@ -112,9 +112,9 @@ const ManageUser = () => {
                           data-bs-toggle="dropdown"
                           aria-expanded="false"
                         >
-                          {user.role}
+                          {user.role.name}
                         </button>
-                        {user.role === 'admin' && (
+                        {user.role.name === 'admin' && (
                           <ul className="dropdown-menu">
                             <li>
                               <button
@@ -126,7 +126,7 @@ const ManageUser = () => {
                             </li>
                           </ul>
                         )}
-                        {user.role === 'user' && (
+                        {user.role.name === 'user' && (
                           <ul className="dropdown-menu">
                             <li>
                               <button
