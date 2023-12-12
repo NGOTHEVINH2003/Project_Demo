@@ -16,7 +16,12 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users = new HashSet<>();
+
+    public Role(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name != null ? name : "";
+    }
 }
