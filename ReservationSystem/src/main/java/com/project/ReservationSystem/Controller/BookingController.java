@@ -36,8 +36,8 @@ public class BookingController {
         return  new ResponseEntity<>(bookingList, HttpStatus.OK);
     }
 
-    @GetMapping("/CancelBooking")
-    public ResponseEntity<String> cancelBooking(@RequestParam int bookingID) {
+    @GetMapping("/CancelBooking/{bookingID}")
+    public ResponseEntity<String> cancelBooking(@PathVariable int bookingID) {
         String cancelResult = bookingService.cancelBooking(bookingID);
             return ResponseEntity.ok().body(cancelResult);
     }
@@ -55,6 +55,16 @@ public class BookingController {
     @GetMapping("/ViewAllBooking")
     public ResponseEntity<List<Booking>> viewAllBooking() {
         List<Booking> bookings = bookingService.getAllBooking();
+        if (bookings.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(bookings, HttpStatus.FOUND);
+        }
+    }
+
+    @GetMapping("/SearchByCustomerID/{customerId}")
+    public ResponseEntity<List<Booking>> SearchByCustomerID(@PathVariable int customerId) {
+        List<Booking> bookings = bookingService.getBookingByCustomerId(customerId);
         if (bookings.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {

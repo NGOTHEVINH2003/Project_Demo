@@ -39,7 +39,7 @@ public class BookingService implements IBookingService {
     public Booking saveBooking( Booking bookingRequest) {
         Booking savedBooking;
         try {
-             savedBooking = bookingRepository.save(bookingRequest);
+            savedBooking = bookingRepository.save(bookingRequest);
             return savedBooking ;
         }catch (Exception e){
             throw new RuntimeException("Failed to save booking", e);
@@ -60,5 +60,9 @@ public class BookingService implements IBookingService {
     @Override
     public List<Booking> getBookingByEmail(String guestEmail) {
         return bookingRepository.findByGuestEmail(guestEmail);
+    }
+
+    public List<Booking> getBookingByCustomerId(int CustomerId) {
+        return bookingRepository.findByCustomerId(CustomerId);
     }
 }
