@@ -12,5 +12,6 @@ public interface IBookingService {
 
     List<Booking> getAllBooking();
     List<Booking> getBookingByEmail(String email);
-
+    public List<Booking> getBookingByCustomerId(int CustomerId);
+    public List<Booking> getBookingByRoomId(int RoomId);
 }
