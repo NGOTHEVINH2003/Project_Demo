@@ -27,4 +27,5 @@ public class BookingResponse {
         this.CheckOut = CheckOut;
         this.ConfirmationCode = ConfirmationCode;
     }
+
 }

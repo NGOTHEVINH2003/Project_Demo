@@ -17,7 +17,7 @@ const NavBar = () => {
       <div className="container">
         <NavLink to={"/"} className="navbar-brand">
           <img
-            src="/assets/images/htLogo.png"
+            src=".../assets/images/htLogo.png"
             alt="Hotel Icon"
             style={{ maxHeight: "40px", marginRight: "5px" }}
           />
@@ -45,7 +45,7 @@ const NavBar = () => {
               </NavLink>
             </li>
 
-            {isLoggedIn && userRole === "ROLE_ADMIN" && (
+            {isLoggedIn && userRole === "admin" && (
               <li className="nav-item">
                 <NavLink className="nav-link" to={"/admin"}>
                   Admin
