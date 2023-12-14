@@ -1,16 +1,18 @@
 package com.project.ReservationSystem.Service;
 
 import com.project.ReservationSystem.Model.Room;
-import com.project.ReservationSystem.Model.User;
 import com.project.ReservationSystem.Repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class RoomService implements IUserService{
+public class RoomService implements IRoomService{
 
     @Autowired
     private RoomRepository roomRepository;
@@ -31,25 +33,7 @@ public class RoomService implements IUserService{
         return roomRepository.findAvailableRoomsByDateAndType(type, CheckIn, CheckOut);
     }
 
-    @Override
-    public User registerUser(User user) {
-        return null;
-    }
 
-    @Override
-    public List<User> getUsers() {
-        return null;
-    }
-
-    @Override
-    public void deleteUser(String email) {
-
-    }
-
-    @Override
-    public User findUserByEmail(String email) {
-        return null;
-    }
 
     public List<Room> getRoomsByType(String type) {
         return roomRepository.findByRoomType(type);
@@ -63,8 +47,48 @@ public class RoomService implements IUserService{
         roomRepository.save(room);
     }
 
-    public Room getRoomById(int id) {
+    @Override
+    public void addNewRoom(Room room) throws SQLException, IOException {
+        roomRepository.save(room);
+    }
+
+    @Override
+    public List<String> getAllRoomTypes() {
+        return roomRepository.findDistinctRoomType();
+    }
+
+    @Override
+    public List<Room> getAllRoom() {
+        return roomRepository.findAll();
+    }
+
+    @Override
+    public String getRoomUrlByRoomId(int roomId) {
+        return null;
+    }
+
+    @Override
+    public void deleteRoom(int roomId) {
+        roomRepository.deleteById(roomId);
+    }
+
+    @Override
+    public void updateRoom(Room room) {
+        roomRepository.save(room);
+    }
+
+    @Override
+    public Room getRoomById(int roomId) {
+        return roomRepository.findById(roomId).orElse(null);
+    }
+
+    public Room getRoom(int id) {
         return roomRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Room> getAvailableRoom(LocalDate CheckInDate, LocalDate CheckOutDate, String roomType) {
+        return roomRepository.findAvailableRoomsByDateAndType(roomType, CheckInDate, CheckOutDate);
     }
 
     public List<Room> getAvailableRoom(){
