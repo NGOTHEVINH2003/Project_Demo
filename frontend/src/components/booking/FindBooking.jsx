@@ -26,8 +26,8 @@ const FindBooking = () => {
 		bookingConfirmationCode: "",
 		room: { id: "", roomType: "" },
 		roomNumber: "",
-		checkInDate: "",
-		checkOutDate: "",
+		checkIn: "",
+		checkOut: "",
 		guestName: "",
 		guestEmail: "",
 		numOfAdults: "",
@@ -103,7 +103,7 @@ const FindBooking = () => {
 					<div>Finding your booking...</div>
 				) : error ? (
 					<div className="text-danger">Error: {error}</div>
-				) : bookingInfo.bookingConfirmationCode ? (
+				) : bookingInfo.confirmationCode ? (
 					<div className="col-md-6 mt-4 mb-5">
 						<h3>Booking Information</h3>
 						<p className="text-success">Confirmation Code: {bookingInfo.bookingConfirmationCode}</p>
@@ -111,17 +111,17 @@ const FindBooking = () => {
 						<p>Room Type: {bookingInfo.room.roomType}</p>
 						<p>
 							Check-in Date:{" "}
-							{moment(bookingInfo.checkInDate).subtract(1, "month").format("MMM Do, YYYY")}
+							{moment(bookingInfo.checkIn).subtract(1, "month").format("MMM Do, YYYY")}
 						</p>
 						<p>
 							Check-out Date:{" "}
-							{moment(bookingInfo.checkInDate).subtract(1, "month").format("MMM Do, YYYY")}
+							{moment(bookingInfo.checkOut).subtract(1, "month").format("MMM Do, YYYY")}
 						</p>
 						<p>Full Name: {bookingInfo.guestName}</p>
 						<p>Email Address: {bookingInfo.guestEmail}</p>
-						<p>Adults: {bookingInfo.numOfAdults}</p>
+						<p>Adults: {bookingInfo.numOfAdult}</p>
 						<p>Children: {bookingInfo.numOfChildren}</p>
-						<p>Total Guest: {bookingInfo.totalNumOfGuests}</p>
+						<p>Total Guest: {bookingInfo.totalGuests}</p>
 
 						{!isDeleted && (
 							<button

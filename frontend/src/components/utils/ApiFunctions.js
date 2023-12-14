@@ -19,7 +19,7 @@ export async function addRoom(photo, roomType, roomPrice) {
 	formData.append("roomType", roomType)
 	formData.append("roomPrice", roomPrice)
 
-	const response = await api.post("/rooms/add/new-room", formData, {
+	const response = await api.post("/room/add", formData, {
 		headers: getHeader()
 	})
 	if (response.status === 201) {
@@ -110,7 +110,7 @@ export async function getAllBookings() {
 /* This function get booking by the cnfirmation code */
 export async function getBookingByConfirmationCode(confirmationCode) {
 	try {
-		const result = await api.get(`/booking/${confirmationCode}`)
+		const result = await api.get(`/booking/searchByConfirmationCode/${confirmationCode}`)
 		return result.data
 	} catch (error) {
 		if (error.response && error.response.data) {
