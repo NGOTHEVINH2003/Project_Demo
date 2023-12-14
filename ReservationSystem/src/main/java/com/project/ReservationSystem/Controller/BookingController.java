@@ -5,6 +5,7 @@ import com.project.ReservationSystem.Data.RoomResponse;
 import com.project.ReservationSystem.Model.Booking;
 import com.project.ReservationSystem.Service.BookingService;
 import com.project.ReservationSystem.Model.Room;
+import com.project.ReservationSystem.Service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 public class BookingController {
     @Autowired
     BookingService bookingService ;
+    RoomService roomService;
     @GetMapping("/searchByComfirmationCode/{ConfirmationCode}")
     public ResponseEntity<?> searchByConfirmationCode(@PathVariable String ConfirmationCode) {
         Booking foundBooking = bookingService.findByConfirmationCode(ConfirmationCode);
@@ -93,7 +95,9 @@ public class BookingController {
         bookingResponse.setTotalGuest(booking.getTotalGuest());
         bookingResponse.setConfirmationCode(booking.getConfirmationCode());
         if (booking.getRoom() != null) {
-            bookingResponse.setRoom(getRoomResponse(booking.getRoom()));
+            Room room = roomService.GetRoomById(booking.getRoom().getId());
+            RoomResponse roomResponse = getRoomResponse(room);
+            bookingResponse.setRoom(roomResponse);
         }
         return bookingResponse;
     }
@@ -117,5 +121,7 @@ public class BookingController {
         List<Booking> bookingList = bookingService.getBookingByRoomId(room.getId());
         return roomResponse;
     }
+
+
 
 }
