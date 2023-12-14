@@ -16,7 +16,7 @@ import java.util.List;
 public class BookingController {
     @Autowired
     BookingService bookingService ;
-    @GetMapping("/searchByComfirmationCode/{ConfirmationCode}")
+    @GetMapping("/searchByConfirmationCode/{ConfirmationCode}")
     public ResponseEntity<?> searchByConfirmationCode(@PathVariable String ConfirmationCode) {
         Booking foundBooking = bookingService.findByConfirmationCode(ConfirmationCode);
         if (foundBooking != null) {

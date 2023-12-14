@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Logout from "../auth/Logout";
+import { AuthProvider } from "../auth/AuthProvider";
 
 const NavBar = () => {
   const [showAccount, setShowAccount] = useState(false);
@@ -85,7 +86,7 @@ const NavBar = () => {
                 className={`dropdown-menu dropdown-menu-right ${showAccount ? "show" : ""}`}
               >
                 {isLoggedIn ? (
-                  <Logout />
+                  <AuthProvider><Logout/></AuthProvider>
                 ) : (
                   <NavLink className="dropdown-item" to={"/login"}>
                     Login
