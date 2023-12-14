@@ -28,19 +28,25 @@ public class RoomController {
 
 
     @GetMapping
-    public List<Room> getAllRooms() {
+    public ResponseEntity<List<Room>> getAllRooms() {
         List<Room> roomList = roomService.getAllRoom();
-        return roomList;
+        if (roomList == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(roomList);
     }
 
     @GetMapping("/type")
-    public List<String> getRoomType() {
+    public ResponseEntity<List<String>> getRoomType() {
         List<String> roomList = roomService.getAllRoomTypes();
-        return roomList;
+        if (roomList == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(roomList);
     }
 
     @PostMapping("/search")
-    public List<Room> getAvailableRooms(@RequestBody Map<String, String> searchData) {
+    public ResponseEntity<List<Room>> getAvailableRooms(@RequestBody Map<String, String> searchData) {
         String checkin = searchData.get("CheckIn");
         String checkout = searchData.get("CheckOut");
         String type = searchData.get("type");
@@ -50,7 +56,10 @@ public class RoomController {
         LocalDate checkoutDate = LocalDate.parse(checkout);
 
         List<Room> roomList = roomService.getAvailableRoom(checkinDate, checkoutDate, type);
-        return roomList;
+        if (roomList == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(roomList);
     }
 
 
@@ -78,7 +87,7 @@ public class RoomController {
         room.setAddress(address);
         room.setBooked(booked);
         String fileName = StringUtils.cleanPath(imgdata.getOriginalFilename());
-        room.setImg_url("image/" + fileName);
+        room.setImg_url("../images/" + fileName);
 
 
         roomService.addNewRoom(room);
@@ -89,9 +98,14 @@ public class RoomController {
 
 
     @GetMapping("/search/{type}")
-    public List<Room> getRoomsByType(@PathVariable String type) {
+    public ResponseEntity<List<Room>> getRoomsByType(@PathVariable String type) {
+        List<Room> roomList = roomService.getRoomsByType(type);
 
-        return roomService.getRoomsByType(type);
+        if (roomList == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(roomList);
+
     }
 
     @DeleteMapping("/delete/{id}")
@@ -124,9 +138,22 @@ public class RoomController {
     }
 
     @GetMapping("/available")
-    public List<Room> getAvailableRooms() {
+    public ResponseEntity<List<Room>> getAvailableRooms() {
         List<Room> roomList = roomService.getAvailableRoom();
-        return roomList;
+        if(roomList == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(roomList);
+    }
+
+    @GetMapping("/getroom/{id}")
+    public ResponseEntity<Room> getRoomsById(@PathVariable int id) {
+        Room room = roomService.getRoomById(id);
+
+        if (room == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(room);
     }
 }
 

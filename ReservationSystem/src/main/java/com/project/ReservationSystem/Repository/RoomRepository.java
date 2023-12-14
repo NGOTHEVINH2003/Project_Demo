@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 
@@ -25,5 +26,6 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 
     @Query("Select r from Room r where r.isBooked = false")
     List<Room> AvailableRoom();
+
 }
 

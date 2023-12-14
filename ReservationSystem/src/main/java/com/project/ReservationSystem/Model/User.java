@@ -19,10 +19,14 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER,
-    cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH})
-    @JoinTable(name = "user_Role",
-    joinColumns = @JoinColumn(name = "userId",referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "roleId",referencedColumnName = "id"))
-    private Collection<Role> roles = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private Role role;
+    public void assignRole(Role role) {
+        this.role = role;
+    }
+    public Role getRole() {
+        return this.role;
+    }
+
 }

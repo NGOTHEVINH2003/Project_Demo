@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RoomService implements IRoomService{
@@ -18,34 +17,11 @@ public class RoomService implements IRoomService{
     private RoomRepository roomRepository;
 
 
-    public void add(Room r){
-        roomRepository.save(r);
-    }
-    public List<Room> getAllRooms() {
-        return roomRepository.findAll();
-    }
-
-    public List<String> getRoomType(){
-        return roomRepository.findDistinctRoomType();
-    }
-
-    public List<Room> getAvailableRooms(String type, LocalDate CheckIn, LocalDate CheckOut){
-        return roomRepository.findAvailableRoomsByDateAndType(type, CheckIn, CheckOut);
-    }
-
-
-
     public List<Room> getRoomsByType(String type) {
         return roomRepository.findByRoomType(type);
     }
 
-    public void deleteRoomById(int id) {
-        roomRepository.deleteById(id);
-    }
 
-    public void update(Room room) {
-        roomRepository.save(room);
-    }
 
     @Override
     public void addNewRoom(Room room) throws SQLException, IOException {
@@ -80,10 +56,6 @@ public class RoomService implements IRoomService{
     @Override
     public Room getRoomById(int roomId) {
         return roomRepository.findById(roomId).orElse(null);
-    }
-
-    public Room getRoom(int id) {
-        return roomRepository.findById(id).orElse(null);
     }
 
     @Override
