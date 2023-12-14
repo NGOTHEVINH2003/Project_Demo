@@ -27,8 +27,7 @@ public class jwtUtils {
     //Generate Jwt token for user information.
     public String generateUserJWT(Authentication auth){
         userDetails userPrincipal = (userDetails) auth.getPrincipal();
-        List<String> role = userPrincipal.getAuthorities()
-                .stream().map(GrantedAuthority::getAuthority).toList();
+        List<String> role = userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 
         return Jwts.builder().setSubject(userPrincipal.getUsername())
                 .claim("role", role).setIssuedAt(new Date())
