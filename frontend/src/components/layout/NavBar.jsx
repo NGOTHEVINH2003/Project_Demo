@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Logout from "../auth/Logout";
+import { AuthProvider } from "../auth/AuthProvider";
 
 const NavBar = () => {
   const [showAccount, setShowAccount] = useState(false);
@@ -17,7 +18,7 @@ const NavBar = () => {
       <div className="container">
         <NavLink to={"/"} className="navbar-brand">
           <img
-            src="/assets/images/htLogo.png"
+            src=".../assets/images/htLogo.png"
             alt="Hotel Icon"
             style={{ maxHeight: "40px", marginRight: "5px" }}
           />
@@ -45,7 +46,7 @@ const NavBar = () => {
               </NavLink>
             </li>
 
-            {isLoggedIn && userRole === "ROLE_ADMIN" && (
+            {isLoggedIn && userRole === "admin" && (
               <li className="nav-item">
                 <NavLink className="nav-link" to={"/admin"}>
                   Admin
@@ -85,7 +86,7 @@ const NavBar = () => {
                 className={`dropdown-menu dropdown-menu-right ${showAccount ? "show" : ""}`}
               >
                 {isLoggedIn ? (
-                  <Logout />
+                  <AuthProvider><Logout/></AuthProvider>
                 ) : (
                   <NavLink className="dropdown-item" to={"/login"}>
                     Login

@@ -23,6 +23,7 @@ public class BookingController {
     BookingService bookingService ;
     RoomService roomService;
     @GetMapping("/searchByComfirmationCode/{ConfirmationCode}")
+
     public ResponseEntity<?> searchByConfirmationCode(@PathVariable String ConfirmationCode) {
         Booking foundBooking = bookingService.findByConfirmationCode(ConfirmationCode);
         if (foundBooking != null) {
@@ -69,6 +70,7 @@ public class BookingController {
         } else {
             List<BookingResponse> bookingResponseList = getListBookingRespone(bookings);
             return new ResponseEntity<>(bookingResponseList, HttpStatus.FOUND);
+
         }
     }
 

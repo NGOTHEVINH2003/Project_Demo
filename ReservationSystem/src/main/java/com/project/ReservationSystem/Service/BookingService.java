@@ -71,4 +71,5 @@ public class BookingService implements IBookingService {
     public List<Booking> getBookingByRoomId(int RoomId) {
         return bookingRepository.findByRoomId(RoomId);
     }
+
 }

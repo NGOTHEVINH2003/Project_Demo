@@ -13,17 +13,19 @@ const Logout = () => {
 
 	return (
 		<>
-			<li>
-				<Link className="dropdown-item" to={"/profile"}>
-					Profile
-				</Link>
-			</li>
-			<li>
-				<hr className="dropdown-divider" />
-			</li>
-			<button className="dropdown-item" onClick={handleLogout}>
-				Logout
-			</button>
+			 <li>
+                <Link className="dropdown-item" to={"/profile"}>
+                    Profile
+                </Link>
+            </li>
+            <li>
+                <hr className="dropdown-divider" />
+            </li>
+            <li>
+                <button className="dropdown-item" onClick={handleLogout}>
+                    Logout
+                </button>
+            </li>
 		</>
 	)
 }

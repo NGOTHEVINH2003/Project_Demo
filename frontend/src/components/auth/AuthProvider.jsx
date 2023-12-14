@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
 
 	const handleLogin = (token) => {
 		const decodedUser = jwt_decode(token)
+		console.log(token)
 		localStorage.setItem("userId", decodedUser.sub)
 		localStorage.setItem("userRole", decodedUser.role)
 		localStorage.setItem("token", token)
@@ -19,6 +20,8 @@ export const AuthProvider = ({ children }) => {
 	}
 
 	const handleLogout = () => {
+		console.log("Logging out...");
+
 		localStorage.removeItem("userId")
 		localStorage.removeItem("userRole")
 		localStorage.removeItem("token")

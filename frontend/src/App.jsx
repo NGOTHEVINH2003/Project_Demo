@@ -47,7 +47,7 @@ function App() {
 						<Route path="/existing-bookings" element={<Bookings />} />
 						<Route path="/find-booking" element={<FindBooking />} />
 
-						<Route path="/login" element={<Login />} />
+						<Route path="/login" element={<AuthProvider><Login/></AuthProvider>} />
 						<Route path="/register" element={<Registration />} />
 
 						<Route path="/profile" element={<Profile />} />

@@ -30,7 +30,6 @@ const ManageUser = () => {
       const result = await deleteUser(userId);
       if (result === "") {
         setSuccessMessage(`User with ID ${userId} was deleted`);
-        // Update the users state after successful deletion
         setUsers(users.filter((user) => user.id !== userId));
       } else {
         console.error(`Error deleting user: ${result.message}`);
@@ -49,7 +48,6 @@ const ManageUser = () => {
       const result = await updateUserRole(userId, newRole);
       if (result === "") {
         setSuccessMessage(`Role of User with ID ${userId} was updated`);
-        // Refresh the users data after successful role update
         fetchUsers();
       } else {
         console.error(`Error updating user role: ${result.message}`);
@@ -64,7 +62,6 @@ const ManageUser = () => {
   };
 
   const grantAdminAccess = (userId) => {
-    // Implement logic to grant admin access, e.g., update user's access level
     console.log(`Grant admin access to User with ID ${userId}`);
   };
 
@@ -103,7 +100,7 @@ const ManageUser = () => {
                 {users.map((user) => (
                   <tr key={user.id} className="text-center">
                     <td>{user.id}</td>
-                    <td>{user.username}</td>
+                    <td>{user.firstName} {user.lastName}</td>
                     <td>
                       <div className="btn-group">
                         <button
@@ -112,9 +109,9 @@ const ManageUser = () => {
                           data-bs-toggle="dropdown"
                           aria-expanded="false"
                         >
-                          {user.role}
+                          {user.role.name}
                         </button>
-                        {user.role === 'admin' && (
+                        {user.role.name === 'admin' && (
                           <ul className="dropdown-menu">
                             <li>
                               <button
@@ -126,7 +123,7 @@ const ManageUser = () => {
                             </li>
                           </ul>
                         )}
-                        {user.role === 'user' && (
+                        {user.role.name === 'user' && (
                           <ul className="dropdown-menu">
                             <li>
                               <button
