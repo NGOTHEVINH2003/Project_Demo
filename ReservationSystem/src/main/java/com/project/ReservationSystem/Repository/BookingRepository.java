@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface BookingRepository extends JpaRepository<Booking,Integer> {
     Optional<Booking> findByConfirmationCode(String confirmationCode);
     List<Booking> findByGuestEmail(String Email);
-    @Query("Select * from Booking where customer_id like %:customer_id%")
-    List<Booking> findByCustomerId(int customer_id);
+    @Query("SELECT b FROM Booking b WHERE b.customer.id = :customerId")
+    List<Booking> findByCustomerId( int customerId);
+    @Query("SELECT b FROM Booking b WHERE b.room.id = :room_id")
+    List<Booking> findByRoomId( int room_id);
 }
