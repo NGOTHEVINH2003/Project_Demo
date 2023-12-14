@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/all")
     public ResponseEntity<List<User>> getUsers(){
-        return new ResponseEntity<>(userService.getUsers(), HttpStatus.FOUND);
+        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
     @GetMapping("profile/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String email){

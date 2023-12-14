@@ -36,8 +36,8 @@ public class BookingController {
         return  new ResponseEntity<>(bookingList, HttpStatus.OK);
     }
 
-    @GetMapping("/CancelBooking")
-    public ResponseEntity<String> cancelBooking(@RequestParam int bookingID) {
+    @GetMapping("/CancelBooking/{bookingID}")
+    public ResponseEntity<String> cancelBooking(@PathVariable int bookingID) {
         String cancelResult = bookingService.cancelBooking(bookingID);
             return ResponseEntity.ok().body(cancelResult);
     }
@@ -58,7 +58,7 @@ public class BookingController {
         if (bookings.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(bookings, HttpStatus.FOUND);
+            return new ResponseEntity<>(bookings, HttpStatus.OK);
         }
     }
 }
