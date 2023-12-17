@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.security.SecureRandom;
 
 @RestController
 @RequestMapping("/booking")
@@ -21,6 +22,7 @@ import java.util.List;
 public class BookingController {
     @Autowired
     BookingService bookingService ;
+    @Autowired
     RoomService roomService;
     @GetMapping("/searchByComfirmationCode/{ConfirmationCode}")
 
@@ -95,7 +97,8 @@ public class BookingController {
         bookingResponse.setNumOfAdult(booking.getNumOfAdult());
         bookingResponse.setNumOfChildren(booking.getNumOfChildren());
         bookingResponse.setTotalGuest(booking.getTotalGuest());
-        bookingResponse.setConfirmationCode(booking.getConfirmationCode());
+        String confimationCode = generateConfimationCode(6);
+        bookingResponse.setConfirmationCode(confimationCode);
         if (booking.getRoom() != null) {
             Room room = roomService.GetRoomById(booking.getRoom().getId());
             RoomResponse roomResponse = getRoomResponse(room);
@@ -124,6 +127,15 @@ public class BookingController {
         return roomResponse;
     }
 
-
+    public static String generateConfimationCode(int length) {
+        String CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(CHARACTERS.length());
+            sb.append(CHARACTERS.charAt(randomIndex));
+        }
+        return sb.toString();
+    }
 
 }
