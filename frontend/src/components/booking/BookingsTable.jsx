@@ -9,8 +9,8 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 		let filtered = bookingInfo
 		if (startDate && endDate) {
 			filtered = bookingInfo.filter((booking) => {
-				const bookingStartDate = parseISO(booking.checkInDate)
-				const bookingEndDate = parseISO(booking.checkOutDate)
+				const bookingStartDate = parseISO(booking.checkIn)
+				const bookingEndDate = parseISO(booking.checkOut)
 				return (
 					bookingStartDate >= startDate && bookingEndDate <= endDate && bookingEndDate > startDate
 				)
@@ -48,7 +48,7 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 					{filteredBookings.map((booking, index) => (
 						<tr key={booking.bookingId}>
 							<td>{index + 1}</td>
-							<td>{booking.id}</td>
+							<td>{booking.bookingId}</td>
 							<td>{booking.room.id}</td>
 							<td>{booking.room.roomType}</td>
 							<td>{booking.checkIn}</td>
@@ -58,7 +58,7 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 							<td>{booking.numOfAdult}</td>
 							<td>{booking.numOfChildren}</td>
 							<td>{booking.totalGuest}</td>
-							<td>{booking.bookingConfirmationCode}</td>
+							<td>{booking.confirmationCode}</td>
 							<td>
 								<button
 									className="btn btn-danger btn-sm"

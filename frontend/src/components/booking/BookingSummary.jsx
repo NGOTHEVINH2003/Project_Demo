@@ -4,9 +4,9 @@ import Button from "react-bootstrap/Button"
 import { useNavigate } from "react-router-dom"
 
 const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
-	const checkInDate = moment(booking.checkInDate)
-	const checkOutDate = moment(booking.checkOutDate)
-	const numberOfDays = checkOutDate.diff(checkInDate, "days")
+	const checkIn = moment(booking.checkIn)
+	const checkOut = moment(booking.checkOut)
+	const numberOfDays = checkOut.diff(checkIn, "days")
 	const [isBookingConfirmed, setIsBookingConfirmed] = useState(false)
 	const [isProcessingPayment, setIsProcessingPayment] = useState(false)
 	const navigate = useNavigate()
@@ -38,10 +38,10 @@ const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
 					Email: <strong>{booking.guestEmail}</strong>
 				</p>
 				<p>
-					Check-in Date: <strong>{moment(booking.checkInDate).format("MMM Do YYYY")}</strong>
+					Check-in Date: <strong>{moment(booking.checkIn).format("MMM Do, YYYY")}</strong>
 				</p>
 				<p>
-					Check-out Date: <strong>{moment(booking.checkOutDate).format("MMM Do YYYY")}</strong>
+					Check-out Date: <strong>{moment(booking.checkOut).format("MMM Do, YYYY")}</strong>
 				</p>
 				<p>
 					Number of Days Booked: <strong>{numberOfDays}</strong>
@@ -50,7 +50,7 @@ const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
 				<div>
 					<h5 className="hotel-color">Number of Guest</h5>
 					<strong>
-						Adult{booking.numOfAdults > 1 ? "s" : ""} : {booking.numOfAdults}
+						Adult{booking.numOfAdult > 1 ? "s" : ""} : {booking.numOfAdult}
 					</strong>
 					<strong>
 						<p>Children : {booking.numOfChildren}</p>
