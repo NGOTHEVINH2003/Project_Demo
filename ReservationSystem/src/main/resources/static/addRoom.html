@@ -45,11 +45,11 @@
         roomData.append('booked', isBooked);
         roomData.append('imgdata', selectedFile);
 
-        console.log(selectedFile);  // Kiểm tra dữ liệu trên console
+        console.log(selectedFile);
 
         fetch('/room/add', {
             method: 'POST',
-            body: roomData,  // Không cần header 'Content-Type' ở đây
+            body: roomData,
         })
         .then(response => {
             if (response.ok) {

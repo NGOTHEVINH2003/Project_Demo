@@ -27,7 +27,7 @@ public class RoomController {
     private RoomService roomService;
 
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Room>> getAllRooms() {
         List<Room> roomList = roomService.getAllRoom();
         if (roomList == null) {
@@ -87,8 +87,7 @@ public class RoomController {
         room.setAddress(address);
         room.setBooked(booked);
         String fileName = StringUtils.cleanPath(imgdata.getOriginalFilename());
-        room.setImg_url("../images/" + fileName);
-
+        room.setImg_url("E:\\Project_Demo\\frontend\\src\\components\\assets\\images\\" + fileName);
 
         roomService.addNewRoom(room);
         Map<String, String> response = new HashMap<>();
@@ -156,5 +155,3 @@ public class RoomController {
         return ResponseEntity.ok(room);
     }
 }
-
-
