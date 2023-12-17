@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import moment from "moment"
 import { cancelBooking, getBookingByConfirmationCode } from "../utils/ApiFunctions"
+import NavBar from "../layout/NavBar"
 
 const FindBooking = () => {
 	const [confirmationCode, setConfirmationCode] = useState("")
@@ -79,6 +80,7 @@ const FindBooking = () => {
 
 	return (
 		<>
+		<NavBar />
 			<div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
 				<h2 className="text-center mb-4">Find My Booking</h2>
 				<form onSubmit={handleFormSubmit} className="col-md-6">

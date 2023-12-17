@@ -200,10 +200,13 @@ body {
 /* Header banner */
 .header-banner {
   background-image: url("./assets/images/ht.jpg");
-  background-size: cover;
+  background-size: 100% auto;
+  background-position: center; 
+  background-repeat: no-repeat; 
   position: relative;
   height: 100vh;
 }
+
 
 
 .header-banner {

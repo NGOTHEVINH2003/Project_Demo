@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { loginUser } from "../utils/ApiFunctions"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "./AuthProvider"
+import NavBar from "../layout/NavBar"
 
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
 	const navigate = useNavigate()
 	const auth = useAuth()
 	const location = useLocation()
-	const redirectUrl = location.state?.path || "/"
+	const redirectUrl = "/admin"
 
 
 	const handleInputChange = (e) => {
@@ -23,22 +24,32 @@ const Login = () => {
 	}
 
 	const handleSubmit = async (e) => {
-		e.preventDefault()
-		const success = await loginUser(login)
+		e.preventDefault();
+		const success = await loginUser(login);
 		if (success) {
-			const token = success.token
-			auth.handleLogin(token)
-			navigate(redirectUrl, { replace: true })
+		  auth.handleLogin(success.token);
+	  
+		  // Check the user's role before redirecting
+		  const role = success.role || ['user'];
+		  if (role.includes('admin')) {
+			// Redirect to the admin page
+			navigate("/admin", { replace: true });
+		  } else {
+			// Redirect to the home page or another page for regular users
+			navigate("/", { replace: true });
+		  }
 		} else {
-			setErrorMessage("Invalid username or password. Please try again.")
+		  setErrorMessage("Invalid username or password. Please try again.");
 		}
 		setTimeout(() => {
-			setErrorMessage("")
-		}, 4000)
-	}
+		  setErrorMessage("");
+		}, 4000);
+	  };
+	  
 
 	return (
 		<section className="container col-6 mt-5 mb-5">
+			<NavBar />
 			{errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
 			<h2>Login</h2>
 			<form onSubmit={handleSubmit}>
