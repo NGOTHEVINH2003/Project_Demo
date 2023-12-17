@@ -21,6 +21,7 @@ import java.util.List;
 public class BookingController {
     @Autowired
     BookingService bookingService ;
+    @Autowired
     RoomService roomService;
     @GetMapping("/searchByComfirmationCode/{ConfirmationCode}")
 
@@ -55,8 +56,7 @@ public class BookingController {
     public ResponseEntity<?> saveBooking(@RequestBody Booking booking) {
         Booking savedBooking = bookingService.saveBooking(booking);
         if (savedBooking != null) {
-            BookingResponse savedBookingResponse = getBookingResponse(savedBooking);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedBookingResponse);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save booking");
         }
@@ -69,7 +69,7 @@ public class BookingController {
             return ResponseEntity.noContent().build();
         } else {
             List<BookingResponse> bookingResponseList = getListBookingRespone(bookings);
-            return new ResponseEntity<>(bookingResponseList, HttpStatus.FOUND);
+            return new ResponseEntity<>(bookingResponseList, HttpStatus.OK);
 
         }
     }
@@ -97,8 +97,9 @@ public class BookingController {
         bookingResponse.setTotalGuest(booking.getTotalGuest());
         bookingResponse.setConfirmationCode(booking.getConfirmationCode());
         if (booking.getRoom() != null) {
-            Room room = roomService.GetRoomById(booking.getRoom().getId());
+            Room room = roomService.getRoomById(booking.getRoom().getId());
             RoomResponse roomResponse = getRoomResponse(room);
+            System.out.println(roomResponse);
             bookingResponse.setRoom(roomResponse);
         }
         return bookingResponse;

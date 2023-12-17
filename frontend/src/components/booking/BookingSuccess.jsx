@@ -4,8 +4,8 @@ import Header from "../common/Header"
 
 const BookingSuccess = () => {
 	const location = useLocation()
-	const message = location.state?.message
-	const error = location.state?.error
+	const message = location.message
+	const error = location.error
 	return (
 		<div className="container">
 			<Header title="Booking Success" />
@@ -19,7 +19,6 @@ const BookingSuccess = () => {
 					<div>
 						<h3 className="text-danger"> Error Booking Room!</h3>
 						<p className="text-danger">{error}</p>
-						
 					</div>
 				)}
 			</div>
