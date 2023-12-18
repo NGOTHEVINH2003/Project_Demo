@@ -75,7 +75,8 @@ public class RoomController {
             @RequestParam(name="photo") MultipartFile imgdata) throws SQLException, IOException {
 
         try {
-            String uploadDir = "./assets/images/roomimg";
+            String uploadDir = "E:/Project_Demo/frontend/src/components/assets/images/roomimg";
+
             String fileName = StringUtils.cleanPath(imgdata.getOriginalFilename());
             Path uploadPath = Paths.get(uploadDir);
 
@@ -88,6 +89,8 @@ public class RoomController {
                 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
             }
 
+            System.out.println("Upload Path: " + uploadDir);
+
             Room room = new Room();
             room.setPrice(Float.parseFloat(price));
             room.setRoomType(roomType);
@@ -99,6 +102,7 @@ public class RoomController {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Add Success");
             return ResponseEntity.ok(response);
+
         } catch (IOException e) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Error uploading image.");
