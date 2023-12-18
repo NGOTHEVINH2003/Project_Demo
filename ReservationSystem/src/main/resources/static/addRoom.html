@@ -16,7 +16,7 @@
     <input type="text" id="address" required>
     <br>
     <label for="imgdata">Image URL:</label>
-    <input type="file" id="imgdata" accept="image/*" onchange="handleFileChange()">
+    <input type="file" id="imgdata" accept="image/*">
     <br>
     <label for="isbooked">IsBooked</label>
     <input type="checkbox" id="isbooked">
@@ -25,38 +25,31 @@
     <button type="reset">Reset</button>
 </form>
 <script>
-    let selectedFile = null;
-
-    function handleFileChange() {
-        const imgdataInput = document.getElementById('imgdata');
-        selectedFile = imgdataInput.files[0];
-    }
-
     function addRoom() {
         var price = document.getElementById("price").value;
         var type = document.getElementById("type").value;
         var address = document.getElementById("address").value;
         var isBooked = document.getElementById("isbooked").checked ? true : false;
 
-        var roomData = new FormData();
-        roomData.append('price', price);
-        roomData.append('roomType', type);
-        roomData.append('address', address);
-        roomData.append('booked', isBooked);
-        roomData.append('imgdata', selectedFile);
+        var imgInput = document.getElementById("imgdata");
+        var imgFileName = imgInput.files[0] ? imgInput.files[0].name : null;
 
-        console.log(selectedFile);  // Kiểm tra dữ liệu trên console
+        var roomData = {
+            price: price,
+            type: type,
+            address: address,
+            isBooked: isBooked,
+            imgdata: imgFileName
+        };
 
         fetch('/room/add', {
             method: 'POST',
-            body: roomData,  // Không cần header 'Content-Type' ở đây
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(roomData)
         })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            }
-            throw new Error('Network response was not ok.');
-        })
+        .then(response => response.json())
         .then(data => {
             console.log('Room added successfully:', data);
         })
@@ -64,7 +57,6 @@
             console.error('Error:', error);
         });
     }
-
 </script>
 
 <br>
