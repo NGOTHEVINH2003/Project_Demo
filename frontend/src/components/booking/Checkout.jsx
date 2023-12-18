@@ -20,7 +20,7 @@ const Checkout = () => {
 	const [roomInfo, setRoomInfo] = useState({
 		photo: "",
 		roomType: "",
-		roomPrice: ""
+		price: ""
 	})
 
 	const { roomId } = useParams()
@@ -63,7 +63,7 @@ const Checkout = () => {
 										</tr>
 										<tr>
 											<th>Price per night:</th>
-											<td>${roomInfo.roomPrice}</td>
+											<td>${roomInfo.price}</td>
 										</tr>
 										<tr>
 											<th>Room Service:</th>

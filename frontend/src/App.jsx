@@ -76,14 +76,18 @@ function App() {
             }
           />
 
-          <Route path="/register" element={<Registration />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/logout" element={<FindBooking />} />
-        </Routes>
-      </Router>
-      <Footer />
-    </main>
-  );
+
+						<Route path="/login" element={<AuthProvider><Login/></AuthProvider>} />
+						<Route path="/register" element={<Registration />} />
+
+						<Route path="/profile" element={<Profile />} />
+						<Route path="/logout" element={<FindBooking />} />
+					</Routes>
+				</Router>
+				<Footer />
+			</main>
+		
+	);
 }
 
 export default App;

@@ -13,13 +13,13 @@ export const getHeader = () => {
 }
 
 /* This function adds a new room room to the database */
-export async function addRoom(photo, roomType, roomPrice) {
+export async function addRoom(photo, roomType, price) {
 	const formData = new FormData()
 	formData.append("photo", photo)
 	formData.append("roomType", roomType)
-	formData.append("roomPrice", roomPrice)
+	formData.append("price", price)
 
-	const response = await api.post("/rooms/add/new-room", formData, {
+	const response = await api.post("/room/add", formData, {
 		headers: getHeader()
 	})
 	if (response.status === 201) {
@@ -63,7 +63,7 @@ export async function deleteRoom(roomId) {
 export async function updateRoom(roomId, roomData) {
 	const formData = new FormData()
 	formData.append("roomType", roomData.roomType)
-	formData.append("roomPrice", roomData.roomPrice)
+	formData.append("price", roomData.price)
 	formData.append("photo", roomData.photo)
 	const response = await api.put(`/rooms/update/${roomId}`, formData, {
 		headers: getHeader()
@@ -74,7 +74,7 @@ export async function updateRoom(roomId, roomData) {
 /* This funcction gets a room by the id */
 export async function getRoomById(roomId) {
 	try {
-		const result = await api.get(`/rooms/room/${roomId}`)
+		const result = await api.get(`/room/getroom/${roomId}`)
 		return result.data
 	} catch (error) {
 		throw new Error(`Error fetching room ${error.message}`)
@@ -82,9 +82,9 @@ export async function getRoomById(roomId) {
 }
 
 /* This function saves a new booking to the databse */
-export async function bookRoom(roomId, booking) {
+export async function bookRoom(booking) {
 	try {
-		const response = await api.post(`/bookings/room/${roomId}/booking`, booking)
+		const response = await api.post(`/booking/SaveBooking`, booking)
 		return response.data
 	} catch (error) {
 		if (error.response && error.response.data) {
@@ -98,7 +98,7 @@ export async function bookRoom(roomId, booking) {
 /* This function gets alll bokings from the database */
 export async function getAllBookings() {
 	try {
-		const result = await api.get("/bookings/all-bookings", {
+		const result = await api.get("/booking/ViewAllBooking", {
 			headers: getHeader()
 		})
 		return result.data
@@ -110,7 +110,7 @@ export async function getAllBookings() {
 /* This function get booking by the cnfirmation code */
 export async function getBookingByConfirmationCode(confirmationCode) {
 	try {
-		const result = await api.get(`/bookings/confirmation/${confirmationCode}`)
+		const result = await api.get(`/booking/searchByComfirmationCode/${confirmationCode}`)
 		return result.data
 	} catch (error) {
 		if (error.response && error.response.data) {
@@ -124,7 +124,7 @@ export async function getBookingByConfirmationCode(confirmationCode) {
 /* This is the function to cancel user booking */
 export async function cancelBooking(bookingId) {
 	try {
-		const result = await api.delete(`/bookings/booking/${bookingId}/delete`)
+		const result = await api.get(`/booking/CancelBooking/${bookingID}`)
 		return result.data
 	} catch (error) {
 		throw new Error(`Error cancelling booking :${error.message}`)
@@ -226,7 +226,7 @@ export async function getAllUsers(token) {
 /* This is the function to get user bookings by the user id */
 export async function getBookingsByUserId(userId, token) {
 	try {
-		const response = await api.get(`/bookings/user/${userId}/bookings`, {
+		const response = await api.get(`/booking/user/${userId}/bookings`, {
 			headers: getHeader()
 		})
 		return response.data
@@ -247,7 +247,7 @@ export async function updateUserRole(userId, newRole, token) {
 	try {
 		// Sending a PATCH request to the specified endpoint
 		const response = await api.patch(
-			`/users/${userId}/updateRole`,  // The endpoint for updating user roles
+			`/user/${userId}/updateRole`,  // The endpoint for updating user roles
 			{ role: newRole },  // The data to be sent in the request body (new role)
 			{
 				headers: {

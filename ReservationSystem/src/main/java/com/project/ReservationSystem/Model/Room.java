@@ -32,4 +32,6 @@ public class Room {
         this.img_url = img_url;
         this.address = address;
     }
+
+
 }

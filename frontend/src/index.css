@@ -87,7 +87,7 @@ body {
 
 
 .parallax {
-  background-image: url("./assets/images/R.png");
+  background-image: url("./components/assets/images/R.png");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -100,7 +100,7 @@ body {
   height: 200px;
   width: 100%;
   background-size: 100% 200px;
-  background-image: url("./assets/images/services4.jpg");
+  background-image: url("./components/assets/images/services4.jpg");
   background-position: center top; /* Adjusted property */
 }
 
@@ -199,10 +199,8 @@ body {
 /* The header banner */
 /* Header banner */
 .header-banner {
-  background-image: url("./assets/images/ht.jpg");
-  background-size: 100% auto;
-  background-position: center; 
-  background-repeat: no-repeat; 
+  background-image: url("./components/assets/images/ht.jpg");
+  background-size: cover;
   position: relative;
   height: 100vh;
 }
