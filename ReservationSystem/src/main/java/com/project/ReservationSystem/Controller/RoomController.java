@@ -94,6 +94,7 @@ public class RoomController {
             Room room = new Room();
             room.setPrice(Float.parseFloat(price));
             room.setRoomType(roomType);
+
             room.setImg_url("../assets/images/roomimg/" + fileName);
 
             roomService.addNewRoom(room);
