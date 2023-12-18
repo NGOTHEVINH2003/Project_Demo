@@ -22,15 +22,20 @@ public class Room {
     private float Price;
     private boolean isBooked = false;
     private String img_url;
-    private String address;
+    private int floor;
+    private int RoomId;
+    private String roomInfo;
+    private String roomStatus;
 
 
-    public Room(String roomType, float price, boolean isBooked, String img_url, String address) {
+    public Room(String roomType, float price, boolean isBooked, String img_url, int floor,int roomId,String roomStatus) {
         RoomType = roomType;
         Price = price;
         this.isBooked = isBooked;
         this.img_url = img_url;
-        this.address = address;
+        this.floor = floor;
+        this.RoomId = roomId;
+        this.roomStatus = roomStatus;
     }
 
     public Room(String roomType, float price, String address) {
@@ -39,8 +44,5 @@ public class Room {
         this.img_url = img_url;
 
     }
-
-
-
 
 }

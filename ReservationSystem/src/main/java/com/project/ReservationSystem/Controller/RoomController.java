@@ -158,7 +158,6 @@ public class RoomController {
         if (existingRoom != null) {
             existingRoom.setPrice(updatedRoom.getPrice());
             existingRoom.setRoomType(updatedRoom.getRoomType());
-            existingRoom.setAddress(updatedRoom.getAddress());
             existingRoom.setImg_url(updatedRoom.getImg_url());
             existingRoom.setBooked(updatedRoom.isBooked());
 
