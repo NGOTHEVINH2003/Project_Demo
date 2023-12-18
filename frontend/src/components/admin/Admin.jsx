@@ -1,5 +1,7 @@
+// Admin.js
+
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../auth/AuthProvider";
 import RequireAuth from "../auth/RequireAuth";
 import ExistingRooms from "../room/ExistingRooms";
@@ -9,6 +11,9 @@ import ManageUser from "../user/ManageUser";
 const Admin = () => {
   const { user } = useAuth();
   const [selectedMenu, setSelectedMenu] = React.useState("rooms");
+
+  // Fetch the user's role from local storage
+  const storedUserRole = localStorage.getItem("userRole");
 
   const renderContent = () => {
     switch (selectedMenu) {
@@ -23,44 +28,42 @@ const Admin = () => {
     }
   };
 
-  
-    return (
-      <RequireAuth>
-        <div className="container mt-5">
-          <div className="row">
-            <div className="col-md-3">
-              <div className="card">
-                <div className="card-body text-center">
-                  <h2 className="mb-4">Welcome to Admin Panel</h2>
-                  <hr />
-                  <ul className="list-group">
-                    <li className={`list-group-item ${selectedMenu === "rooms" ? "active" : ""}`}>
-                      <Link to="#" onClick={() => setSelectedMenu("rooms")}>
-                        Manage Rooms
-                      </Link>
-                    </li>
-                    <li className={`list-group-item ${selectedMenu === "bookings" ? "active" : ""}`}>
-                      <Link to="#" onClick={() => setSelectedMenu("bookings")}>
-                        Manage Bookings
-                      </Link>
-                    </li>
-                    <li className={`list-group-item ${selectedMenu === "manage" ? "active" : ""}`}>
-                      <Link to="#" onClick={() => setSelectedMenu("manage")}>
-                        Manage Users
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+  return (
+    <RequireAuth requiredRole="admin">
+      <div className="container mt-5">
+        <div className="row">
+          <div className="col-md-3">
+            <div className="card">
+              <div className="card-body text-center">
+                <h2 className="mb-4">Welcome to Admin Panel</h2>
+                <hr />
+                <ul className="list-group">
+                  <li className={`list-group-item ${selectedMenu === "rooms" ? "active" : ""}`}>
+                    <Link to="#" onClick={() => setSelectedMenu("rooms")}>
+                      Manage Rooms
+                    </Link>
+                  </li>
+                  <li className={`list-group-item ${selectedMenu === "bookings" ? "active" : ""}`}>
+                    <Link to="#" onClick={() => setSelectedMenu("bookings")}>
+                      Manage Bookings
+                    </Link>
+                  </li>
+                  <li className={`list-group-item ${selectedMenu === "manage" ? "active" : ""}`}>
+                    <Link to="#" onClick={() => setSelectedMenu("manage")}>
+                      Manage Users
+                    </Link>
+                  </li>
+                </ul>
               </div>
             </div>
-            <div className="col-md-9">
-              {renderContent()}
-            </div>
+          </div>
+          <div className="col-md-9">
+            {renderContent()}
           </div>
         </div>
-        </RequireAuth>
-    );
- 
+      </div>
+    </RequireAuth>
+  );
 };
 
 export default Admin;

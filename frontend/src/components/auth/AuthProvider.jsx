@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
 		setUser(decodedUser)
 	}
 
+
 	const handleLogout = () => {
 		console.log("Logging out...");
 
@@ -26,6 +27,7 @@ export const AuthProvider = ({ children }) => {
 		localStorage.removeItem("userRole")
 		localStorage.removeItem("token")
 		setUser(null)
+		window.location.reload();
 	}
 
 	return (
