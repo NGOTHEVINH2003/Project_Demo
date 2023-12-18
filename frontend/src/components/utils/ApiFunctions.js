@@ -20,7 +20,8 @@ export async function addRoom(photo, roomType, price) {
 	formData.append("price", price)
 
 	const response = await api.post("/room/add", formData, {
-		headers: getHeader()
+		// headers: getHeader()
+		"Content-Type": "multipart/form-data"
 	})
 	if (response.status === 201) {
 		return true
