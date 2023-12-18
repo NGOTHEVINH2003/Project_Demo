@@ -20,7 +20,8 @@ export async function addRoom(photo, roomType, price) {
 	formData.append("price", price)
 
 	const response = await api.post("/room/add", formData, {
-		headers: getHeader()
+		// headers: getHeader()
+		"Content-Type": "multipart/form-data"
 	})
 	if (response.status === 201) {
 		return true
@@ -51,9 +52,10 @@ export async function getAllRooms() {
 /* This function deletes a room by the Id */
 export async function deleteRoom(roomId) {
 	try {
-		const result = await api.delete(`/rooms/delete/room/${roomId}`, {
+		const result = await api.delete(`/room/delete/${roomId}`, {
 			headers: getHeader()
 		})
+		window.location.reload();
 		return result.data
 	} catch (error) {
 		throw new Error(`Error deleting room ${error.message}`)
@@ -66,7 +68,7 @@ export async function updateRoom(roomId, roomData) {
 	formData.append("price", roomData.price)
 	formData.append("photo", roomData.photo)
 	const response = await api.put(`/rooms/update/${roomId}`, formData, {
-		headers: getHeader()
+		"Content-Type": "multipart/form-data"
 	})
 	return response
 }
