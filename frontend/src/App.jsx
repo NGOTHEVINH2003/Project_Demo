@@ -25,7 +25,6 @@ function App() {
 
 			<main>
 				<Router>
-					<NavBar />
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/edit-room/:roomId" element={<EditRoom />} />

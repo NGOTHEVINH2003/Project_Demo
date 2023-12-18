@@ -6,12 +6,15 @@ import RoomCarousel from "../common/RoomCarousel"
 import RoomSearch from "../common/RoomSearch"
 import { useLocation } from "react-router-dom"
 import { useAuth } from "../auth/AuthProvider"
+import NavBar from "../layout/NavBar"
 const Home = () => {
 	const location = useLocation()
 
 	const message = location.state && location.state.message
 	const currentUser = localStorage.getItem("userId")
 	return (
+		<>
+		<NavBar/>
 		<section>
 			{message && <p className="text-warning px-5">{message}</p>}
 			{currentUser && (
@@ -28,6 +31,8 @@ const Home = () => {
 				<RoomCarousel />
 			</div>
 		</section>
+		</>
+		
 	)
 }
 
