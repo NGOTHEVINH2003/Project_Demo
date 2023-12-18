@@ -52,9 +52,10 @@ export async function getAllRooms() {
 /* This function deletes a room by the Id */
 export async function deleteRoom(roomId) {
 	try {
-		const result = await api.delete(`/rooms/delete/room/${roomId}`, {
-			"Content-Type": "multipart/form-data"
+		const result = await api.delete(`/room/delete/${roomId}`, {
+			headers: getHeader()
 		})
+		window.location.reload();
 		return result.data
 	} catch (error) {
 		throw new Error(`Error deleting room ${error.message}`)
