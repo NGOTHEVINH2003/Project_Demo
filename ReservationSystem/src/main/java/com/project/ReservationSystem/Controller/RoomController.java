@@ -102,6 +102,7 @@ public class RoomController {
             room.setFloor(Integer.parseInt(floor));
             room.setRoom_status("empty");
             room.setRoom_info(information);
+
             room.setImg_url("../assets/images/roomimg/" + fileName);
 
             roomService.addNewRoom(room);
