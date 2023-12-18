@@ -26,8 +26,7 @@ public class Booking {
     private int NumOfChildren;
     private int TotalGuest;
     private String confirmationCode;
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id")
     private Room room;
 
@@ -36,8 +35,7 @@ public class Booking {
     @JoinColumn(name = "employee_id")
     private User employee;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private User customer;
 }

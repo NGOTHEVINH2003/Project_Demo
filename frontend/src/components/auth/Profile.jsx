@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { deleteUser, getBookingsByUserId, getUser } from "../utils/ApiFunctions"
 import { useNavigate } from "react-router-dom"
 import moment from "moment"
+import NavBar from "../layout/NavBar"
 
 const Profile = () => {
 	const [user, setUser] = useState({
@@ -77,6 +78,7 @@ const Profile = () => {
 
 	return (
 		<div className="container">
+			<NavBar />
 			{errorMessage && <p className="text-danger">{errorMessage}</p>}
 			{message && <p className="text-danger">{message}</p>}
 			{user ? (

@@ -4,6 +4,7 @@
     <title></title>
 </head>
 <body>
+<img src="image/dog.jpg" alt="hello">
 <form id="roomForm">
     <label for="price">Price: </label>
     <input type="text" id="price" required>
@@ -14,8 +15,8 @@
     <label for="address">Address: </label>
     <input type="text" id="address" required>
     <br>
-    <label for="imgdata">Image Url: </label>
-    <input type="text" id="imgdata" required>
+    <label for="imgdata">Image URL:</label>
+    <input type="file" id="imgdata" accept="image/*">
     <br>
     <label for="isbooked">IsBooked</label>
     <input type="checkbox" id="isbooked">
@@ -28,15 +29,17 @@
         var price = document.getElementById("price").value;
         var type = document.getElementById("type").value;
         var address = document.getElementById("address").value;
-        var imgdata = document.getElementById("imgdata").value;
         var isBooked = document.getElementById("isbooked").checked ? true : false;
+
+        var imgInput = document.getElementById("imgdata");
+        var imgFileName = imgInput.files[0] ? imgInput.files[0].name : null;
 
         var roomData = {
             price: price,
-            roomType: type,
+            type: type,
             address: address,
-            img_url: imgdata,
-            booked: isBooked
+            isBooked: isBooked,
+            imgdata: imgFileName
         };
 
         fetch('/room/add', {
@@ -46,12 +49,7 @@
             },
             body: JSON.stringify(roomData)
         })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            }
-            throw new Error('Network response was not ok.');
-        })
+        .then(response => response.json())
         .then(data => {
             console.log('Room added successfully:', data);
         })
@@ -66,17 +64,26 @@
 <div id="roomList"></div>
 <script>
     fetch('room')
-        .then(response => response.json())
-        .then(data => {
-            const roomListDiv = document.getElementById('roomList');
-            data.forEach(room => {
-                const roomDiv = document.createElement('div');
-                roomDiv.textContent = `Room ID: ${room.id}, Type:${room.roomType}, Price: ${room.price}, Address: ${room.address},
-                 Url: ${room.img_url}, Status: ${room.booked}`;
-                roomListDiv.appendChild(roomDiv);
-            });
-        })
-        .catch(error => console.error('Error:', error));
+    .then(response => response.json())
+    .then(data => {
+        const roomListDiv = document.getElementById('roomList');
+        data.forEach(room => {
+            const roomDiv = document.createElement('div');
+
+            const imgElement = document.createElement('img');
+            imgElement.src = room.img_url;
+
+           console.log(room.img_url);
+
+            roomDiv.appendChild(imgElement);
+
+            roomDiv.innerHTML += `Room ID: ${room.id}, Type:${room.roomType}, Price: ${room.price}, Address: ${room.address}, Status: ${room.booked}`;
+
+            roomListDiv.appendChild(roomDiv);
+        });
+    })
+    .catch(error => console.error('Error:', error));
+
 </script>
 
 </body>

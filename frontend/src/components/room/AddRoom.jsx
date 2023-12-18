@@ -7,7 +7,7 @@ const AddRoom = () => {
 	const [newRoom, setNewRoom] = useState({
 		photo: null,
 		roomType: "",
-		roomPrice: ""
+		price: ""
 	})
 
 	const [successMessage, setSuccessMessage] = useState("")
@@ -17,13 +17,7 @@ const AddRoom = () => {
 	const handleRoomInputChange = (e) => {
 		const name = e.target.name
 		let value = e.target.value
-		if (name === "roomPrice") {
-			if (!isNaN(value)) {
-				value = parseInt(value)
-			} else {
-				value = ""
-			}
-		}
+		
 		setNewRoom({ ...newRoom, [name]: value })
 	}
 
@@ -33,13 +27,14 @@ const AddRoom = () => {
 		setImagePreview(URL.createObjectURL(selectedImage))
 	}
 
+
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		try {
-			const success = await addRoom(newRoom.photo, newRoom.roomType, newRoom.roomPrice)
+			const success = await addRoom(newRoom.photo, newRoom.roomType, newRoom.price)
 			if (success !== undefined) {
 				setSuccessMessage("A new room was  added successfully !")
-				setNewRoom({ photo: null, roomType: "", roomPrice: "" })
+				setNewRoom({ photo: null, roomType: "", price: "" })
 				setImagePreview("")
 				setErrorMessage("")
 			} else {
@@ -79,16 +74,16 @@ const AddRoom = () => {
 								</div>
 							</div>
 							<div className="mb-3">
-								<label htmlFor="roomPrice" className="form-label">
+								<label htmlFor="price" className="form-label">
 									Room Price
 								</label>
 								<input
 									required
 									type="number"
 									className="form-control"
-									id="roomPrice"
-									name="roomPrice"
-									value={newRoom.roomPrice}
+									id="price"
+									name="price"
+									value={newRoom.price}
 									onChange={handleRoomInputChange}
 								/>
 							</div>

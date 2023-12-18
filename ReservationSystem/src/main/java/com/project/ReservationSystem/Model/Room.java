@@ -33,5 +33,14 @@ public class Room {
         this.address = address;
     }
 
+    public Room(String roomType, float price, String address) {
+        RoomType = roomType;
+        Price = price;
+        this.img_url = img_url;
+
+    }
+
+
+
 
 }
