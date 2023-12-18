@@ -6,7 +6,7 @@ const EditRoom = () => {
 	const [room, setRoom] = useState({
 		photo: "",
 		roomType: "",
-		roomPrice: ""
+		price: ""
 	})
 
 	const [imagePreview, setImagePreview] = useState("")
@@ -97,7 +97,7 @@ const EditRoom = () => {
 								className="form-control"
 								id="roomPrice"
 								name="roomPrice"
-								value={room.roomPrice}
+								value={room.price}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -116,7 +116,7 @@ const EditRoom = () => {
 							/>
 							{imagePreview && (
 								<img
-									src={`data:image/jpeg;base64,${imagePreview}`}
+									src={imagePreview}
 									alt="Room preview"
 									style={{ maxWidth: "400px", maxHeight: "400" }}
 									className="mt-3"

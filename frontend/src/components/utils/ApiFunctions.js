@@ -13,11 +13,14 @@ export const getHeader = () => {
 }
 
 /* This function adds a new room room to the database */
-export async function addRoom(photo, roomType, price) {
+export async function addRoom(photo, roomType, price, roomId, floor, information) {
 	const formData = new FormData()
-	formData.append("photo", photo)
-	formData.append("roomType", roomType)
-	formData.append("price", price)
+	formData.append("photo", photo);
+    formData.append("roomType", roomType);
+    formData.append("price", price);
+    formData.append("roomId", roomId);
+    formData.append("floor", floor);
+    formData.append("information", information);
 
 	const response = await api.post("/room/add", formData, {
 		// headers: getHeader()
@@ -62,13 +65,13 @@ export async function deleteRoom(roomId) {
 	}
 }
 /* This function update a room */
-export async function updateRoom(roomId, roomData) {
+export async function updateRoom(roomId, photo, roomType, price) {
 	const formData = new FormData()
-	formData.append("roomType", roomData.roomType)
-	formData.append("price", roomData.price)
-	formData.append("photo", roomData.photo)
-	const response = await api.put(`/rooms/update/${roomId}`, formData, {
-		headers: getHeader()
+	formData.append("roomType", roomType)
+	formData.append("price", price)
+	formData.append("photo", photo)
+	const response = await api.put(`/room/update/${roomId}`, formData, {
+		"Content-Type": "multipart/form-data"
 	})
 	return response
 }
