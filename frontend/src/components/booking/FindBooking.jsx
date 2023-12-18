@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import moment from "moment"
 import { cancelBooking, getBookingByConfirmationCode } from "../utils/ApiFunctions"
+import NavBar from "../layout/NavBar"
 
 const FindBooking = () => {
 	const [confirmationCode, setConfirmationCode] = useState("")
@@ -9,11 +10,10 @@ const FindBooking = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [bookingInfo, setBookingInfo] = useState({
 		id: "",
-		bookingConfirmationCode: "",
+		confirmationCode: "",
 		room: { id: "", roomType: "" },
-		roomNumber: "",
-		checkInDate: "",
-		checkOutDate: "",
+		checkIn: "",
+		checkOut: "",
 		guestName: "",
 		guestEmail: "",
 		numOfAdults: "",
@@ -22,10 +22,9 @@ const FindBooking = () => {
 	})
 
 	const emptyBookingInfo = {
-		id: "",
-		bookingConfirmationCode: "",
+		bookingId: "",
+		confirmationCode: "",
 		room: { id: "", roomType: "" },
-		roomNumber: "",
 		checkIn: "",
 		checkOut: "",
 		guestName: "",
@@ -35,7 +34,7 @@ const FindBooking = () => {
 		totalNumOfGuests: ""
 	}
 	const [isDeleted, setIsDeleted] = useState(false)
-
+	
 	const handleInputChange = (event) => {
 		setConfirmationCode(event.target.value)
 	}
@@ -62,7 +61,7 @@ const FindBooking = () => {
 
 	const handleBookingCancellation = async (bookingId) => {
 		try {
-			await cancelBooking(bookingInfo.id)
+			await cancelBooking(bookingInfo.bookingId)
 			setIsDeleted(true)
 			setSuccessMessage("Booking has been cancelled successfully!")
 			setBookingInfo(emptyBookingInfo)
@@ -79,6 +78,7 @@ const FindBooking = () => {
 
 	return (
 		<>
+		<NavBar />
 			<div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
 				<h2 className="text-center mb-4">Find My Booking</h2>
 				<form onSubmit={handleFormSubmit} className="col-md-6">
@@ -106,22 +106,20 @@ const FindBooking = () => {
 				) : bookingInfo.confirmationCode ? (
 					<div className="col-md-6 mt-4 mb-5">
 						<h3>Booking Information</h3>
-						<p className="text-success">Confirmation Code: {bookingInfo.bookingConfirmationCode}</p>
+						<p className="text-success">Confirmation Code: {bookingInfo.confirmationCode}</p>
 						<p>Room Number: {bookingInfo.room.id}</p>
 						<p>Room Type: {bookingInfo.room.roomType}</p>
 						<p>
-							Check-in Date:{" "}
-							{moment(bookingInfo.checkIn).subtract(1, "month").format("MMM Do, YYYY")}
+							Check-in Date: {bookingInfo.checkIn.at(2)}-{bookingInfo.checkIn.at(1)}-{bookingInfo.checkIn.at(0)}
 						</p>
 						<p>
-							Check-out Date:{" "}
-							{moment(bookingInfo.checkOut).subtract(1, "month").format("MMM Do, YYYY")}
+							Check-out Date: {bookingInfo.checkOut.at(2)}-{bookingInfo.checkOut.at(1)}-{bookingInfo.checkOut.at(0)}
 						</p>
-						<p>Full Name: {bookingInfo.guestName}</p>
+						<p>Full Name: {bookingInfo.guestFullName}</p>
 						<p>Email Address: {bookingInfo.guestEmail}</p>
 						<p>Adults: {bookingInfo.numOfAdult}</p>
 						<p>Children: {bookingInfo.numOfChildren}</p>
-						<p>Total Guest: {bookingInfo.totalGuests}</p>
+						<p>Total Guest: {bookingInfo.totalGuest}</p>
 
 						{!isDeleted && (
 							<button

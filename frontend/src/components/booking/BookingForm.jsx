@@ -1,31 +1,34 @@
 import React, { useEffect } from "react"
-import moment from "moment"
 import { useState } from "react"
 import { Form, FormControl, Button } from "react-bootstrap"
 import BookingSummary from "./BookingSummary"
 import { bookRoom, getRoomById } from "../utils/ApiFunctions"
 import { useNavigate, useParams } from "react-router-dom"
 import { useAuth } from "../auth/AuthProvider"
+import moment from "moment";
+
 
 const BookingForm = () => {
 	const [validated, setValidated] = useState(false)
 	const [isSubmitted, setIsSubmitted] = useState(false)
 	const [errorMessage, setErrorMessage] = useState("")
-	const [roomPrice, setRoomPrice] = useState(0)
+	const [price, setPrice] = useState(0)
 
-const currentUser = localStorage.getItem("userId")
+	const currentUser = localStorage.getItem("userId")
+	const { roomId } = useParams()
+	const navigate = useNavigate()
 
 	const [booking, setBooking] = useState({
 		guestFullName: "",
 		guestEmail: currentUser,
-		checkInDate: "",
-		checkOutDate: "",
-		numOfAdults: "",
-		numOfChildren: ""
+		checkIn: "",
+		checkOut: "",
+		numOfAdult: "",
+		numOfChildren: "",
+		room: { id: roomId }
 	})
 
-	const { roomId } = useParams()
-	const navigate = useNavigate()
+
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target
@@ -37,7 +40,7 @@ const currentUser = localStorage.getItem("userId")
 	const getRoomPriceById = async (roomId) => {
 		try {
 			const response = await getRoomById(roomId)
-			setRoomPrice(response.roomPrice)
+			setPrice(response.price)
 		} catch (error) {
 			throw new Error(error)
 		}
@@ -48,24 +51,30 @@ const currentUser = localStorage.getItem("userId")
 	}, [roomId])
 
 	const calculatePayment = () => {
-		const checkInDate = moment(booking.checkInDate)
-		const checkOutDate = moment(booking.checkOutDate)
-		const diffInDays = checkOutDate.diff(checkInDate, "days")
-		const paymentPerDay = roomPrice ? roomPrice : 0
+		const checkIn = moment(booking.checkIn)
+		const checkOut = moment(booking.checkOut)
+		const diffInDays = checkOut.diff(checkIn, "days")
+		const paymentPerDay = price ? price : 0
 		return diffInDays * paymentPerDay
 	}
 
 	const isGuestCountValid = () => {
-		const adultCount = parseInt(booking.numOfAdults)
+		const adultCount = parseInt(booking.numOfAdult)
 		const childrenCount = parseInt(booking.numOfChildren)
 		const totalCount = adultCount + childrenCount
 		return totalCount >= 1 && adultCount >= 1
 	}
 
-	const isCheckOutDateValid = () => {
-		if (!moment(booking.checkOutDate).isSameOrAfter(moment(booking.checkInDate))) {
-			setErrorMessage("Check-out date must be after check-in date")
-			return false
+	const ischeckOutValid = () => {
+		if (!moment(booking.checkOut).isSameOrAfter(moment(booking.checkIn))) {
+			if (!moment(booking.checkIn).isSameOrAfter(moment())) {
+				setErrorMessage("Check-In date must be after current date")
+				return false
+			} else {
+				setErrorMessage("Check-out date must be after check-in date")
+				return false
+			}
+
 		} else {
 			setErrorMessage("")
 			return true
@@ -75,7 +84,7 @@ const currentUser = localStorage.getItem("userId")
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		const form = e.currentTarget
-		if (form.checkValidity() === false || !isGuestCountValid() || !isCheckOutDateValid()) {
+		if (form.checkValidity() === false || !isGuestCountValid() || !ischeckOutValid()) {
 			e.stopPropagation()
 		} else {
 			setIsSubmitted(true)
@@ -85,7 +94,7 @@ const currentUser = localStorage.getItem("userId")
 
 	const handleFormSubmit = async () => {
 		try {
-			const confirmationCode = await bookRoom(roomId, booking)
+			const confirmationCode = await bookRoom(booking)
 			setIsSubmitted(true)
 			navigate("/booking-success", { state: { message: confirmationCode } })
 		} catch (error) {
@@ -145,15 +154,15 @@ const currentUser = localStorage.getItem("userId")
 									<legend>Lodging Period</legend>
 									<div className="row">
 										<div className="col-6">
-											<Form.Label htmlFor="checkInDate" className="hotel-color">
+											<Form.Label htmlFor="checkIn" className="hotel-color">
 												Check-in date
 											</Form.Label>
 											<FormControl
 												required
 												type="date"
-												id="checkInDate"
-												name="checkInDate"
-												value={booking.checkInDate}
+												id="checkIn"
+												name="checkIn"
+												value={booking.checkIn}
 												placeholder="check-in-date"
 												min={moment().format("MMM Do, YYYY")}
 												onChange={handleInputChange}
@@ -164,15 +173,15 @@ const currentUser = localStorage.getItem("userId")
 										</div>
 
 										<div className="col-6">
-											<Form.Label htmlFor="checkOutDate" className="hotel-color">
+											<Form.Label htmlFor="checkOut" className="hotel-color">
 												Check-out date
 											</Form.Label>
 											<FormControl
 												required
 												type="date"
-												id="checkOutDate"
-												name="checkOutDate"
-												value={booking.checkOutDate}
+												id="checkOut"
+												name="checkOut"
+												value={booking.checkOut}
 												placeholder="check-out-date"
 												min={moment().format("MMM Do, YYYY")}
 												onChange={handleInputChange}
@@ -195,9 +204,9 @@ const currentUser = localStorage.getItem("userId")
 											<FormControl
 												required
 												type="number"
-												id="numOfAdults"
-												name="numOfAdults"
-												value={booking.numOfAdults}
+												id="numOfAdult"
+												name="numOfAdult"
+												value={booking.numOfAdult}
 												min={1}
 												placeholder="0"
 												onChange={handleInputChange}
