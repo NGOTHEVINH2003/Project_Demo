@@ -48,10 +48,12 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> Login(@Valid @RequestBody LoginRequest request){
         System.out.println(request.toString());
-        Authentication auth = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+
         SecurityContextHolder.getContext().setAuthentication(auth);
+
         String jwt = utils.generateUserJWT(auth);
+
         userDetails userDetails = (userDetails) auth.getPrincipal();
         List<String> role = userDetails.getAuthorities()
                 .stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());

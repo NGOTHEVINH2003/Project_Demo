@@ -4,6 +4,7 @@
     <title></title>
 </head>
 <body>
+<img src="image/dog.jpg" alt="hello">
 <form id="roomForm">
     <label for="price">Price: </label>
     <input type="text" id="price" required>
@@ -14,8 +15,8 @@
     <label for="address">Address: </label>
     <input type="text" id="address" required>
     <br>
-    <label for="imgdata">Image Url: </label>
-    <input type="text" id="imgdata" required>
+    <label for="imgdata">Image URL:</label>
+    <input type="file" id="imgdata" accept="image/*" onchange="handleFileChange()">
     <br>
     <label for="isbooked">IsBooked</label>
     <input type="checkbox" id="isbooked">
@@ -24,27 +25,31 @@
     <button type="reset">Reset</button>
 </form>
 <script>
+    let selectedFile = null;
+
+    function handleFileChange() {
+        const imgdataInput = document.getElementById('imgdata');
+        selectedFile = imgdataInput.files[0];
+    }
+
     function addRoom() {
         var price = document.getElementById("price").value;
         var type = document.getElementById("type").value;
         var address = document.getElementById("address").value;
-        var imgdata = document.getElementById("imgdata").value;
         var isBooked = document.getElementById("isbooked").checked ? true : false;
 
-        var roomData = {
-            price: price,
-            roomType: type,
-            address: address,
-            img_url: imgdata,
-            booked: isBooked
-        };
+        var roomData = new FormData();
+        roomData.append('price', price);
+        roomData.append('roomType', type);
+        roomData.append('address', address);
+        roomData.append('booked', isBooked);
+        roomData.append('imgdata', selectedFile);
+
+        console.log(selectedFile);  // Kiểm tra dữ liệu trên console
 
         fetch('/room/add', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(roomData)
+            body: roomData,  // Không cần header 'Content-Type' ở đây
         })
         .then(response => {
             if (response.ok) {
@@ -59,6 +64,7 @@
             console.error('Error:', error);
         });
     }
+
 </script>
 
 <br>
@@ -66,17 +72,26 @@
 <div id="roomList"></div>
 <script>
     fetch('room')
-        .then(response => response.json())
-        .then(data => {
-            const roomListDiv = document.getElementById('roomList');
-            data.forEach(room => {
-                const roomDiv = document.createElement('div');
-                roomDiv.textContent = `Room ID: ${room.id}, Type:${room.roomType}, Price: ${room.price}, Address: ${room.address},
-                 Url: ${room.img_url}, Status: ${room.booked}`;
-                roomListDiv.appendChild(roomDiv);
-            });
-        })
-        .catch(error => console.error('Error:', error));
+    .then(response => response.json())
+    .then(data => {
+        const roomListDiv = document.getElementById('roomList');
+        data.forEach(room => {
+            const roomDiv = document.createElement('div');
+
+            const imgElement = document.createElement('img');
+            imgElement.src = room.img_url;
+
+           console.log(room.img_url);
+
+            roomDiv.appendChild(imgElement);
+
+            roomDiv.innerHTML += `Room ID: ${room.id}, Type:${room.roomType}, Price: ${room.price}, Address: ${room.address}, Status: ${room.booked}`;
+
+            roomListDiv.appendChild(roomDiv);
+        });
+    })
+    .catch(error => console.error('Error:', error));
+
 </script>
 
 </body>

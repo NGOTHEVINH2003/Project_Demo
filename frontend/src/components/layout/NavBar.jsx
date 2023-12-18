@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import Logout from "../auth/Logout";
 import { AuthProvider } from "../auth/AuthProvider";
 
+import htLogo from "../assets/images/htLogo.png"
 const NavBar = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -18,7 +19,7 @@ const NavBar = () => {
       <div className="container">
         <NavLink to={"/"} className="navbar-brand">
           <img
-            src="/assets/images/htLogo.png"
+            src={htLogo}
             alt="Hotel Icon"
             style={{ maxHeight: "40px", marginRight: "5px" }}
           />
@@ -46,13 +47,6 @@ const NavBar = () => {
               </NavLink>
             </li>
 
-            {isLoggedIn && userRole === "ROLE_ADMIN" && (
-              <li className="nav-item">
-                <NavLink className="nav-link" to={"/admin"}>
-                  Admin
-                </NavLink>
-              </li>
-            )}
 
             <li className="nav-item">
               <NavLink className="nav-link" to={"/find-booking"}>

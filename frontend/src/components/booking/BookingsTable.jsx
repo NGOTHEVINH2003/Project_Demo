@@ -5,14 +5,14 @@ import DateSlider from "../common/DateSlider"
 const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 	const [filteredBookings, setFilteredBookings] = useState(bookingInfo)
 
-	const filterBooknigs = (startDate, endDate) => {
+	const filterBookings = (startDate, endDate) => {
 		let filtered = bookingInfo
 		if (startDate && endDate) {
 			filtered = bookingInfo.filter((booking) => {
-				const bookingStarDate = parseISO(booking.checkInDate)
-				const bookingEndDate = parseISO(booking.checkOutDate)
+				const bookingStartDate = parseISO(booking.checkIn)
+				const bookingEndDate = parseISO(booking.checkOut)
 				return (
-					bookingStarDate >= startDate && bookingEndDate <= endDate && bookingEndDate > startDate
+					bookingStartDate >= startDate && bookingEndDate <= endDate && bookingEndDate > startDate
 				)
 			})
 		}
@@ -25,7 +25,7 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 
 	return (
 		<section className="p-4">
-			<DateSlider onDateChange={filterBooknigs} onFilterChange={filterBooknigs} />
+			<DateSlider onDateChange={filterBookings} onFilterChange={filterBookings} />
 			<table className="table table-bordered table-hover shadow">
 				<thead>
 					<tr>
@@ -44,14 +44,14 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 				</thead>
 				<tbody className="text-center">
 					{filteredBookings.map((booking, index) => (
-						<tr key={booking.id}>
+						<tr key={booking.bookingId}>
 							<td>{index + 1}</td>
-							<td>{booking.id}</td>
+							<td>{booking.bookingId}</td>
 							<td>{booking.room.id}</td>
 							<td>{booking.room.roomType}</td>
-							<td>{booking.checkInDate}</td>
-							<td>{booking.checkOutDate}</td>
-							<td>{booking.guestName}</td>
+							<td>{booking.checkIn}</td>
+							<td>{booking.checkOut}</td>
+							<td>{booking.guestFullName}</td>
 							<td>{booking.guestEmail}</td>
 							<td>{booking.totalNumOfGuests}</td>
 							<td>{booking.bookingConfirmationCode}</td>
@@ -66,7 +66,7 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 					))}
 				</tbody>
 			</table>
-			{filterBooknigs.length === 0 && <p> No booking found for the selected dates</p>}
+			{filterBookings.length === 0 && <p> No booking found for the selected dates</p>}
 		</section>
 	)
 }

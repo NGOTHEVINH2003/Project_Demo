@@ -2,7 +2,6 @@ package com.project.ReservationSystem.Data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import org.apache.tomcat.util.codec.binary.Base64;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class RoomResponse {
     private int id;
     private String roomType;
     private float Price;
-    private boolean isBooked;
+    private boolean isBooked=false;
     private String photo;
     private List<BookingResponse>bookings;
 
