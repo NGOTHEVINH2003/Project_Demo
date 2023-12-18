@@ -37,8 +37,6 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 						<th>Check-Out Date</th>
 						<th>Guest Name</th>
 						<th>Guest Email</th>
-						<th>Adults</th>
-						<th>Children</th>
 						<th>Total Guest</th>
 						<th>Confirmation Code</th>
 						<th colSpan={2}>Actions</th>
@@ -55,8 +53,6 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 							<td>{booking.checkOutDate}</td>
 							<td>{booking.guestName}</td>
 							<td>{booking.guestEmail}</td>
-							<td>{booking.numOfAdults}</td>
-							<td>{booking.numOfChildren}</td>
 							<td>{booking.totalNumOfGuests}</td>
 							<td>{booking.bookingConfirmationCode}</td>
 							<td>
