@@ -128,7 +128,7 @@ public class RoomController {
 //        response.put("message", "Add Success");
 //        return ResponseEntity.ok(response);
 //    }
-    
+
 
     @GetMapping("/search/{type}")
     public ResponseEntity<List<Room>> getRoomsByType(@PathVariable String type) {
