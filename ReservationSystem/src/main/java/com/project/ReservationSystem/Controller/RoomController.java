@@ -73,11 +73,11 @@ public class RoomController {
 
     @PostMapping("/add")
     public ResponseEntity<Map<String, String>> addRoom(
-            @RequestParam("price") String price,
-            @RequestParam("roomType") String roomType,
-            @RequestParam("address") String address,
-            @RequestParam("booked") boolean booked,
-            @RequestParam("imgdata") MultipartFile imgdata) throws SQLException, IOException {
+            @RequestParam(name ="price") String price,
+            @RequestParam(name ="roomType") String roomType,
+            @RequestParam(name ="address") String address,
+            @RequestParam(name ="booked") boolean booked,
+            @RequestParam(name ="imgdata") MultipartFile imgdata) throws SQLException, IOException {
 
         // Kiểm tra và lưu file ảnh vào thư mục "image" trong resources
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { registerUser } from "../utils/ApiFunctions"
 import { Link } from "react-router-dom"
+import NavBar from "../layout/NavBar"
 
 const Registration = () => {
 	const [registration, setRegistration] = useState({
@@ -36,6 +37,7 @@ const Registration = () => {
 
 	return (
 		<section className="container col-6 mt-5 mb-5">
+			<NavBar />
 			{errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
 			{successMessage && <p className="alert alert-success">{successMessage}</p>}
 
