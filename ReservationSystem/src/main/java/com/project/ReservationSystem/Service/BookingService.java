@@ -71,5 +71,8 @@ public class BookingService implements IBookingService {
     public List<Booking> getBookingByRoomId(int RoomId) {
         return bookingRepository.findByRoomId(RoomId);
     }
-
+    public boolean existsByConfirmationCode(String confirmationCode){
+        Optional<Booking> optionalBooking = bookingRepository.findByConfirmationCode(confirmationCode);
+        return optionalBooking.isPresent();
+    }
 }
