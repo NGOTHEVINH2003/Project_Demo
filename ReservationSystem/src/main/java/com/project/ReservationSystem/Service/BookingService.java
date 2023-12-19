@@ -14,8 +14,6 @@ import java.util.Optional;
 @Component
 public class BookingService implements IBookingService {
     @Autowired
-    private RoomService roomService;
-    @Autowired
     private final BookingRepository bookingRepository;
 
     @Autowired
