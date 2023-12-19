@@ -38,10 +38,14 @@ public class UserService implements IUserService{
     }
     @Override
     @Transactional
-    public void deleteUser(String email) {
-        User user = findByEmail(email);
-        if(user != null){
-            userRepository.deleteByEmail(email);
+    public String deleteUser(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent()){
+           User u = user.get();
+            userRepository.delete(u);
+            return "User with email: " + email + " has been deleted successfully.";
+        }else {
+            return "User with email: " + email + " not found.";
         }
     }
 
@@ -51,6 +55,15 @@ public class UserService implements IUserService{
         return userRepository.findByEmail(email)
                 .orElseThrow(() ->new RuntimeException("User not found!"));
     }
-
-
+    @Override
+    public User findById(int id){
+        return  userRepository.findById(id).orElseThrow(() ->new RuntimeException("User not found!"));
+    }
+    @Override
+    public void UpdateUser(int userId, String role){
+        User u = userRepository.findById(userId).orElseThrow(() ->new RuntimeException("User not found!"));
+        Role r = roleRepository.findByName(role).get();
+        u.setRole(r);
+        userRepository.save(u);
+    }
 }
