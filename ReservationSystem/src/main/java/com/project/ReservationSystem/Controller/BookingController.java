@@ -47,7 +47,7 @@ public class BookingController {
         return  new ResponseEntity<>(bookingResponseList, HttpStatus.OK);
     }
 
-    @GetMapping("/CancelBooking/{bookingID}")
+    @GetMapping("/CancelBooking/{bookingId}")
     public ResponseEntity<String> cancelBooking(@PathVariable int bookingID) {
         String cancelResult = bookingService.cancelBooking(bookingID);
             return ResponseEntity.ok().body(cancelResult);
@@ -96,7 +96,7 @@ public class BookingController {
         bookingResponse.setNumOfAdult(booking.getNumOfAdult());
         bookingResponse.setNumOfChildren(booking.getNumOfChildren());
         bookingResponse.setTotalGuest(booking.getTotalGuest());
-        String confimationCode = generateConfimationCode(6);
+        String confimationCode = generateConfirmationCode(6);
         bookingResponse.setConfirmationCode(confimationCode);
         if (booking.getRoom() != null) {
             Room room = roomService.getRoomById(booking.getRoom().getId());
@@ -127,15 +127,20 @@ public class BookingController {
         return roomResponse;
     }
 
-    public static String generateConfimationCode(int length) {
+    public  String generateConfirmationCode(int length) {
         String CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789";
         SecureRandom random = new SecureRandom();
         StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-            int randomIndex = random.nextInt(CHARACTERS.length());
-            sb.append(CHARACTERS.charAt(randomIndex));
-        }
+        do {
+            for (int i = 0; i < length; i++) {
+                int randomIndex = random.nextInt(CHARACTERS.length());
+                sb.append(CHARACTERS.charAt(randomIndex));
+            }
+        } while (!checkDuplicateCode(sb.toString()));
         return sb.toString();
     }
 
+    public boolean checkDuplicateCode(String code) {
+        return !bookingService.existsByConfirmationCode(code);
+    }
 }

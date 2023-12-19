@@ -30,11 +30,6 @@ public class Booking {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private User employee;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private User customer;

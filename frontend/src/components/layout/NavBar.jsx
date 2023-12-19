@@ -76,10 +76,13 @@ const NavBar = () => {
               >
                 {isLoggedIn ? (
                   <>
-                    {userRole === "ROLE_ADMIN" && (
-                      <NavLink className="dropdown-item" to={"/admin"}>
-                        Admin Panel
-                      </NavLink>
+                    {userRole === "admin" && (
+                      <>
+                        <NavLink className="dropdown-item" to={"/admin"}>
+                          Admin Panel
+                        </NavLink>
+                        <div className="dropdown-divider"></div>
+                      </>
                     )}
                     <NavLink className="dropdown-item" to={"/profile"}>
                       Profile
