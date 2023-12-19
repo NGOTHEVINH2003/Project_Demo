@@ -150,7 +150,7 @@ public class RoomController {
             @RequestParam("roomId") String roomId,
             @RequestParam("floor") String floor,
             @RequestParam("room_status") String status,
-            @RequestParam("room_info") String information)throws SQLException, IOException {
+            @RequestParam("room_info") String information) {
         Room existingRoom = roomService.getRoomById(id);
 
         try {
@@ -168,19 +168,19 @@ public class RoomController {
                 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
             }
 
-            System.out.println("Upload Path: " + uploadDir);
+            if (existingRoom != null) {
+                existingRoom.setPrice(Float.parseFloat(price));
+                existingRoom.setRoomType(roomType);
+                existingRoom.setRoomId(Integer.parseInt(roomId));
+                existingRoom.setFloor(Integer.parseInt(floor));
+                existingRoom.setRoom_status(status);
+                existingRoom.setRoom_info(information);
+                existingRoom.setImg_url("../assets/images/roomimg/" + fileName);
 
-            Room room = new Room();
-            room.setPrice(Float.parseFloat(price));
-            room.setRoomType(roomType);
-            room.setRoomId(Integer.parseInt(roomId));
-            room.setFloor(Integer.parseInt(floor));
-            room.setRoom_status("empty");
-            room.setRoom_info(information);
 
-            room.setImg_url("../assets/images/roomimg/" + fileName);
+                roomService.updateRoom(existingRoom);
 
-            roomService.addNewRoom(room);
+            }
 
             Map<String, String> response = new HashMap<>();
             response.put("message", "Add Success");
@@ -194,25 +194,6 @@ public class RoomController {
         }
     }
 
-
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity<String> updateRoom(@PathVariable int id, @RequestBody Room updatedRoom) {
-//        Room existingRoom = roomService.getRoomById(id);
-//
-//        if (existingRoom != null) {
-//            existingRoom.setPrice(updatedRoom.getPrice());
-//            existingRoom.setRoomType(updatedRoom.getRoomType());
-//            existingRoom.setAddress(updatedRoom.getAddress());
-//            existingRoom.setImg_url(updatedRoom.getImg_url());
-//            existingRoom.setBooked(updatedRoom.isBooked());
-//
-//            roomService.updateRoom(existingRoom);
-//
-//            return ResponseEntity.ok("Update Success");
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
 
     @GetMapping("/available")
     public ResponseEntity<List<Room>> getAvailableRooms() {
