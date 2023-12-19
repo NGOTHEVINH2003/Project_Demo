@@ -41,7 +41,7 @@ public class BookingController {
     public ResponseEntity<?>  searchByMail(@PathVariable String email){
         List<Booking> bookingList = bookingService.getBookingByEmail(email);
         if(bookingList.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
+            return ResponseEntity.noContent().build();
         }
         List<BookingResponse> bookingResponseList = getListBookingRespone(bookingList);
         return  new ResponseEntity<>(bookingResponseList, HttpStatus.OK);
