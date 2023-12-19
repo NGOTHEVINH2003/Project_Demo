@@ -12,6 +12,11 @@ public class RoomResponse {
     private String roomType;
     private float Price;
     private boolean isBooked=false;
+    private int floor;
+    private int RoomId;
+    private String roomInfo;
+    private String roomStatus;
+
     private String photo;
     private List<BookingResponse>bookings;
 

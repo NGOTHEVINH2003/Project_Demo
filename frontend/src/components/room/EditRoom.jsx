@@ -6,7 +6,7 @@ const EditRoom = () => {
 	const [room, setRoom] = useState({
 		photo: "",
 		roomType: "",
-		roomPrice: ""
+		price: ""
 	})
 
 	const [imagePreview, setImagePreview] = useState("")
@@ -89,15 +89,15 @@ const EditRoom = () => {
 							/>
 						</div>
 						<div className="mb-3">
-							<label htmlFor="roomPrice" className="form-label hotel-color">
+							<label htmlFor="price" className="form-label hotel-color">
 								Room Price
 							</label>
 							<input
 								type="number"
 								className="form-control"
-								id="roomPrice"
-								name="roomPrice"
-								value={room.roomPrice}
+								id="price"
+								name="price"
+								value={room.price}
 								onChange={handleInputChange}
 							/>
 						</div>

@@ -10,4 +10,8 @@ public interface IUserService {
     User findByEmail(String email);
     User registerUser(User user);
 
+    User findById(int id);
+
+    void UpdateUser(int userId, String role);
+
 }

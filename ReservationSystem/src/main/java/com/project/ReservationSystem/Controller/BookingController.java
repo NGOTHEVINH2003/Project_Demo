@@ -47,7 +47,7 @@ public class BookingController {
         return  new ResponseEntity<>(bookingResponseList, HttpStatus.OK);
     }
 
-    @GetMapping("/CancelBooking/{bookingID}")
+    @GetMapping("/CancelBooking/{bookingId}")
     public ResponseEntity<String> cancelBooking(@PathVariable int bookingID) {
         String cancelResult = bookingService.cancelBooking(bookingID);
             return ResponseEntity.ok().body(cancelResult);

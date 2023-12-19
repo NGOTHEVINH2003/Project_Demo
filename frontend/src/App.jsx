@@ -19,6 +19,7 @@ import Registration from "./components/auth/Registration";
 import Profile from "./components/auth/Profile";
 import { AuthProvider } from "./components/auth/AuthProvider";
 import RequireAuth from "./components/auth/RequireAuth";
+import EditUser from "./components/user/EditUser";
 
 function App() {
   return (
@@ -33,6 +34,14 @@ function App() {
                 <EditRoom />
               </RequireAuth>
             }
+          />
+          <Route
+            path="/edit-user/:userId"
+            element={
+              <RequireAuth>
+                <EditUser/>
+              </RequireAuth>
+            } 
           />
           <Route path="/existing-rooms" element={<ExistingRooms />} />
           <Route
