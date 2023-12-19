@@ -226,7 +226,7 @@ export async function getAllUsers(token) {
 /* This is the function to get user bookings by the user id */
 export async function getBookingsByUserId(userId, token) {
 	try {
-		const response = await api.get(`/booking/user/${userId}/bookings`, {
+		const response = await api.get(`/booking/searchByMail/${userId}`, {
 			headers: getHeader()
 		})
 		return response.data

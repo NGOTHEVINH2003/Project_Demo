@@ -84,7 +84,6 @@ public class RoomController {
         Room room = new Room();
         room.setPrice(Float.parseFloat(price));
         room.setRoomType(roomType);
-        room.setAddress(address);
         room.setBooked(booked);
         String fileName = StringUtils.cleanPath(imgdata.getOriginalFilename());
         room.setImg_url("E:\\Project_Demo\\frontend\\src\\components\\assets\\images\\" + fileName);
@@ -124,10 +123,8 @@ public class RoomController {
         if (existingRoom != null) {
             existingRoom.setPrice(updatedRoom.getPrice());
             existingRoom.setRoomType(updatedRoom.getRoomType());
-            existingRoom.setAddress(updatedRoom.getAddress());
             existingRoom.setImg_url(updatedRoom.getImg_url());
             existingRoom.setBooked(updatedRoom.isBooked());
-
             roomService.updateRoom(existingRoom);
 
             return ResponseEntity.ok("Update Success");

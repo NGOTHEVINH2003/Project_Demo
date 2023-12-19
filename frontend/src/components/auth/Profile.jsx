@@ -32,15 +32,17 @@ const Profile = () => {
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
-				const userData = await getUser(userId, token)
-				setUser(userData)
+				const userData = await getUser(userId, token);
+				setUser(userData);
 			} catch (error) {
-				console.error(error)
+				console.error("Error fetching user:", error);
 			}
-		}
+		};
 
-		fetchUser()
-	}, [userId])
+		if (userId) {
+			fetchUser();
+		}
+	}, [userId]);
 
 	useEffect(() => {
 		const fetchBookings = async () => {
@@ -137,9 +139,9 @@ const Profile = () => {
 												<label className="col-md-2 col-form-label fw-bold">Role:</label>
 												<div className="col-md-10">
 													<ul className="list-unstyled">
-															<li key={user.role.id} className="card-text">
-																{user.role.name}
-															</li>
+														<li key={user.role.id} className="card-text">
+															{user.role.name}
+														</li>
 													</ul>
 												</div>
 											</div>
