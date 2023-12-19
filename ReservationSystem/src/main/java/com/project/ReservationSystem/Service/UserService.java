@@ -38,10 +38,14 @@ public class UserService implements IUserService{
     }
     @Override
     @Transactional
-    public void deleteUser(String email) {
-        User user = findByEmail(email);
-        if(user != null){
-            userRepository.deleteByEmail(email);
+    public String deleteUser(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent()){
+           User u = user.get();
+            userRepository.delete(u);
+            return "User with email: " + email + " has been deleted successfully.";
+        }else {
+            return "User with email: " + email + " not found.";
         }
     }
 

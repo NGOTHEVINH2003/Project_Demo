@@ -7,11 +7,11 @@ import { FaEdit, FaEye, FaPlus, FaTrashAlt } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
 const ExistingRooms = () => {
-	const [rooms, setRooms] = useState([{ id: "", roomType: "", roomPrice: "" }])
+	const [rooms, setRooms] = useState([{ id: "", roomType: "", price: "" }])
 	const [currentPage, setCurrentPage] = useState(1)
 	const [roomsPerPage] = useState(8)
 	const [isLoading, setIsLoading] = useState(false)
-	const [filteredRooms, setFilteredRooms] = useState([{ id: "", roomType: "", roomPrice: "" }])
+	const [filteredRooms, setFilteredRooms] = useState([{ id: "", roomType: "", price: "" }])
 	const [selectedRoomType, setSelectedRoomType] = useState("")
 	const [errorMessage, setErrorMessage] = useState("")
 	const [successMessage, setSuccessMessage] = useState("")
