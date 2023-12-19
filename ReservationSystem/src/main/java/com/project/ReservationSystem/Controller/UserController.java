@@ -35,8 +35,8 @@ public class UserController {
     @PostMapping("/delete/{email}")
     public ResponseEntity<String> deleteUser(@PathVariable String email){
         try{
-            userService.deleteUser(email);
-            return ResponseEntity.ok("delete successfully!");
+            String deleteUser = userService.deleteUser(email);
+            return ResponseEntity.ok(deleteUser);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

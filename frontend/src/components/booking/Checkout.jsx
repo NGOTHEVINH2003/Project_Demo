@@ -18,7 +18,7 @@ const Checkout = () => {
 	const [error, setError] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
 	const [roomInfo, setRoomInfo] = useState({
-		photo: "",
+		img_url: "",
 		roomType: "",
 		price: ""
 	})
@@ -38,6 +38,16 @@ const Checkout = () => {
 				})
 		}, 1000)
 	}, [roomId])
+	const getImageUrl = (url) => {
+		if (url.startsWith("http")) {
+		  // If it's already an absolute URL, return as it is
+		  return url;
+		} else {
+		  // If it's a relative URL, construct the absolute URL based on your API endpoint or server
+		  const baseUrl = "http://localhost:5173/"; // Replace this with your base URL
+		  return baseUrl + url;
+		}
+	  };
 
 	return (
 		<div>
@@ -51,8 +61,8 @@ const Checkout = () => {
 						) : (
 							<div className="room-info">
 								<img
-									src={`data:image/png;base64,${roomInfo.photo}`}
-									alt="Room photo"
+									src={getImageUrl(roomInfo.img_url)}
+									alt="Room img_url"
 									style={{ width: "100%", height: "200px" }}
 								/>
 								<table className="table table-bordered">

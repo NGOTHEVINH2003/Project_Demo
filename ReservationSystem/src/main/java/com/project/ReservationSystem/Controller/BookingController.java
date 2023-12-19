@@ -48,8 +48,8 @@ public class BookingController {
     }
 
     @GetMapping("/CancelBooking/{bookingId}")
-    public ResponseEntity<String> cancelBooking(@PathVariable int bookingID) {
-        String cancelResult = bookingService.cancelBooking(bookingID);
+    public ResponseEntity<String> cancelBooking(@PathVariable int bookingId) {
+        String cancelResult = bookingService.cancelBooking(bookingId);
             return ResponseEntity.ok().body(cancelResult);
     }
 

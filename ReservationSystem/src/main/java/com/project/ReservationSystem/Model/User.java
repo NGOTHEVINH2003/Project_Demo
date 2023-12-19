@@ -19,14 +19,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
-    public void assignRole(Role role) {
-        this.role = role;
-    }
-    public Role getRole() {
-        return this.role;
-    }
-
 }
