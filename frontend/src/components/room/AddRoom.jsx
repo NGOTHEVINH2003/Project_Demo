@@ -20,7 +20,7 @@ const AddRoom = () => {
 	const handleRoomInputChange = (e) => {
 		const name = e.target.name
 		let value = e.target.value
-		
+
 		setNewRoom({ ...newRoom, [name]: value })
 	}
 
@@ -32,41 +32,41 @@ const AddRoom = () => {
 
 
 	const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const success = await addRoom(
-      newRoom.photo,
-      newRoom.roomType,
-      newRoom.price,
-      newRoom.roomId,
-      newRoom.floor,
-      newRoom.information
-    );
+		e.preventDefault();
+		try {
+			const success = await addRoom(
+				newRoom.photo,
+				newRoom.roomType,
+				newRoom.price,
+				newRoom.roomId,
+				newRoom.floor,
+				newRoom.information
+			);
 
-    if (success !== undefined) {
-      setSuccessMessage("A new room was added successfully!");
-      setNewRoom({
-        photo: null,
-        roomType: "",
-        price: "",
-        roomId: "",
-        floor: "",
-        information: "",
-      });
-      setImagePreview("");
-      setErrorMessage("");
-    } else {
-      setErrorMessage("Error adding new room");
-    }
-  } catch (error) {
-    setErrorMessage(error.message);
-  }
+			if (success !== undefined) {
+				setSuccessMessage("A new room was added successfully!");
+				setNewRoom({
+					photo: null,
+					roomType: "",
+					price: "",
+					roomId: "",
+					floor: "",
+					information: "",
+				});
+				setImagePreview("");
+				setErrorMessage("");
+			} else {
+				setErrorMessage("Error adding new room");
+			}
+		} catch (error) {
+			setErrorMessage(error.message);
+		}
 
-  setTimeout(() => {
-    setSuccessMessage("");
-    setErrorMessage("");
-  }, 3000);
-};
+		setTimeout(() => {
+			setSuccessMessage("");
+			setErrorMessage("");
+		}, 3000);
+	};
 
 	// const handleSubmit = async (e) => {
 	// 	e.preventDefault()
@@ -128,52 +128,52 @@ const AddRoom = () => {
 								/>
 							</div>
 
-{/* ------------------- */}
+							{/* ------------------- */}
 							<div className="mb-3">
-  <label htmlFor="roomId" className="form-label">
-    Room ID
-  </label>
-  <input
-    required
-    type="text"
-    className="form-control"
-    id="roomId"
-    name="roomId"
-    value={newRoom.roomId}
-    onChange={handleRoomInputChange}
-  />
-</div>
+								<label htmlFor="roomId" className="form-label">
+									Room ID
+								</label>
+								<input
+									required
+									type="text"
+									className="form-control"
+									id="roomId"
+									name="roomId"
+									value={newRoom.roomId}
+									onChange={handleRoomInputChange}
+								/>
+							</div>
 
-<div className="mb-3">
-  <label htmlFor="floor" className="form-label">
-    Room Floor
-  </label>
-  <input
-    required
-    type="text"
-    className="form-control"
-    id="floor"
-    name="floor"
-    value={newRoom.floor}
-    onChange={handleRoomInputChange}
-  />
-</div>
+							<div className="mb-3">
+								<label htmlFor="floor" className="form-label">
+									Room Floor
+								</label>
+								<input
+									required
+									type="text"
+									className="form-control"
+									id="floor"
+									name="floor"
+									value={newRoom.floor}
+									onChange={handleRoomInputChange}
+								/>
+							</div>
 
-<div className="mb-3">
-  <label htmlFor="information" className="form-label">
-    Room Information
-  </label>
-  <textarea
-    required
-    className="form-control"
-    id="information"
-    name="information"
-    value={newRoom.information}
-    onChange={handleRoomInputChange}
-  />
-</div>
+							<div className="mb-3">
+								<label htmlFor="information" className="form-label">
+									Room Information
+								</label>
+								<textarea
+									required
+									className="form-control"
+									id="information"
+									name="information"
+									value={newRoom.information}
+									onChange={handleRoomInputChange}
+								/>
+							</div>
 
-{/* ------------------- */}
+							{/* ------------------- */}
 
 							<div className="mb-3">
 								<label htmlFor="photo" className="form-label">

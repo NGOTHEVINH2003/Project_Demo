@@ -70,12 +70,12 @@ public class RoomController {
 
     @PostMapping("/add")
     public ResponseEntity<Map<String, String>> addRoom(
-            @RequestParam(name="price") String price,
-            @RequestParam(name="roomType") String roomType,
-            @RequestParam(name="photo") MultipartFile imgdata,
-            @RequestParam(name="roomId") String roomId,
-            @RequestParam(name="floor") String floor,
-            @RequestParam(name="information") String information
+            @RequestParam(name = "price") String price,
+            @RequestParam(name = "roomType") String roomType,
+            @RequestParam(name = "photo") MultipartFile imgdata,
+            @RequestParam(name = "roomId") String roomId,
+            @RequestParam(name = "floor") String floor,
+            @RequestParam(name = "information") String information
     ) throws SQLException, IOException {
 
         try {
@@ -142,10 +142,15 @@ public class RoomController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Map<String, String>> updateRoom(@PathVariable int id,
-                                             @RequestParam(name="price") String price,
-                                             @RequestParam(name="roomType") String roomType,
-                                             @RequestParam(name="photo") MultipartFile imgdata) {
+    public ResponseEntity<Map<String, String>> updateRoom(
+            @PathVariable int id,
+            @RequestParam("photo") MultipartFile imgdata,
+            @RequestParam("roomType") String roomType,
+            @RequestParam("price") String price,
+            @RequestParam("roomId") String roomId,
+            @RequestParam("floor") String floor,
+            @RequestParam("room_status") String status,
+            @RequestParam("room_info") String information) {
         Room existingRoom = roomService.getRoomById(id);
 
         try {
@@ -164,9 +169,13 @@ public class RoomController {
             }
 
             if (existingRoom != null) {
-                    existingRoom.setPrice(Float.parseFloat(price));
-                    existingRoom.setRoomType(roomType);
-                    existingRoom.setImg_url("../assets/images/roomimg/" + fileName);
+                existingRoom.setPrice(Float.parseFloat(price));
+                existingRoom.setRoomType(roomType);
+                existingRoom.setRoomId(Integer.parseInt(roomId));
+                existingRoom.setFloor(Integer.parseInt(floor));
+                existingRoom.setRoom_status(status);
+                existingRoom.setRoom_info(information);
+                existingRoom.setImg_url("../assets/images/roomimg/" + fileName);
 
 
                 roomService.updateRoom(existingRoom);
@@ -208,7 +217,7 @@ public class RoomController {
     @GetMapping("/available")
     public ResponseEntity<List<Room>> getAvailableRooms() {
         List<Room> roomList = roomService.getAvailableRoom();
-        if(roomList == null){
+        if (roomList == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(roomList);
