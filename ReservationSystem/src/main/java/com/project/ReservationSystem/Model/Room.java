@@ -19,8 +19,11 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String RoomType;
+    private int roomId;
     private float Price;
+    private int floor;
     private boolean isBooked = false;
+    private String room_status;
     private String img_url;
     private int floor;
     private int RoomId;
@@ -44,5 +47,6 @@ public class Room {
         this.img_url = img_url;
 
     }
+
 
 }
