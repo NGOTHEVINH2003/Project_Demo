@@ -150,9 +150,8 @@ public class RoomController {
             @RequestParam("roomId") String roomId,
             @RequestParam("floor") String floor,
             @RequestParam("room_status") String status,
-            @RequestParam("room_info") String information) {
+            @RequestParam("room_info") String information)throws SQLException, IOException {
         Room existingRoom = roomService.getRoomById(id);
-
 
         try {
             String uploadDir = "E:/Project_Demo/frontend/src/components/assets/images/roomimg";
@@ -169,19 +168,19 @@ public class RoomController {
                 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
             }
 
-            if (existingRoom != null) {
-                existingRoom.setPrice(Float.parseFloat(price));
-                existingRoom.setRoomType(roomType);
-                existingRoom.setRoomId(Integer.parseInt(roomId));
-                existingRoom.setFloor(Integer.parseInt(floor));
-                existingRoom.setRoom_status(status);
-                existingRoom.setRoom_info(information);
-                existingRoom.setImg_url("../assets/images/roomimg/" + fileName);
+            System.out.println("Upload Path: " + uploadDir);
 
+            Room room = new Room();
+            room.setPrice(Float.parseFloat(price));
+            room.setRoomType(roomType);
+            room.setRoomId(Integer.parseInt(roomId));
+            room.setFloor(Integer.parseInt(floor));
+            room.setRoom_status("empty");
+            room.setRoom_info(information);
 
-                roomService.updateRoom(existingRoom);
+            room.setImg_url("../assets/images/roomimg/" + fileName);
 
-            }
+            roomService.addNewRoom(room);
 
             Map<String, String> response = new HashMap<>();
             response.put("message", "Add Success");

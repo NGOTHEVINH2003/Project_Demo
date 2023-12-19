@@ -27,6 +27,7 @@ public class Room {
     private String img_url;
     private String room_info;
 
+
     public Room(String roomType, float price, boolean isBooked, String img_url, int floor,int roomId,String roomStatus) {
         RoomType = roomType;
         Price = price;
