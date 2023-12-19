@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.security.SecureRandom;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/booking")
@@ -55,12 +56,18 @@ public class BookingController {
 
     @PostMapping("/SaveBooking")
     public ResponseEntity<?> saveBooking(@RequestBody Booking booking) {
-        Booking savedBooking = bookingService.saveBooking(booking);
-        if (savedBooking != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save booking");
+        if(checkAvailableBookingRoom(booking)){
+            booking.setConfirmationCode(generateConfirmationCode(6));
+            Booking savedBooking = bookingService.saveBooking(booking);
+            if (savedBooking != null) {
+                return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save booking");
+            }
+        }else {
+            return ResponseEntity.ok("Rooms are booked for this period");
         }
+
     }
 
     @GetMapping("/ViewAllBooking")
@@ -96,8 +103,7 @@ public class BookingController {
         bookingResponse.setNumOfAdult(booking.getNumOfAdult());
         bookingResponse.setNumOfChildren(booking.getNumOfChildren());
         bookingResponse.setTotalGuest(booking.getTotalGuest());
-        String confimationCode = generateConfirmationCode(6);
-        bookingResponse.setConfirmationCode(confimationCode);
+        bookingResponse.setConfirmationCode(booking.getConfirmationCode());
         if (booking.getRoom() != null) {
             Room room = roomService.getRoomById(booking.getRoom().getId());
             RoomResponse roomResponse = getRoomResponse(room);
@@ -142,5 +148,18 @@ public class BookingController {
 
     public boolean checkDuplicateCode(String code) {
         return !bookingService.existsByConfirmationCode(code);
+    }
+
+    public boolean checkAvailableBookingRoom(Booking booking){
+        List<Booking> bookingList = bookingService.getBookingByRoomId(booking.getRoom().getId());
+        if(bookingList.isEmpty()){
+            return true;
+        }
+        for (Booking bk: bookingList) {
+            if(booking.getCheckOut().isBefore(bk.getCheckIn()) || booking.getCheckIn().isAfter(bk.getCheckOut())){
+                return true;
+            }
+        }
+        return false;
     }
 }
