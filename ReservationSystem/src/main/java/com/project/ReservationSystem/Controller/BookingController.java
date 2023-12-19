@@ -57,6 +57,7 @@ public class BookingController {
     @PostMapping("/SaveBooking")
     public ResponseEntity<?> saveBooking(@RequestBody Booking booking) {
         if(checkAvailableBookingRoom(booking)){
+            booking.setConfirmationCode(generateConfirmationCode(6));
             Booking savedBooking = bookingService.saveBooking(booking);
             if (savedBooking != null) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
@@ -102,8 +103,7 @@ public class BookingController {
         bookingResponse.setNumOfAdult(booking.getNumOfAdult());
         bookingResponse.setNumOfChildren(booking.getNumOfChildren());
         bookingResponse.setTotalGuest(booking.getTotalGuest());
-        String confimationCode = generateConfirmationCode(6);
-        bookingResponse.setConfirmationCode(confimationCode);
+        bookingResponse.setConfirmationCode(booking.getConfirmationCode());
         if (booking.getRoom() != null) {
             Room room = roomService.getRoomById(booking.getRoom().getId());
             RoomResponse roomResponse = getRoomResponse(room);
