@@ -13,14 +13,18 @@ export const getHeader = () => {
 }
 
 /* This function adds a new room room to the database */
-export async function addRoom(photo, roomType, roomPrice) {
+export async function addRoom(photo, roomType, price, roomId, floor, information) {
 	const formData = new FormData()
-	formData.append("photo", photo)
-	formData.append("roomType", roomType)
-	formData.append("roomPrice", roomPrice)
+	formData.append("photo", photo);
+    formData.append("roomType", roomType);
+    formData.append("price", price);
+    formData.append("roomId", roomId);
+    formData.append("floor", floor);
+    formData.append("information", information);
 
-	const response = await api.post("/rooms/add/new-room", formData, {
-		headers: getHeader()
+	const response = await api.post("/room/add", formData, {
+		// headers: getHeader()
+		"Content-Type": "multipart/form-data"
 	})
 	if (response.status === 201) {
 		return true
@@ -51,9 +55,10 @@ export async function getAllRooms() {
 /* This function deletes a room by the Id */
 export async function deleteRoom(roomId) {
 	try {
-		const result = await api.delete(`/rooms/delete/room/${roomId}`, {
+		const result = await api.delete(`/room/delete/${roomId}`, {
 			headers: getHeader()
 		})
+		window.location.reload();
 		return result.data
 	} catch (error) {
 		throw new Error(`Error deleting room ${error.message}`)
@@ -62,19 +67,24 @@ export async function deleteRoom(roomId) {
 /* This function update a room */
 export async function updateRoom(roomId, roomData) {
 	const formData = new FormData()
-	formData.append("roomType", roomData.roomType)
-	formData.append("roomPrice", roomData.roomPrice)
-	formData.append("photo", roomData.photo)
-	const response = await api.put(`/rooms/update/${roomId}`, formData, {
-		headers: getHeader()
+	formData.append("photo", roomData.photo);
+    formData.append("roomType", roomData.roomType);
+    formData.append("price", roomData.price);
+    formData.append("roomId", roomData.roomId);
+    formData.append("floor", roomData.floor);
+    formData.append("room_status", roomData.room_status);
+    formData.append("room_info", roomData.room_info);
+	const response = await api.put(`/room/update/${roomId}`, formData, {
+		"Content-Type": "multipart/form-data"
 	})
 	return response
 }
 
+
 /* This funcction gets a room by the id */
 export async function getRoomById(roomId) {
 	try {
-		const result = await api.get(`/room/${roomId}`)
+		const result = await api.get(`/room/getroom/${roomId}`)
 		return result.data
 	} catch (error) {
 		throw new Error(`Error fetching room ${error.message}`)
@@ -82,9 +92,9 @@ export async function getRoomById(roomId) {
 }
 
 /* This function saves a new booking to the databse */
-export async function bookRoom(roomId, booking) {
+export async function bookRoom(booking) {
 	try {
-		const response = await api.post(`/bookings/room/${roomId}/booking`, booking)
+		const response = await api.post(`/booking/SaveBooking`, booking)
 		return response.data
 	} catch (error) {
 		if (error.response && error.response.data) {
@@ -110,7 +120,7 @@ export async function getAllBookings() {
 /* This function get booking by the cnfirmation code */
 export async function getBookingByConfirmationCode(confirmationCode) {
 	try {
-		const result = await api.get(`/booking/${confirmationCode}`)
+		const result = await api.get(`/booking/searchByComfirmationCode/${confirmationCode}`)
 		return result.data
 	} catch (error) {
 		if (error.response && error.response.data) {

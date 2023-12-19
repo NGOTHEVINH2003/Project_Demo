@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Logout from "../auth/Logout";
+import { AuthProvider } from "../auth/AuthProvider";
 
 const NavBar = () => {
-  const [showAccount, setShowAccount] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const handleAccountClick = () => {
-    setShowAccount(!showAccount);
+    setShowUserMenu(!showUserMenu);
   };
 
   const isLoggedIn = localStorage.getItem("token");
@@ -16,8 +17,8 @@ const NavBar = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <NavLink to={"/"} className="navbar-brand">
-          <img
-            src=".../assets/images/htLogo.png"
+            <img
+            src={require("../assets/images/htLogo.png")} 
             alt="Hotel Icon"
             style={{ maxHeight: "40px", marginRight: "5px" }}
           />
@@ -30,7 +31,7 @@ const NavBar = () => {
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
-          aria-expanded={showAccount ? "true" : "false"}
+          aria-expanded={showUserMenu ? "true" : "false"}
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
@@ -45,47 +46,47 @@ const NavBar = () => {
               </NavLink>
             </li>
 
-            {isLoggedIn && userRole === "admin" && (
-              <li className="nav-item">
-                <NavLink className="nav-link" to={"/admin"}>
-                  Admin
-                </NavLink>
-              </li>
-            )}
 
             <li className="nav-item">
               <NavLink className="nav-link" to={"/find-booking"}>
                 Find Booking
               </NavLink>
             </li>
-
-            <li className="nav-item">
-              <NavLink className="nav-link" to={"/about-us"}>
-                About Us
-              </NavLink>
-            </li>
-
-            <li className="nav-item">
-              <NavLink className="nav-link" to={"/contact-us"}>
-                Contact Us
-              </NavLink>
-            </li>
           </ul>
 
-          <ul className="navbar-nav ml-auto"> {/* Right-side navigation items */}
-            <li className="nav-item">
-              <button
-                className={`btn btn-secondary ${showAccount ? "active" : ""}`}
-                style={{ backgroundColor: "purple", color: "white" }}
-                onClick={handleAccountClick}
-              >
-                Account
-              </button>
+          {/* "Account" button on the right with custom margin */}
+          <div className="navbar-nav" style={{ marginLeft: "auto" }}>
+            <li className="nav-item dropdown">
+              {isLoggedIn ? (
+                <button
+                  className={`btn btn-secondary dropdown-toggle`}
+                  style={{ backgroundColor: "purple", color: "white" }}
+                  onClick={handleAccountClick}
+                >
+                  User
+                </button>
+              ) : (
+                <NavLink className="nav-link" to={"/login"}>
+                  Account
+                </NavLink>
+              )}
               <div
-                className={`dropdown-menu dropdown-menu-right ${showAccount ? "show" : ""}`}
+                className={`dropdown-menu ${showUserMenu ? "show" : ""}`}
+                style={{ position: "absolute", right: 0, left: "auto", minWidth: "200px" }}
               >
                 {isLoggedIn ? (
-                  <Logout />
+                  <>
+                    {userRole === "ROLE_ADMIN" && (
+                      <NavLink className="dropdown-item" to={"/admin"}>
+                        Admin Panel
+                      </NavLink>
+                    )}
+                    <NavLink className="dropdown-item" to={"/profile"}>
+                      Profile
+                    </NavLink>
+                    <div className="dropdown-divider"></div>
+                    <AuthProvider><Logout /></AuthProvider>
+                  </>
                 ) : (
                   <NavLink className="dropdown-item" to={"/login"}>
                     Login
@@ -93,7 +94,7 @@ const NavBar = () => {
                 )}
               </div>
             </li>
-          </ul>
+          </div>
         </div>
       </div>
     </nav>

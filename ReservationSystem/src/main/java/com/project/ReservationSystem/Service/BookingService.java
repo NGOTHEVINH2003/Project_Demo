@@ -13,7 +13,9 @@ import java.util.Optional;
 @Service
 @Component
 public class BookingService implements IBookingService {
-
+    @Autowired
+    private RoomService roomService;
+    @Autowired
     private final BookingRepository bookingRepository;
 
     @Autowired
@@ -38,6 +40,7 @@ public class BookingService implements IBookingService {
     @Transactional
     public Booking saveBooking( Booking bookingRequest) {
         Booking savedBooking;
+        bookingRequest.setTotalGuest(bookingRequest.getNumOfAdult() + bookingRequest.getNumOfChildren());
         try {
             savedBooking = bookingRepository.save(bookingRequest);
             return savedBooking ;
@@ -48,8 +51,7 @@ public class BookingService implements IBookingService {
 
     @Override
     public Booking findByConfirmationCode(String confirmationCode) {
-        return bookingRepository.findByConfirmationCode(confirmationCode)
-                .orElse(null);
+        return bookingRepository.findByConfirmationCode(confirmationCode).orElse(null);
     }
 
     @Override
@@ -61,4 +63,15 @@ public class BookingService implements IBookingService {
     public List<Booking> getBookingByEmail(String guestEmail) {
         return bookingRepository.findByGuestEmail(guestEmail);
     }
+
+    @Override
+    public List<Booking> getBookingByCustomerId(int CustomerId) {
+        return bookingRepository.findByCustomerId(CustomerId);
+    }
+
+    @Override
+    public List<Booking> getBookingByRoomId(int RoomId) {
+        return bookingRepository.findByRoomId(RoomId);
+    }
+
 }
