@@ -28,8 +28,22 @@ public class Room {
     private String room_info;
 
 
+    public Room(String roomType, float price, boolean isBooked, String img_url, int floor,int roomId,String roomStatus) {
+        RoomType = roomType;
+        Price = price;
+        this.isBooked = isBooked;
+        this.img_url = img_url;
+        this.floor = floor;
+        this.roomId = roomId;
+        this.room_status = roomStatus;
+    }
 
+    public Room(String roomType, float price, String address) {
+        RoomType = roomType;
+        Price = price;
+        this.img_url = img_url;
 
+    }
 
 
 }

@@ -11,6 +11,7 @@ const Logout = () => {
     auth.handleLogout();
   };
 
+
   return (
     <button className="dropdown-item" onClick={handleLogout}>
       Logout

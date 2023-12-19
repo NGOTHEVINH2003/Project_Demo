@@ -90,6 +90,14 @@ export async function getRoomById(roomId) {
 		throw new Error(`Error fetching room ${error.message}`)
 	}
 }
+export async function getUserById(userId) {
+	try {
+		const result = await api.get(`/user/getuser/${userId}`)
+		return result.data
+	} catch (error) {
+		throw new Error(`Error fetching room ${error.message}`)
+	}
+}
 
 /* This function saves a new booking to the databse */
 export async function bookRoom(booking) {
@@ -134,7 +142,7 @@ export async function getBookingByConfirmationCode(confirmationCode) {
 /* This is the function to cancel user booking */
 export async function cancelBooking(bookingId) {
 	try {
-		const result = await api.get(`/booking/CancelBooking/${bookingID}`)
+		const result = await api.get(`/booking/CancelBooking/${bookingId}`)
 		return result.data
 	} catch (error) {
 		throw new Error(`Error cancelling booking :${error.message}`)
@@ -253,42 +261,11 @@ export async function getBookingsByUserId(userId, token) {
  * Update the role of a user.
  
  */
-export async function updateUserRole(userId, newRole, token) {
+export async function updateUser(userId, newRole) {
 	try {
-		// Sending a PATCH request to the specified endpoint
+		
 		const response = await api.patch(
-			`/user/${userId}/updateRole`,  // The endpoint for updating user roles
-			{ role: newRole },  // The data to be sent in the request body (new role)
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,  // Adding an Authorization header with the token
-					// Add other headers if needed
-				},
-			}
-		);
-
-		// Returning the data from the response (updated user data)
-		return response.data;
-	} catch (error) {
-		// If an error occurs, throw the error
-		throw error;
-	}
-}
-
-/**
-* Grant admin access to a user.
-*/
-export async function grantAdminAccess(userId, token) {
-	try {
-		const response = await api.post(
-			`/users/${userId}/grantAdminAccess`,
-			{},
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-					// Add other headers if needed
-				},
-			}
+			`/user/updateRole/${userId}`, newRole
 		);
 
 		return response.data;
@@ -296,5 +273,6 @@ export async function grantAdminAccess(userId, token) {
 		throw error;
 	}
 }
+
 
 
