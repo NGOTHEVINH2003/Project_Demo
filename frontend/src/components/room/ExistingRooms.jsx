@@ -105,8 +105,9 @@ const ExistingRooms = () => {
 						<table className="table table-bordered table-hover">
 							<thead>
 								<tr className="text-center">
-									<th>ID</th>
+									<th>Room Name</th>
 									<th>Room Type</th>
+									<th>Floor</th>
 									<th>Room Price</th>
 									<th>Actions</th>
 								</tr>
@@ -115,8 +116,9 @@ const ExistingRooms = () => {
 							<tbody>
 								{currentRooms.map((room) => (
 									<tr key={room.id} className="text-center">
-										<td>{room.id}</td>
+										<td>{room.roomId}</td>
 										<td>{room.roomType}</td>
+										<td>{room.floor}</td>
 										<td>{room.price}</td>
 										<td className="gap-2">
 											<Link to={`/edit-room/${room.id}`} className="gap-2">
