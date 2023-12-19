@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.security.SecureRandom;
 
 @RestController
 @RequestMapping("/booking")
@@ -95,7 +96,8 @@ public class BookingController {
         bookingResponse.setNumOfAdult(booking.getNumOfAdult());
         bookingResponse.setNumOfChildren(booking.getNumOfChildren());
         bookingResponse.setTotalGuest(booking.getTotalGuest());
-        bookingResponse.setConfirmationCode(booking.getConfirmationCode());
+        String confimationCode = generateConfirmationCode(6);
+        bookingResponse.setConfirmationCode(confimationCode);
         if (booking.getRoom() != null) {
             Room room = roomService.getRoomById(booking.getRoom().getId());
             RoomResponse roomResponse = getRoomResponse(room);
@@ -125,6 +127,20 @@ public class BookingController {
         return roomResponse;
     }
 
+    public  String generateConfirmationCode(int length) {
+        String CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(length);
+        do {
+            for (int i = 0; i < length; i++) {
+                int randomIndex = random.nextInt(CHARACTERS.length());
+                sb.append(CHARACTERS.charAt(randomIndex));
+            }
+        } while (!checkDuplicateCode(sb.toString()));
+        return sb.toString();
+    }
 
-
+    public boolean checkDuplicateCode(String code) {
+        return !bookingService.existsByConfirmationCode(code);
+    }
 }

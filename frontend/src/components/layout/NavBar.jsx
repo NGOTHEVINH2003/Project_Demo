@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import Logout from "../auth/Logout";
 import { AuthProvider } from "../auth/AuthProvider";
 
-import htLogo from "../assets/images/htLogo.png"
 const NavBar = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -19,8 +18,8 @@ const NavBar = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <NavLink to={"/"} className="navbar-brand">
-          <img
-            src={htLogo}
+            <img
+            src={require("../assets/images/htLogo.png")} 
             alt="Hotel Icon"
             style={{ maxHeight: "40px", marginRight: "5px" }}
           />

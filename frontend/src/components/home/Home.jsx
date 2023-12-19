@@ -14,6 +14,8 @@ const Home = () => {
 	const message = location.state && location.state.message
 	const currentUser = localStorage.getItem("userId")
 	return (
+		<>
+		<NavBar/>
 		<section>
 			<NavBar />
 			{message && <p className="text-warning px-5">{message}</p>}
@@ -31,6 +33,8 @@ const Home = () => {
 				<RoomCarousel />
 			</div>
 		</section>
+		</>
+		
 	)
 }
 
