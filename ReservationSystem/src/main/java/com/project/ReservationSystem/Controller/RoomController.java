@@ -50,17 +50,17 @@ public class RoomController {
         return ResponseEntity.ok(roomList);
     }
 
-    @PostMapping("/search")
-    public ResponseEntity<List<Room>> getAvailableRooms(@RequestBody Map<String, String> searchData) {
-        String checkin = searchData.get("CheckIn");
-        String checkout = searchData.get("CheckOut");
-        String type = searchData.get("type");
+    @GetMapping("/search")
+    public ResponseEntity<List<Room>> getAvailableRooms(
+            @RequestParam("checkInDate") String checkInDate,
+            @RequestParam("checkOutDate") String checkOutDate,
+            @RequestParam("roomType") String roomType) {
 
-        // Xử lý dữ liệu và trả về kết quả
-        LocalDate checkinDate = LocalDate.parse(checkin);
-        LocalDate checkoutDate = LocalDate.parse(checkout);
 
-        List<Room> roomList = roomService.getAvailableRoom(checkinDate, checkoutDate, type);
+        LocalDate checkinDate = LocalDate.parse(checkInDate);
+        LocalDate checkoutDate = LocalDate.parse(checkOutDate);
+
+        List<Room> roomList = roomService.getAvailableRoom(checkinDate, checkoutDate, roomType);
         if (roomList == null) {
             return ResponseEntity.notFound().build();
         }
@@ -103,7 +103,7 @@ public class RoomController {
             room.setRoom_status("empty");
             room.setRoom_info(information);
 
-            room.setImg_url("../assets/images/roomimg/" + fileName);
+            room.setImg_url("/src/components/assets/images/roomimg/" + fileName);
 
             roomService.addNewRoom(room);
 
@@ -175,7 +175,7 @@ public class RoomController {
                 existingRoom.setFloor(Integer.parseInt(floor));
                 existingRoom.setRoom_status(status);
                 existingRoom.setRoom_info(information);
-                existingRoom.setImg_url("../assets/images/roomimg/" + fileName);
+                existingRoom.setImg_url("/src/components/assets/images/roomimg/" + fileName);
 
 
                 roomService.updateRoom(existingRoom);
