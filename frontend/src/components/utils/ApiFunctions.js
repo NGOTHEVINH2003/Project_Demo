@@ -13,11 +13,14 @@ export const getHeader = () => {
 }
 
 /* This function adds a new room room to the database */
-export async function addRoom(photo, roomType, price) {
+export async function addRoom(photo, roomType, price, roomId, floor, information) {
 	const formData = new FormData()
-	formData.append("photo", photo)
-	formData.append("roomType", roomType)
-	formData.append("price", price)
+	formData.append("photo", photo);
+    formData.append("roomType", roomType);
+    formData.append("price", price);
+    formData.append("roomId", roomId);
+    formData.append("floor", floor);
+    formData.append("information", information);
 
 	const response = await api.post("/room/add", formData, {
 		// headers: getHeader()
@@ -52,9 +55,10 @@ export async function getAllRooms() {
 /* This function deletes a room by the Id */
 export async function deleteRoom(roomId) {
 	try {
-		const result = await api.delete(`/rooms/delete/room/${roomId}`, {
-			"Content-Type": "multipart/form-data"
+		const result = await api.delete(`/room/delete/${roomId}`, {
+			headers: getHeader()
 		})
+		window.location.reload();
 		return result.data
 	} catch (error) {
 		throw new Error(`Error deleting room ${error.message}`)
@@ -63,19 +67,32 @@ export async function deleteRoom(roomId) {
 /* This function update a room */
 export async function updateRoom(roomId, roomData) {
 	const formData = new FormData()
-	formData.append("roomType", roomData.roomType)
-	formData.append("price", roomData.price)
-	formData.append("photo", roomData.photo)
-	const response = await api.put(`/rooms/update/${roomId}`, formData, {
+	formData.append("photo", roomData.photo);
+    formData.append("roomType", roomData.roomType);
+    formData.append("price", roomData.price);
+    formData.append("roomId", roomData.roomId);
+    formData.append("floor", roomData.floor);
+    formData.append("room_status", roomData.room_status);
+    formData.append("room_info", roomData.room_info);
+	const response = await api.put(`/room/update/${roomId}`, formData, {
 		"Content-Type": "multipart/form-data"
 	})
 	return response
 }
 
+
 /* This funcction gets a room by the id */
 export async function getRoomById(roomId) {
 	try {
 		const result = await api.get(`/room/getroom/${roomId}`)
+		return result.data
+	} catch (error) {
+		throw new Error(`Error fetching room ${error.message}`)
+	}
+}
+export async function getUserById(userId) {
+	try {
+		const result = await api.get(`/user/getuser/${userId}`)
 		return result.data
 	} catch (error) {
 		throw new Error(`Error fetching room ${error.message}`)
@@ -125,7 +142,7 @@ export async function getBookingByConfirmationCode(confirmationCode) {
 /* This is the function to cancel user booking */
 export async function cancelBooking(bookingId) {
 	try {
-		const result = await api.get(`/booking/CancelBooking/${bookingID}`)
+		const result = await api.get(`/booking/CancelBooking/${bookingId}`)
 		return result.data
 	} catch (error) {
 		throw new Error(`Error cancelling booking :${error.message}`)
@@ -191,7 +208,7 @@ export async function getUserProfile(userId, token) {
 /* This isthe function to delete a user */
 export async function deleteUser(userId) {
 	try {
-		const response = await api.delete(`/users/delete/${userId}`, {
+		const response = await api.post(`/user/delete/${userId}`, {
 			headers: getHeader()
 		})
 		return response.data
@@ -227,7 +244,7 @@ export async function getAllUsers(token) {
 /* This is the function to get user bookings by the user id */
 export async function getBookingsByUserId(userId, token) {
 	try {
-		const response = await api.get(`/booking/user/${userId}/bookings`, {
+		const response = await api.get(`/booking/searchByMail/${userId}`, {
 			headers: getHeader()
 		})
 		return response.data
@@ -244,42 +261,11 @@ export async function getBookingsByUserId(userId, token) {
  * Update the role of a user.
  
  */
-export async function updateUserRole(userId, newRole, token) {
+export async function updateUser(userId, newRole) {
 	try {
-		// Sending a PATCH request to the specified endpoint
+		
 		const response = await api.patch(
-			`/user/${userId}/updateRole`,  // The endpoint for updating user roles
-			{ role: newRole },  // The data to be sent in the request body (new role)
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,  // Adding an Authorization header with the token
-					// Add other headers if needed
-				},
-			}
-		);
-
-		// Returning the data from the response (updated user data)
-		return response.data;
-	} catch (error) {
-		// If an error occurs, throw the error
-		throw error;
-	}
-}
-
-/**
-* Grant admin access to a user.
-*/
-export async function grantAdminAccess(userId, token) {
-	try {
-		const response = await api.post(
-			`/users/${userId}/grantAdminAccess`,
-			{},
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-					// Add other headers if needed
-				},
-			}
+			`/user/updateRole/${userId}`, newRole
 		);
 
 		return response.data;
@@ -287,5 +273,6 @@ export async function grantAdminAccess(userId, token) {
 		throw error;
 	}
 }
+
 
 

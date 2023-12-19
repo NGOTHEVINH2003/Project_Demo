@@ -70,12 +70,17 @@ public class RoomController {
 
     @PostMapping("/add")
     public ResponseEntity<Map<String, String>> addRoom(
-            @RequestParam(name="price") String price,
-            @RequestParam(name="roomType") String roomType,
-            @RequestParam(name="photo") MultipartFile imgdata) throws SQLException, IOException {
+            @RequestParam(name = "price") String price,
+            @RequestParam(name = "roomType") String roomType,
+            @RequestParam(name = "photo") MultipartFile imgdata,
+            @RequestParam(name = "roomId") String roomId,
+            @RequestParam(name = "floor") String floor,
+            @RequestParam(name = "information") String information
+    ) throws SQLException, IOException {
 
         try {
-            String uploadDir = "./assets/images/roomimg";
+            String uploadDir = "E:/Project_Demo/frontend/src/components/assets/images/roomimg";
+
             String fileName = StringUtils.cleanPath(imgdata.getOriginalFilename());
             Path uploadPath = Paths.get(uploadDir);
 
@@ -88,17 +93,24 @@ public class RoomController {
                 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
             }
 
+            System.out.println("Upload Path: " + uploadDir);
+
             Room room = new Room();
             room.setPrice(Float.parseFloat(price));
             room.setRoomType(roomType);
+            room.setRoomId(Integer.parseInt(roomId));
+            room.setFloor(Integer.parseInt(floor));
+            room.setRoom_status("empty");
+            room.setRoom_info(information);
 
-            room.setImg_url("../assets/images/roomimg/" + fileName);
+            room.setImg_url("src/components/assets/images/roomimg/" + fileName);
 
-            roomService.addNewRoom(room);
+            roomService.updateRoom(room);
 
             Map<String, String> response = new HashMap<>();
             response.put("message", "Add Success");
             return ResponseEntity.ok(response);
+
         } catch (IOException e) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Error uploading image.");
@@ -106,28 +118,6 @@ public class RoomController {
 
         }
     }
-
-
-
-//    @PostMapping("/add")
-//    public ResponseEntity<Map<String, String>> addRoom(@RequestBody Room room) throws SQLException, IOException {
-//
-//        float price = room.getPrice();
-//        String type = room.getRoomType();
-//        String imgName = room.getImg_url();
-//
-//        Room r = new Room();
-//        r.setPrice(price);
-//        r.setRoomType(type);
-//        r.setImg_url(imgName);
-//
-//        //"E:\\Project_Demo\\frontend\\src\\components\\assets\\images\\roomimg\\"
-//
-//        roomService.addNewRoom(r);
-//        Map<String, String> response = new HashMap<>();
-//        response.put("message", "Add Success");
-//        return ResponseEntity.ok(response);
-//    }
 
 
     @GetMapping("/search/{type}")
@@ -152,28 +142,82 @@ public class RoomController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateRoom(@PathVariable int id, @RequestBody Room updatedRoom) {
+    public ResponseEntity<Map<String, String>> updateRoom(
+            @PathVariable int id,
+            @RequestParam("photo") MultipartFile imgdata,
+            @RequestParam("roomType") String roomType,
+            @RequestParam("price") String price,
+            @RequestParam("roomId") String roomId,
+            @RequestParam("floor") String floor,
+            @RequestParam("room_status") String status,
+            @RequestParam("room_info") String information)throws SQLException, IOException {
         Room existingRoom = roomService.getRoomById(id);
 
-        if (existingRoom != null) {
-            existingRoom.setPrice(updatedRoom.getPrice());
-            existingRoom.setRoomType(updatedRoom.getRoomType());
-            existingRoom.setAddress(updatedRoom.getAddress());
-            existingRoom.setImg_url(updatedRoom.getImg_url());
-            existingRoom.setBooked(updatedRoom.isBooked());
+        try {
+            String uploadDir = "E:/Project_Demo/frontend/src/components/assets/images/roomimg";
 
-            roomService.updateRoom(existingRoom);
+            String fileName = StringUtils.cleanPath(imgdata.getOriginalFilename());
+            Path uploadPath = Paths.get(uploadDir);
 
-            return ResponseEntity.ok("Update Success");
-        } else {
-            return ResponseEntity.notFound().build();
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            try (InputStream inputStream = imgdata.getInputStream()) {
+                Path filePath = uploadPath.resolve(fileName);
+                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            System.out.println("Upload Path: " + uploadDir);
+
+            Room room = new Room();
+            room.setPrice(Float.parseFloat(price));
+            room.setRoomType(roomType);
+            room.setRoomId(Integer.parseInt(roomId));
+            room.setFloor(Integer.parseInt(floor));
+            room.setRoom_status("empty");
+            room.setRoom_info(information);
+
+            room.setImg_url("../assets/images/roomimg/" + fileName);
+
+            roomService.addNewRoom(room);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Add Success");
+            return ResponseEntity.ok(response);
+
+        } catch (IOException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Error uploading image.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+
         }
     }
+
+
+//    @PutMapping("/update/{id}")
+//    public ResponseEntity<String> updateRoom(@PathVariable int id, @RequestBody Room updatedRoom) {
+//        Room existingRoom = roomService.getRoomById(id);
+//
+//        if (existingRoom != null) {
+//            existingRoom.setPrice(updatedRoom.getPrice());
+//            existingRoom.setRoomType(updatedRoom.getRoomType());
+//            existingRoom.setAddress(updatedRoom.getAddress());
+//            existingRoom.setImg_url(updatedRoom.getImg_url());
+//            existingRoom.setBooked(updatedRoom.isBooked());
+//
+//            roomService.updateRoom(existingRoom);
+//
+//            return ResponseEntity.ok("Update Success");
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
     @GetMapping("/available")
     public ResponseEntity<List<Room>> getAvailableRooms() {
         List<Room> roomList = roomService.getAvailableRoom();
-        if(roomList == null){
+        if (roomList == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(roomList);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllUsers, deleteUser, updateUserRole } from "../utils/ApiFunctions";
+import { getAllUsers, deleteUser } from "../utils/ApiFunctions";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
@@ -101,50 +101,7 @@ const ManageUser = () => {
                   <tr key={user.id} className="text-center">
                     <td>{user.id}</td>
                     <td>{user.firstName} {user.lastName}</td>
-                    <td>
-                      <div className="btn-group">
-                        <button
-                          type="button"
-                          className="btn btn-secondary btn-sm dropdown-toggle"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          {user.role.name}
-                        </button>
-                        {user.role.name === 'admin' && (
-                          <ul className="dropdown-menu">
-                            <li>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => handleRoleChange(user.id, 'user')}
-                              >
-                                Change to User
-                              </button>
-                            </li>
-                          </ul>
-                        )}
-                        {user.role.name === 'user' && (
-                          <ul className="dropdown-menu">
-                            <li>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => handleRoleChange(user.id, 'admin')}
-                              >
-                                Change to Admin
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => grantAdminAccess(user.id)}
-                              >
-                                Grant Admin Access
-                              </button>
-                            </li>
-                          </ul>
-                        )}
-                      </div>
-                    </td>
+                    <td>{user.role.name}</td>
                     <td className="gap-2">
                       <Link to={`/edit-user/${user.id}`} className="gap-2">
                         <span className="btn btn-warning btn-sm ml-5">

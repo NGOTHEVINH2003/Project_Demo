@@ -42,15 +42,15 @@ public class BookingController {
     public ResponseEntity<?>  searchByMail(@PathVariable String email){
         List<Booking> bookingList = bookingService.getBookingByEmail(email);
         if(bookingList.isEmpty()){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         }
         List<BookingResponse> bookingResponseList = getListBookingRespone(bookingList);
         return  new ResponseEntity<>(bookingResponseList, HttpStatus.OK);
     }
 
-    @GetMapping("/CancelBooking/{bookingID}")
-    public ResponseEntity<String> cancelBooking(@PathVariable int bookingID) {
-        String cancelResult = bookingService.cancelBooking(bookingID);
+    @GetMapping("/CancelBooking/{bookingId}")
+    public ResponseEntity<String> cancelBooking(@PathVariable int bookingId) {
+        String cancelResult = bookingService.cancelBooking(bookingId);
             return ResponseEntity.ok().body(cancelResult);
     }
 

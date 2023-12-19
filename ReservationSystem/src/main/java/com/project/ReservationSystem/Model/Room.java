@@ -19,18 +19,23 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String RoomType;
+    private int roomId;
     private float Price;
+    private int floor;
     private boolean isBooked = false;
+    private String room_status;
     private String img_url;
-    private String address;
+    private String room_info;
 
 
-    public Room(String roomType, float price, boolean isBooked, String img_url, String address) {
+    public Room(String roomType, float price, boolean isBooked, String img_url, int floor,int roomId,String roomStatus) {
         RoomType = roomType;
         Price = price;
         this.isBooked = isBooked;
         this.img_url = img_url;
-        this.address = address;
+        this.floor = floor;
+        this.roomId = roomId;
+        this.room_status = roomStatus;
     }
 
     public Room(String roomType, float price, String address) {
@@ -39,8 +44,6 @@ public class Room {
         this.img_url = img_url;
 
     }
-
-
 
 
 }

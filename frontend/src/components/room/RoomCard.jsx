@@ -11,16 +11,16 @@ const RoomCard = ({ room }) => {
 						<Link to={`/book-room/${room.id}`}>
 							<Card.Img
 								variant="top"
-								src={room.photo}
-								alt="Room Photo"
+								src={require(room.img_url)}
+								alt="Room img_url"
 								style={{ width: "100%", maxWidth: "200px", height: "auto" }}
 							/>
 						</Link>
 					</div>
 					<div className="flex-grow-1 ml-3 px-5">
 						<Card.Title className="hotel-color">{room.roomType}</Card.Title>
-						<Card.Title className="room-price">{room.roomPrice} / night</Card.Title>
-						<Card.Text>Some room information goes here for the guest to read through</Card.Text>
+						<Card.Title className="room-price">{room.price} / night</Card.Title>
+						<Card.Text>{room.room_info}</Card.Text>
 					</div>
 					<div className="flex-shrink-0 mt-3">
 						<Link to={`/book-room/${room.id}`} className="btn btn-hotel btn-sm">
