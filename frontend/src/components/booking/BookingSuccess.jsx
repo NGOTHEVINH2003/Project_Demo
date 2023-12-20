@@ -13,7 +13,7 @@ const BookingSuccess = () => {
 				{message ? (
 					<div>
 						<h3 className="text-success"> Booking Success!</h3>
-						<p className="text-success">{message}</p>
+						<h1 className="text-success">{message}</h1>
 					</div>
 				) : (
 					<div>

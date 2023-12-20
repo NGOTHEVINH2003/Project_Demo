@@ -31,6 +31,7 @@ function App() {
             path="/edit-room/:roomId"
             element={
               <RequireAuth requiredRole="admin">
+                <NavBar/>
                 <EditRoom />
               </RequireAuth>
             }
@@ -39,6 +40,7 @@ function App() {
             path="/edit-user/:userId"
             element={
               <RequireAuth>
+                <NavBar/>
                 <EditUser/>
               </RequireAuth>
             } 
@@ -48,6 +50,7 @@ function App() {
             path="/add-room"
             element={
               <RequireAuth requiredRole="admin">
+                <NavBar/>
                 <AddRoom />
               </RequireAuth>
             }
@@ -56,12 +59,12 @@ function App() {
             path="/book-room/:roomId"
             element={
               <RequireAuth>
+                <NavBar/>
                 <Checkout />
               </RequireAuth>
             }
           />
-          <Route path="/browse-all-rooms" element={<RoomListing />} />
-
+          <Route path="/browse-all-rooms" element={<><NavBar/><RoomListing /></>} />
           <Route
             path="/admin"
             element={
@@ -70,7 +73,10 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="/booking-success" element={<BookingSuccess />} />
+          <Route path="/booking-success" element={<>
+            <NavBar/>
+            <BookingSuccess />
+            </>} />
           <Route path="/existing-bookings" element={<Bookings />} />
           <Route path="/find-booking" element={<FindBooking />} />
 

@@ -164,7 +164,7 @@ const BookingForm = () => {
 												name="checkIn"
 												value={booking.checkIn}
 												placeholder="check-in-date"
-												min={moment().format("MMM Do, YYYY")}
+												min={moment().format("YYYY-MM-DD")}
 												onChange={handleInputChange}
 											/>
 											<Form.Control.Feedback type="invalid">
@@ -183,7 +183,7 @@ const BookingForm = () => {
 												name="checkOut"
 												value={booking.checkOut}
 												placeholder="check-out-date"
-												min={moment().format("MMM Do, YYYY")}
+												min={moment().format("YYYY-MM-DD")}
 												onChange={handleInputChange}
 											/>
 											<Form.Control.Feedback type="invalid">
