@@ -18,8 +18,10 @@ const RoomCard = ({ room }) => {
 						</Link>
 					</div>
 					<div className="flex-grow-1 ml-3 px-5">
-						<Card.Title className="hotel-color">{room.roomType}</Card.Title>
-						<Card.Title className="room-price">{room.price} / night</Card.Title>
+						<Card.Title className="hotel-color">Floor: {room.floor}</Card.Title>
+						<Card.Title className="hotel-color">Room Name: {room.roomId}</Card.Title>
+						<Card.Title className="hotel-color">Type: {room.roomType}</Card.Title>
+						<Card.Title className="room-price">Price: {room.price} / night</Card.Title>
 						<Card.Text>{room.room_info}</Card.Text>
 					</div>
 					<div className="flex-shrink-0 mt-3">
