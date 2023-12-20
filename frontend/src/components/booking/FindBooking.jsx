@@ -29,7 +29,7 @@ const FindBooking = () => {
 		checkOut: "",
 		guestName: "",
 		guestEmail: "",
-		numOfAdults: "",
+		numOfAdult: "",
 		numOfChildren: "",
 		totalNumOfGuests: ""
 	}

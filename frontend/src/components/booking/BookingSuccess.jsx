@@ -12,13 +12,12 @@ const BookingSuccess = () => {
 			<div className="mt-5">
 				{message ? (
 					<div>
-						<h3 className="text-success"> Booking Success!</h3>
-						<p className="text-success">{message}</p>
+						<h1 className="text-success">{message}</h1>
 					</div>
 				) : (
 					<div>
 						<h3 className="text-danger"> Error Booking Room!</h3>
-						<p className="text-danger">{error}</p>
+						<h1 className="text-danger text-center">{error}</h1>
 					</div>
 				)}
 			</div>

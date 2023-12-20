@@ -72,13 +72,19 @@ public class RoomController {
     public ResponseEntity<Map<String, String>> addRoom(
             @RequestParam(name = "price") String price,
             @RequestParam(name = "roomType") String roomType,
-            @RequestParam(name = "photo") MultipartFile imgdata,
+            @RequestParam(name = "img_url:") MultipartFile imgdata,
             @RequestParam(name = "roomId") String roomId,
             @RequestParam(name = "floor") String floor,
             @RequestParam(name = "information") String information
     ) throws SQLException, IOException {
 
         try {
+            if (roomService.isRoomIdExists(Integer.parseInt(roomId))) {
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "RoomId already exists. Please choose a different RoomId.");
+                return ResponseEntity.badRequest().body(response);
+            }
+
             String uploadDir = "E:/Project_Demo/frontend/src/components/assets/images/roomimg";
 
             String fileName = StringUtils.cleanPath(imgdata.getOriginalFilename());
@@ -115,9 +121,9 @@ public class RoomController {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Error uploading image.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-
         }
     }
+
 
 
     @GetMapping("/search/{type}")
@@ -144,7 +150,7 @@ public class RoomController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Map<String, String>> updateRoom(
             @PathVariable int id,
-            @RequestParam("photo") MultipartFile imgdata,
+            @RequestParam("img_url") MultipartFile imgdata,
             @RequestParam("roomType") String roomType,
             @RequestParam("price") String price,
             @RequestParam("roomId") String roomId,
@@ -153,8 +159,13 @@ public class RoomController {
             @RequestParam("room_info") String information) {
         Room existingRoom = roomService.getRoomById(id);
 
-
         try {
+            if (roomService.isRoomIdExists(Integer.parseInt(roomId)) && existingRoom.getRoomId()!= Integer.valueOf(roomId)) {
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "RoomId already exists. Please choose a different RoomId.");
+                return ResponseEntity.badRequest().body(response);
+            }
+
             String uploadDir = "E:/Project_Demo/frontend/src/components/assets/images/roomimg";
 
             String fileName = StringUtils.cleanPath(imgdata.getOriginalFilename());
@@ -213,5 +224,14 @@ public class RoomController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(room);
+    }
+
+    @GetMapping("/getroomsbyfloor/{floor}")
+    public ResponseEntity<List<Room>> getListSortByRoomId(@PathVariable int floor){
+        List<Room> roomList = roomService.getSortedRoomList(floor);
+        if (roomList == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(roomList);
     }
 }

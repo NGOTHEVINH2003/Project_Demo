@@ -124,9 +124,6 @@ const ExistingRooms = () => {
 												<span className="btn btn-info btn-sm">
 													<FaEye />
 												</span>
-												<span className="btn btn-warning btn-sm ml-5">
-													<FaEdit />
-												</span>
 											</Link>
 											<button
 												className="btn btn-danger btn-sm ml-5"

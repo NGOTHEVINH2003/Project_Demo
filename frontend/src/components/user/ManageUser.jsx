@@ -77,14 +77,14 @@ const ManageUser = () => {
             <div className="container mt-3">
             <div className="input-group mb-3">
                 <input
-                  type="text"
+                  type="search"
                   placeholder="Search by email"
                   value={searchTerm}
                   onChange={handleSearch}
                   className="form-control"
                 />
                 <div className="input-group-append">
-                  <span className="input-group-text" id="searchicon">
+                  <span className="input-group-text btn btn-primary disabled" id="searchicon">
                     <FaSearch />
                   </span>
                 </div>

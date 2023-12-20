@@ -68,26 +68,6 @@ const AddRoom = () => {
 		}, 3000);
 	};
 
-	// const handleSubmit = async (e) => {
-	// 	e.preventDefault()
-	// 	try {
-	// 		const success = await addRoom(newRoom.img_url, newRoom.roomType, newRoom.price)
-	// 		if (success !== undefined) {
-	// 			setSuccessMessage("A new room was  added successfully !")
-	// 			setNewRoom({ img_url: null, roomType: "", price: "" })
-	// 			setImagePreview("")
-	// 			setErrorMessage("")
-	// 		} else {
-	// 			setErrorMessage("Error adding new room")
-	// 		}
-	// 	} catch (error) {
-	// 		setErrorMessage(error.message)
-	// 	}
-	// 	setTimeout(() => {
-	// 		setSuccessMessage("")
-	// 		setErrorMessage("")
-	// 	}, 3000)
-	// }
 
 	return (
 		<>
@@ -197,8 +177,8 @@ const AddRoom = () => {
 							</div>
 							
 							<div className="d-grid gap-2 d-md-flex mt-2">
-								<Link to={"/existing-rooms"} className="btn btn-outline-info">
-									Existing rooms
+								<Link to={"/admin"} className="btn btn-outline-info">
+									Back
 								</Link>
 								<button type="submit" className="btn btn-outline-primary ml-5">
 									Save Room
