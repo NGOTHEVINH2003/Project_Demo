@@ -3,6 +3,8 @@ import { getAllRooms } from "../utils/ApiFunctions"
 import RoomCard from "./RoomCard"
 import { Col, Container, Row } from "react-bootstrap"
 import RoomFilter from "../common/RoomFilter"
+import RoomFilter2 from "../common/RoomFilter2"
+
 import RoomPaginator from "../common/RoomPaginator"
 
 const Room = () => {
@@ -50,11 +52,15 @@ const Room = () => {
 	return (
 		<Container>
 			<Row>
-				<Col md={6} className="mb-3 mb-md-0">
+				<Col md={4} className="mb-3 mb-md-0">
 					<RoomFilter data={data} setFilteredData={setFilteredData} />
 				</Col>
 
-				<Col md={6} className="d-flex align-items-center justify-content-end">
+				<Col md={4} className="mb-3 mb-md-0">
+					<RoomFilter2 data={data} setFilteredData={setFilteredData} />
+				</Col>
+
+				<Col md={4} className="d-flex align-items-center justify-content-end">
 					<RoomPaginator
 						currentPage={currentPage}
 						totalPages={totalPages}

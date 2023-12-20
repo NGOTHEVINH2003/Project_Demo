@@ -27,5 +27,10 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     @Query("Select r from Room r where r.isBooked = false")
     List<Room> AvailableRoom();
 
+    @Query("Select r from Room r where r.floor = :f ")
+    List<Room> sortByRoomId(int f);
+
+    @Query("Select COUNT(r) > 0 from Room r where r.roomId = ?1")
+    boolean existsByRoomId(Integer roomId);
 }
 

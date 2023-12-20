@@ -68,26 +68,6 @@ const AddRoom = () => {
 		}, 3000);
 	};
 
-	// const handleSubmit = async (e) => {
-	// 	e.preventDefault()
-	// 	try {
-	// 		const success = await addRoom(newRoom.img_url, newRoom.roomType, newRoom.price)
-	// 		if (success !== undefined) {
-	// 			setSuccessMessage("A new room was  added successfully !")
-	// 			setNewRoom({ img_url: null, roomType: "", price: "" })
-	// 			setImagePreview("")
-	// 			setErrorMessage("")
-	// 		} else {
-	// 			setErrorMessage("Error adding new room")
-	// 		}
-	// 	} catch (error) {
-	// 		setErrorMessage(error.message)
-	// 	}
-	// 	setTimeout(() => {
-	// 		setSuccessMessage("")
-	// 		setErrorMessage("")
-	// 	}, 3000)
-	// }
 
 	return (
 		<>

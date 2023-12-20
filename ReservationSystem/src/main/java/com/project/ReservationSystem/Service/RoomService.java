@@ -66,4 +66,12 @@ public class RoomService implements IRoomService{
     public List<Room> getAvailableRoom(){
         return roomRepository.AvailableRoom();
     }
+
+    public List<Room> getSortedRoomList(int floor) {
+        return roomRepository.sortByRoomId(floor);
+    }
+
+    public boolean isRoomIdExists(Integer roomId) {
+        return roomRepository.existsByRoomId(roomId);
+    }
 }
