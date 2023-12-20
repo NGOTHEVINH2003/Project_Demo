@@ -160,6 +160,12 @@ public class RoomController {
         Room existingRoom = roomService.getRoomById(id);
 
         try {
+            if (roomService.isRoomIdExists(Integer.parseInt(roomId)) && existingRoom.getRoomId()!= Integer.valueOf(roomId)) {
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "RoomId already exists. Please choose a different RoomId.");
+                return ResponseEntity.badRequest().body(response);
+            }
+
             String uploadDir = "E:/Project_Demo/frontend/src/components/assets/images/roomimg";
 
             String fileName = StringUtils.cleanPath(imgdata.getOriginalFilename());
