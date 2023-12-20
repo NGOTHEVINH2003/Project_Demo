@@ -12,6 +12,7 @@ const NavBar = () => {
 
   const isLoggedIn = localStorage.getItem("token");
   const userRole = localStorage.getItem("userRole");
+  const userName = localStorage.getItem("email");
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -63,7 +64,7 @@ const NavBar = () => {
                   style={{ backgroundColor: "purple", color: "white" }}
                   onClick={handleAccountClick}
                 >
-                  User
+                 {userName}
                 </button>
               ) : (
                 <NavLink className="nav-link" to={"/login"}>

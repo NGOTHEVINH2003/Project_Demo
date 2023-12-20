@@ -153,6 +153,7 @@ public class RoomController {
             @RequestParam("room_info") String information) {
         Room existingRoom = roomService.getRoomById(id);
 
+
         try {
             String uploadDir = "E:/Project_Demo/frontend/src/components/assets/images/roomimg";
 

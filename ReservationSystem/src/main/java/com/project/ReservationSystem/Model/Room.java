@@ -25,6 +25,7 @@ public class Room {
     private boolean isBooked = false;
     private String room_status;
     private String img_url;
+
     private String room_info;
 
 
@@ -33,6 +34,7 @@ public class Room {
         Price = price;
         this.isBooked = isBooked;
         this.img_url = img_url;
+
         this.floor = floor;
         this.roomId = roomId;
         this.room_status = roomStatus;
