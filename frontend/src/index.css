@@ -254,3 +254,7 @@ body {
 .rdrMonth{
   width: -webkit-fill-available;
 }
+
+.contact{
+  display: flex;
+}

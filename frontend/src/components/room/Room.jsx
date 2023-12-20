@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react"
 import { getAllRooms } from "../utils/ApiFunctions"
 import RoomCard from "./RoomCard"
@@ -7,47 +8,43 @@ import RoomFilter2 from "../common/RoomFilter2"
 
 import RoomPaginator from "../common/RoomPaginator"
 
-const Room = () => {
-	const [data, setData] = useState([])
-	const [error, setError] = useState(null)
-	const [isLoading, setIsLoading] = useState(false)
-	const [currentPage, setCurrentPage] = useState(1)
-	const [roomsPerPage] = useState(6)
-	const [filteredData, setFilteredData] = useState([{ id: "" }])
+const NavBar = () => {
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
-	useEffect(() => {
-		setIsLoading(true)
-		getAllRooms()
-			.then((data) => {
-				setData(data)
-				setFilteredData(data)
-				setIsLoading(false)
-			})
-			.catch((error) => {
-				setError(error.message)
-				setIsLoading(false)
-			})
-	}, [])
-	if (isLoading) {
-		return <div>Loading rooms.....</div>
-	}
-	if (error) {
-		return <div className=" text-danger">Error : {error}</div>
-	}
+  const handleAccountClick = () => {
+    setShowUserMenu(!showUserMenu);
+  };
 
-	const handlePageChange = (pageNumber) => {
-		setCurrentPage(pageNumber)
-	}
+  // Variables to check if the user is logged in and retrieve user-related data
+  const isLoggedIn = localStorage.getItem("token");
+  const userRole = localStorage.getItem("userRole");
+  const userName = localStorage.getItem("userId");
 
-	const totalPages = Math.ceil(filteredData.length / roomsPerPage)
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container">
+        <NavLink to={"/"} className="navbar-brand">
+          <img
+            src={require("../assets/images/htLogo.png")}
+            alt="Hotel Icon"
+            style={{ maxHeight: "40px", marginRight: "5px" }}
+          />
+          <span className="hotel-color">Hotel</span>
+        </NavLink>
 
-	const renderRooms = () => {
-		const startIndex = (currentPage - 1) * roomsPerPage
-		const endIndex = startIndex + roomsPerPage
-		return filteredData
-			.slice(startIndex, endIndex)
-			.map((room) => <RoomCard key={room.id} room={room} />)
-	}
+        {/* Toggler button for mobile navigation */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded={showUserMenu ? "true" : "false"}
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
 
 	return (
 		<Container>
@@ -69,19 +66,66 @@ const Room = () => {
 				</Col>
 			</Row>
 
-			<Row>{renderRooms()}</Row>
+          {/* "Account" button on the right with custom margin */}
+          <div className="navbar-nav ml-auto">
+            <li className="nav-item dropdown">
+              {isLoggedIn ? (
+                <button
+                  className={`btn btn-secondary dropdown-toggle`}
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "black",
+                    border: "none",
+                  }}
+                  onClick={handleAccountClick}
+                >
+                  {userName}
+                </button>
+              ) : (
+                <NavLink className="nav-link" to={"/login"}>
+                  Account
+                </NavLink>
+              )}
+              <div
+                className={`dropdown-menu ${showUserMenu ? "show" : ""}`}
+                style={{
+                  position: "absolute",
+                  right: showUserMenu ? "0" : "-9999px",
+                  minWidth: "100%",
+                  marginTop: "0.5rem",
+                  left: 0,
+                }}
+              >
+                {isLoggedIn ? (
+                  <>
+                    {userRole === "admin" && (
+                      <>
+                        <NavLink className="dropdown-item" to={"/admin"}>
+                          Admin Panel
+                        </NavLink>
+                        <div className="dropdown-divider"></div>
+                      </>
+                    )}
+                    <NavLink className="dropdown-item" to={"/profile"}>
+                      Profile
+                    </NavLink>
+                    <div className="dropdown-divider"></div>
+                    <AuthProvider>
+                      <Logout />
+                    </AuthProvider>
+                  </>
+                ) : (
+                  <NavLink className="dropdown-item" to={"/login"}>
+                    Login
+                  </NavLink>
+                )}
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
 
-			<Row>
-				<Col md={6} className="d-flex align-items-center justify-content-end">
-					<RoomPaginator
-						currentPage={currentPage}
-						totalPages={totalPages}
-						onPageChange={handlePageChange}
-					/>
-				</Col>
-			</Row>
-		</Container>
-	)
-}
-
-export default Room
+export default NavBar;
