@@ -1,4 +1,4 @@
-import { parseISO } from "date-fns"
+import { parseISO, format} from "date-fns"
 import React, { useState, useEffect } from "react"
 import DateSlider from "../common/DateSlider"
 
@@ -55,8 +55,8 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 									<td>{booking.bookingId}</td>
 									<td>{booking.room.id}</td>
 									<td>{booking.room.roomType}</td>
-									<td>{booking.checkIn}</td>
-									<td>{booking.checkOut}</td>
+									<td>{format(new Date(booking.checkIn), 'dd-MM-yyyy')}</td>
+									<td>{format(new Date(booking.checkOut), 'dd-MM-yyyy')}</td>
 									<td>{booking.guestFullName}</td>
 									<td>{booking.guestEmail}</td>
 									<td>{booking.numOfAdult}</td>
