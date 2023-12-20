@@ -156,6 +156,9 @@ public class BookingController {
             return true;
         }
         for (Booking bk: bookingList) {
+            if(booking.getCheckIn().isEqual(bk.getCheckIn()) || booking.getCheckOut().isEqual(bk.getCheckOut())) {
+                return false;
+            }
             if(booking.getCheckOut().isBefore(bk.getCheckIn()) || booking.getCheckIn().isAfter(bk.getCheckOut())){
                 return true;
             }
