@@ -31,10 +31,10 @@ const Admin = () => {
 
   return (
     <RequireAuth requiredRole="admin">
-      <div className="container mt-5">
+      <div className="container-fluid mt-5">
         <NavBar />
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-2">
             <div className="card">
               <div className="card-body text-center">
                 <h2 className="mb-4">Welcome to Admin Panel</h2>
@@ -59,7 +59,7 @@ const Admin = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-9">
+          <div className="col-md-10">
             {renderContent()}
           </div>
         </div>

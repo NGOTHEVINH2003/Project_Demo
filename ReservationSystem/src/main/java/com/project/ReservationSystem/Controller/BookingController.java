@@ -60,7 +60,7 @@ public class BookingController {
             booking.setConfirmationCode(generateConfirmationCode(6));
             Booking savedBooking = bookingService.saveBooking(booking);
             if (savedBooking != null) {
-                return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
+                return ResponseEntity.status(HttpStatus.CREATED).body("Your booking confirmation Code is: " + savedBooking.getConfirmationCode());
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save booking");
             }
