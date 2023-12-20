@@ -40,11 +40,9 @@ const Checkout = () => {
 	}, [roomId])
 	const getImageUrl = (url) => {
 		if (url.startsWith("http")) {
-		  // If it's already an absolute URL, return as it is
 		  return url;
 		} else {
-		  // If it's a relative URL, construct the absolute URL based on your API endpoint or server
-		  const baseUrl = "http://localhost:5173/"; // Replace this with your base URL
+		  const baseUrl = "http://localhost:5173/"; 
 		  return baseUrl + url;
 		}
 	  };

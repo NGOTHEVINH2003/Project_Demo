@@ -15,10 +15,10 @@ const Profile = () => {
 
 	const [bookings, setBookings] = useState([
 		{
-			id: "",
+			bookingId: "",
 			room: { id: "", roomType: "" },
-			checkInDate: "",
-			checkOutDate: "",
+			checkIn: "",
+			checkOut: "",
 			confirmationCode: ""
 		}
 	])
@@ -32,15 +32,17 @@ const Profile = () => {
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
-				const userData = await getUser(userId, token)
-				setUser(userData)
+				const userData = await getUser(userId, token);
+				setUser(userData);
 			} catch (error) {
-				console.error(error)
+				console.error("Error fetching user:", error);
 			}
-		}
+		};
 
-		fetchUser()
-	}, [userId])
+		if (userId) {
+			fetchUser();
+		}
+	}, [userId]);
 
 	useEffect(() => {
 		const fetchBookings = async () => {
@@ -137,15 +139,22 @@ const Profile = () => {
 												<label className="col-md-2 col-form-label fw-bold">Role:</label>
 												<div className="col-md-10">
 													<ul className="list-unstyled">
-															<li key={user.role.id} className="card-text">
-																{user.role.name}
-															</li>
+														<li key={user.role.id} className="card-text">
+															{user.role.name}
+														</li>
 													</ul>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+								<div className="d-flex justify-content-center">
+								<div className="mx-2 mb-4">
+									<button className="btn btn-danger btn-sm" onClick={handleDeleteAccount}>
+										Close account
+									</button>
+								</div>
+							</div>
 							</div>
 
 							<h4 className="card-title text-center">Booking History</h4>
@@ -166,16 +175,14 @@ const Profile = () => {
 									<tbody>
 										{bookings.map((booking, index) => (
 											<tr key={index}>
-												<td>{booking.id}</td>
+												<td>{booking.bookingId}</td>
 												<td>{booking.room.id}</td>
 												<td>{booking.room.roomType}</td>
 												<td>
-													{moment(booking.checkInDate).subtract(1, "month").format("MMM Do, YYYY")}
+												{booking.checkIn.at(2)}-{booking.checkIn.at(1)}-{booking.checkIn.at(0)}
 												</td>
 												<td>
-													{moment(booking.checkOutDate)
-														.subtract(1, "month")
-														.format("MMM Do, YYYY")}
+												{booking.checkOut.at(2)}-{booking.checkOut.at(1)}-{booking.checkOut.at(0)}
 												</td>
 												<td>{booking.confirmationCode}</td>
 												<td className="text-success">On-going</td>
@@ -187,13 +194,7 @@ const Profile = () => {
 								<p>You have not made any bookings yet.</p>
 							)}
 
-							<div className="d-flex justify-content-center">
-								<div className="mx-2">
-									<button className="btn btn-danger btn-sm" onClick={handleDeleteAccount}>
-										Close account
-									</button>
-								</div>
-							</div>
+							
 						</div>
 					</div>
 				</div>

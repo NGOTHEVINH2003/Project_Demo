@@ -77,7 +77,6 @@ const ExistingRooms = () => {
 		<>
 			<div className="container col-md-8 col-lg-6">
 				{successMessage && <p className="alert alert-success mt-5">{successMessage}</p>}
-
 				{errorMessage && <p className="alert alert-danger mt-5">{errorMessage}</p>}
 			</div>
 
@@ -105,8 +104,9 @@ const ExistingRooms = () => {
 						<table className="table table-bordered table-hover">
 							<thead>
 								<tr className="text-center">
-									<th>ID</th>
+									<th>Room Name</th>
 									<th>Room Type</th>
+									<th>Floor</th>
 									<th>Room Price</th>
 									<th>Actions</th>
 								</tr>
@@ -115,8 +115,9 @@ const ExistingRooms = () => {
 							<tbody>
 								{currentRooms.map((room) => (
 									<tr key={room.id} className="text-center">
-										<td>{room.id}</td>
+										<td>{room.roomId}</td>
 										<td>{room.roomType}</td>
+										<td>{room.floor}</td>
 										<td>{room.price}</td>
 										<td className="gap-2">
 											<Link to={`/edit-room/${room.id}`} className="gap-2">
