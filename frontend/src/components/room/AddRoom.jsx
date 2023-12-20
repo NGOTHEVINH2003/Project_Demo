@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 const AddRoom = () => {
 	const [newRoom, setNewRoom] = useState({
-		photo: null,
+		img_url: null,
 		roomType: "",
 		price: "",
 		roomId: "",
@@ -26,7 +26,7 @@ const AddRoom = () => {
 
 	const handleImageChange = (e) => {
 		const selectedImage = e.target.files[0]
-		setNewRoom({ ...newRoom, photo: selectedImage })
+		setNewRoom({ ...newRoom, img_url: selectedImage })
 		setImagePreview(URL.createObjectURL(selectedImage))
 	}
 
@@ -35,7 +35,7 @@ const AddRoom = () => {
 		e.preventDefault();
 		try {
 			const success = await addRoom(
-				newRoom.photo,
+				newRoom.img_url,
 				newRoom.roomType,
 				newRoom.price,
 				newRoom.roomId,
@@ -46,7 +46,7 @@ const AddRoom = () => {
 			if (success !== undefined) {
 				setSuccessMessage("A new room was added successfully!");
 				setNewRoom({
-					photo: null,
+					img_url: null,
 					roomType: "",
 					price: "",
 					roomId: "",
@@ -71,10 +71,10 @@ const AddRoom = () => {
 	// const handleSubmit = async (e) => {
 	// 	e.preventDefault()
 	// 	try {
-	// 		const success = await addRoom(newRoom.photo, newRoom.roomType, newRoom.price)
+	// 		const success = await addRoom(newRoom.img_url, newRoom.roomType, newRoom.price)
 	// 		if (success !== undefined) {
 	// 			setSuccessMessage("A new room was  added successfully !")
-	// 			setNewRoom({ photo: null, roomType: "", price: "" })
+	// 			setNewRoom({ img_url: null, roomType: "", price: "" })
 	// 			setImagePreview("")
 	// 			setErrorMessage("")
 	// 		} else {
@@ -176,13 +176,13 @@ const AddRoom = () => {
 							{/* ------------------- */}
 
 							<div className="mb-3">
-								<label htmlFor="photo" className="form-label">
-									Room Photo
+								<label htmlFor="img_url" className="form-label">
+									Room img_url
 								</label>
 								<input
 									required
-									name="photo"
-									id="photo"
+									name="img_url"
+									id="img_url"
 									type="file"
 									className="form-control"
 									onChange={handleImageChange}
@@ -190,7 +190,7 @@ const AddRoom = () => {
 								{imagePreview && (
 									<img
 										src={imagePreview}
-										alt="Preview  room photo"
+										alt="Preview  room img_url"
 										style={{ maxWidth: "400px", maxHeight: "400px" }}
 										className="mb-3"></img>
 								)}

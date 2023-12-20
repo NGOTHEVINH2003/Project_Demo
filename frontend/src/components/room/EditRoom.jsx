@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom"
 
 const EditRoom = () => {
 	const [room, setRoom] = useState({
-		photo: "",
+		img_url: "",
 		roomType: "",
 		price: "",
 		roomId: "",
@@ -20,7 +20,7 @@ const EditRoom = () => {
 
 	const handleImageChange = (e) => {
 		const selectedImage = e.target.files[0]
-		setRoom({ ...room, photo: selectedImage })
+		setRoom({ ...room, img_url: selectedImage })
 		setImagePreview(URL.createObjectURL(selectedImage))
 	}
 
@@ -34,7 +34,7 @@ const EditRoom = () => {
 			try {
 				const roomData = await getRoomById(roomId)
 				setRoom(roomData)
-				setImagePreview(roomData.photo)
+				setImagePreview(roomData.img_url)
 			} catch (error) {
 				console.error(error)
 			}
@@ -52,7 +52,7 @@ const EditRoom = () => {
 				setSuccessMessage("Room updated successfully!");
 				const updatedRoomData = await getRoomById(roomId);
 				setRoom(updatedRoomData);
-				setImagePreview(updatedRoomData.photo);
+				setImagePreview(updatedRoomData.img_url);
 				setErrorMessage("");
 			} else {
 				setErrorMessage("Error updating room");
@@ -167,15 +167,15 @@ const EditRoom = () => {
 
 						{/* --------------------------- */}
 						<div className="mb-3">
-							<label htmlFor="photo" className="form-label hotel-color">
-								Photo
+							<label htmlFor="img_url" className="form-label hotel-color">
+								img_url
 							</label>
 							<input
 								required
 								type="file"
 								className="form-control"
-								id="photo"
-								name="photo"
+								id="img_url"
+								name="img_url"
 								onChange={handleImageChange}
 							/>
 							{imagePreview && (

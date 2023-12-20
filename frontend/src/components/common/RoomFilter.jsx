@@ -23,11 +23,11 @@ const RoomFilter = ({ data, setFilteredData }) => {
 	return (
 		<div className="input-group mb-3">
 			<span className="input-group-text" id="room-type-filter">
-				FIlter rooms by type
+				Filter rooms by type
 			</span>
 			<select
 				className="form-select"
-				aria-label="romm type filter"
+				aria-label="room type filter"
 				value={filter}
 				onChange={handleSelectChange}>
 				<option value="">select a room type to filter....</option>

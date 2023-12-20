@@ -18,7 +18,7 @@ const Checkout = () => {
 	const [error, setError] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
 	const [roomInfo, setRoomInfo] = useState({
-		photo: "",
+		img_url: "",
 		roomType: "",
 		price: ""
 	})
@@ -38,6 +38,14 @@ const Checkout = () => {
 				})
 		}, 1000)
 	}, [roomId])
+	const getImageUrl = (url) => {
+		if (url.startsWith("http")) {
+		  return url;
+		} else {
+		  const baseUrl = "http://localhost:5173/"; 
+		  return baseUrl + url;
+		}
+	  };
 
 	return (
 		<div>
@@ -51,8 +59,8 @@ const Checkout = () => {
 						) : (
 							<div className="room-info">
 								<img
-									src={`data:image/png;base64,${roomInfo.photo}`}
-									alt="Room photo"
+									src={getImageUrl(roomInfo.img_url)}
+									alt="Room img_url"
 									style={{ width: "100%", height: "200px" }}
 								/>
 								<table className="table table-bordered">

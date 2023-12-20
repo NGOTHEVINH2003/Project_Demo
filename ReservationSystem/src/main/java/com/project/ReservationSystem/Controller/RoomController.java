@@ -103,9 +103,9 @@ public class RoomController {
             room.setRoom_status("empty");
             room.setRoom_info(information);
 
-            room.setImg_url("/src/components/assets/images/roomimg/" + fileName);
+            room.setImg_url("src/components/assets/images/roomimg/" + fileName);
 
-            roomService.addNewRoom(room);
+            roomService.updateRoom(room);
 
             Map<String, String> response = new HashMap<>();
             response.put("message", "Add Success");

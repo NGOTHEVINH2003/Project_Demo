@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { Card, Carousel, Col, Container, Row } from "react-bootstrap"
 
 const RoomCarousel = () => {
-	const [rooms, setRooms] = useState([{ id: "", roomType: "", roomPrice: "", photo: "" }])
+	const [rooms, setRooms] = useState([{ id: "", roomType: "", price: "", img_url: "" }])
 	const [errorMessage, setErrorMessage] = useState("")
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -20,6 +20,17 @@ const RoomCarousel = () => {
 				setIsLoading(false)
 			})
 	}, [])
+
+	const getImageUrl = (url) => {
+		if (url.startsWith("http")) {
+		  // If it's already an absolute URL, return as it is
+		  return url;
+		} else {
+		  // If it's a relative URL, construct the absolute URL based on your API endpoint or server
+		  const baseUrl = "http://localhost:5173/"; // Replace this with your base URL
+		  return baseUrl + url;
+		}
+	  };
 
 	if (isLoading) {
 		return <div className="mt-5">Loading rooms....</div>
@@ -45,8 +56,8 @@ const RoomCarousel = () => {
 											<Link to={`/book-room/${room.id}`}>
 												<Card.Img
 													variant="top"
-													src={room.photo}
-													alt="Room Photo"
+													src={getImageUrl(room.img_url)}
+													alt="Room img_url"
 													className="w-100"
 													style={{ height: "200px" }}
 												/>
