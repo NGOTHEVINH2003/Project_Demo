@@ -16,11 +16,11 @@ export const getHeader = () => {
 export async function addRoom(photo, roomType, price, roomId, floor, information) {
 	const formData = new FormData()
 	formData.append("photo", photo);
-    formData.append("roomType", roomType);
-    formData.append("price", price);
-    formData.append("roomId", roomId);
-    formData.append("floor", floor);
-    formData.append("information", information);
+	formData.append("roomType", roomType);
+	formData.append("price", price);
+	formData.append("roomId", roomId);
+	formData.append("floor", floor);
+	formData.append("information", information);
 
 	const response = await api.post("/room/add", formData, {
 		// headers: getHeader()
@@ -68,12 +68,12 @@ export async function deleteRoom(roomId) {
 export async function updateRoom(roomId, roomData) {
 	const formData = new FormData()
 	formData.append("photo", roomData.photo);
-    formData.append("roomType", roomData.roomType);
-    formData.append("price", roomData.price);
-    formData.append("roomId", roomData.roomId);
-    formData.append("floor", roomData.floor);
-    formData.append("room_status", roomData.room_status);
-    formData.append("room_info", roomData.room_info);
+	formData.append("roomType", roomData.roomType);
+	formData.append("price", roomData.price);
+	formData.append("roomId", roomData.roomId);
+	formData.append("floor", roomData.floor);
+	formData.append("room_status", roomData.room_status);
+	formData.append("room_info", roomData.room_info);
 	const response = await api.put(`/room/update/${roomId}`, formData, {
 		"Content-Type": "multipart/form-data"
 	})
@@ -152,7 +152,7 @@ export async function cancelBooking(bookingId) {
 /* This function gets all availavle rooms from the database with a given date and a room type */
 export async function getAvailableRooms(checkInDate, checkOutDate, roomType) {
 	const result = await api.get(
-		`rooms/available-rooms?checkInDate=${checkInDate}
+		`room/search?checkInDate=${checkInDate}
 		&checkOutDate=${checkOutDate}&roomType=${roomType}`
 	)
 	return result
@@ -263,7 +263,7 @@ export async function getBookingsByUserId(userId, token) {
  */
 export async function updateUser(userId, newRole) {
 	try {
-		
+
 		const response = await api.patch(
 			`/user/updateRole/${userId}`, newRole
 		);
