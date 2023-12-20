@@ -56,7 +56,6 @@ public class BookingController {
 
     @PostMapping("/SaveBooking")
     public ResponseEntity<?> saveBooking(@RequestBody Booking booking) {
-        if(checkAvailableBookingRoom(booking)){
             booking.setConfirmationCode(generateConfirmationCode(6));
             Booking savedBooking = bookingService.saveBooking(booking);
             if (savedBooking != null) {
@@ -64,10 +63,6 @@ public class BookingController {
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save booking");
             }
-        }else {
-            return ResponseEntity.ok("Rooms are booked for this period");
-        }
-
     }
 
     @GetMapping("/ViewAllBooking")
@@ -150,19 +145,5 @@ public class BookingController {
         return !bookingService.existsByConfirmationCode(code);
     }
 
-    public boolean checkAvailableBookingRoom(Booking booking){
-        List<Booking> bookingList = bookingService.getBookingByRoomId(booking.getRoom().getId());
-        if(bookingList.isEmpty()){
-            return true;
-        }
-        for (Booking bk: bookingList) {
-            if(booking.getCheckIn().isEqual(bk.getCheckIn()) || booking.getCheckOut().isEqual(bk.getCheckOut())) {
-                return false;
-            }
-            if(booking.getCheckOut().isBefore(bk.getCheckIn()) || booking.getCheckIn().isAfter(bk.getCheckOut())){
-                return true;
-            }
-        }
-        return false;
-    }
+
 }
