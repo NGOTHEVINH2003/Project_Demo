@@ -16,7 +16,7 @@ const FindBooking = () => {
 		checkOut: "",
 		guestName: "",
 		guestEmail: "",
-		numOfAdults: "",
+		numOfAdult: "",
 		numOfChildren: "",
 		totalNumOfGuests: ""
 	})
@@ -115,7 +115,7 @@ const FindBooking = () => {
 						<p>
 							Check-out Date: {bookingInfo.checkOut.at(2)}-{bookingInfo.checkOut.at(1)}-{bookingInfo.checkOut.at(0)}
 						</p>
-						<p>Full Name: {bookingInfo.guestFullName}</p>
+						<p>Full Name: {bookingInfo.guestName}</p>
 						<p>Email Address: {bookingInfo.guestEmail}</p>
 						<p>Adults: {bookingInfo.numOfAdult}</p>
 						<p>Children: {bookingInfo.numOfChildren}</p>
@@ -130,7 +130,7 @@ const FindBooking = () => {
 						)}
 					</div>
 				) : (
-					<div>find booking...</div>
+					<div></div>
 				)}
 
 				{isDeleted && <div className="alert alert-success mt-3 fade show">{successMessage}</div>}

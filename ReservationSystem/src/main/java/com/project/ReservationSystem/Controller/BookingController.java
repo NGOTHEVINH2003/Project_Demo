@@ -33,7 +33,7 @@ public class BookingController {
             BookingResponse foundBookingResponse = getBookingResponse(foundBooking);
             return ResponseEntity.ok(foundBookingResponse);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("NO BOOKING FOUND!");
         }
     }
 
