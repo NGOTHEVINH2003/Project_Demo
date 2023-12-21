@@ -12,14 +12,14 @@ const NavBar = () => {
 
   const isLoggedIn = localStorage.getItem("token");
   const userRole = localStorage.getItem("userRole");
-  const userName = localStorage.getItem("email");
+  const userName = localStorage.getItem("userId");
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <NavLink to={"/"} className="navbar-brand">
-            <img
-            src={require("../assets/images/htLogo.png")} 
+          <img
+            src={require("../assets/images/htLogo.png")}
             alt="Hotel Icon"
             style={{ maxHeight: "40px", marginRight: "5px" }}
           />
@@ -61,10 +61,10 @@ const NavBar = () => {
               {isLoggedIn ? (
                 <button
                   className={`btn btn-secondary dropdown-toggle`}
-                  style={{ backgroundColor: "purple", color: "white" }}
+                  style={{ backgroundColor: "transparent", color: "black", border: "none" }}
                   onClick={handleAccountClick}
                 >
-                 {userName}
+                  {userName}
                 </button>
               ) : (
                 <NavLink className="nav-link" to={"/login"}>
@@ -73,7 +73,13 @@ const NavBar = () => {
               )}
               <div
                 className={`dropdown-menu ${showUserMenu ? "show" : ""}`}
-                style={{ position: "absolute", right: 0, left: "auto", minWidth: "200px" }}
+                style={{
+                  position: "absolute",
+                  minWidth: "200px",
+                  marginTop: "0.5rem",
+                  left: "auto",
+                  right: showUserMenu ? "0" : "-9999px",
+                }}
               >
                 {isLoggedIn ? (
                   <>

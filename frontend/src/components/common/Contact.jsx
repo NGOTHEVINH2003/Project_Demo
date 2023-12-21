@@ -8,6 +8,8 @@ const Contact = () => {
                 <div className="row">
                     <div className="col">
                         <h1>Contact us</h1>
+                        <p className="contact">Address: 106 Hoa Lac</p>
+                        <p className="contact">Tel: 0912345678</p>
                     </div>
                     <div className="col">
                         <h1>About us</h1>

@@ -13,7 +13,7 @@ import {
 import { useParams } from "react-router-dom"
 import { getRoomById } from "../utils/ApiFunctions"
 import RoomCarousel from "../common/RoomCarousel"
-
+import NavBar from "../layout/NavBar"
 const Checkout = () => {
 	const [error, setError] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
@@ -49,6 +49,7 @@ const Checkout = () => {
 
 	return (
 		<div>
+			<NavBar />
 			<section className="container">
 				<div className="row">
 					<div className="col-md-4 mt-5 mb-5">

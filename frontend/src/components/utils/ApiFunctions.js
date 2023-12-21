@@ -13,9 +13,9 @@ export const getHeader = () => {
 }
 
 /* This function adds a new room room to the database */
-export async function addRoom(photo, roomType, price, roomId, floor, information) {
+export async function addRoom(img_url, roomType, price, roomId, floor, information) {
 	const formData = new FormData()
-	formData.append("photo", photo);
+	formData.append("img_url:", img_url);
 	formData.append("roomType", roomType);
 	formData.append("price", price);
 	formData.append("roomId", roomId);
@@ -52,6 +52,17 @@ export async function getAllRooms() {
 	}
 }
 
+/* This function gets list rooms after soft by roomid from the database */
+export async function getSortedRooms() {
+	try {
+		const result = await api.get("/room/sortbyroomid")
+		return result.data
+	} catch (error) {
+		throw new Error("Error fetching rooms")
+	}
+}
+
+
 /* This function deletes a room by the Id */
 export async function deleteRoom(roomId) {
 	try {
@@ -67,7 +78,7 @@ export async function deleteRoom(roomId) {
 /* This function update a room */
 export async function updateRoom(roomId, roomData) {
 	const formData = new FormData()
-	formData.append("photo", roomData.photo);
+	formData.append("img_url", roomData.img_url);
 	formData.append("roomType", roomData.roomType);
 	formData.append("price", roomData.price);
 	formData.append("roomId", roomData.roomId);

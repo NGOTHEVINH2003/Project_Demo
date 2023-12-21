@@ -35,33 +35,35 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     @Autowired
     private final jwtUtils utils;
+
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user){
-        try{
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+        try {
             service.registerUser(user);
             return ResponseEntity.ok("Register success!");
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CREATED).body("Register Failed");
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> Login(@Valid @RequestBody LoginRequest request){
-        System.out.println(request.toString());
-        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+    public ResponseEntity<?> Login(@Valid @RequestBody LoginRequest request) {
+            System.out.println(request.toString());
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(auth);
+            SecurityContextHolder.getContext().setAuthentication(auth);
 
-        String jwt = utils.generateUserJWT(auth);
+            String jwt = utils.generateUserJWT(auth);
 
-        userDetails userDetails = (userDetails) auth.getPrincipal();
-        List<String> role = userDetails.getAuthorities()
-                .stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+            userDetails userDetails = (userDetails) auth.getPrincipal();
+            System.out.println("userDetails:" + userDetails);
+            List<String> role = userDetails.getAuthorities()
+                    .stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(
-                userDetails.getId(),
-                userDetails.getEmail(),
-                jwt,
-                role));
+            return ResponseEntity.ok(new JwtResponse(
+                    userDetails.getId(),
+                    userDetails.getEmail(),
+                    jwt,
+                    role));
     }
 }

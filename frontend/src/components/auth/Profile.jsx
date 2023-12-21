@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { deleteUser, getBookingsByUserId, getUser } from "../utils/ApiFunctions"
+import { deleteUser, getBookingsByUserId, getUser, cancelBooking } from "../utils/ApiFunctions"
 import { useNavigate } from "react-router-dom"
-import moment from "moment"
 import NavBar from "../layout/NavBar"
 
 const Profile = () => {
@@ -25,7 +24,6 @@ const Profile = () => {
 	const [message, setMessage] = useState("")
 	const [errorMessage, setErrorMessage] = useState("")
 	const navigate = useNavigate()
-
 	const userId = localStorage.getItem("userId")
 	const token = localStorage.getItem("token")
 
@@ -77,6 +75,17 @@ const Profile = () => {
 				})
 		}
 	}
+	
+	const handleBookingCancellation = async (bookingId) => {
+		try {
+			await cancelBooking(bookingId)
+			const data = await getBookingsByUserId(userId,token)
+			setBookings(data)
+		} catch (error) {
+			console.log(errorMessage)
+		}
+	}
+
 
 	return (
 		<div className="container">
@@ -149,12 +158,12 @@ const Profile = () => {
 									</div>
 								</div>
 								<div className="d-flex justify-content-center">
-								<div className="mx-2 mb-4">
-									<button className="btn btn-danger btn-sm" onClick={handleDeleteAccount}>
-										Close account
-									</button>
+									<div className="mx-2 mb-4">
+										<button className="btn btn-danger btn-sm" onClick={handleDeleteAccount}>
+											Close account
+										</button>
+									</div>
 								</div>
-							</div>
 							</div>
 
 							<h4 className="card-title text-center">Booking History</h4>
@@ -170,6 +179,7 @@ const Profile = () => {
 											<th scope="col">Check Out Date</th>
 											<th scope="col">Confirmation Code</th>
 											<th scope="col">Status</th>
+											<th scope="col">Action</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -179,22 +189,31 @@ const Profile = () => {
 												<td>{booking.room.id}</td>
 												<td>{booking.room.roomType}</td>
 												<td>
-												{booking.checkIn.at(2)}-{booking.checkIn.at(1)}-{booking.checkIn.at(0)}
+													{booking.checkIn.at(2)}-{booking.checkIn.at(1)}-{booking.checkIn.at(0)}
 												</td>
 												<td>
-												{booking.checkOut.at(2)}-{booking.checkOut.at(1)}-{booking.checkOut.at(0)}
+													{booking.checkOut.at(2)}-{booking.checkOut.at(1)}-{booking.checkOut.at(0)}
 												</td>
 												<td>{booking.confirmationCode}</td>
 												<td className="text-success">On-going</td>
+												<td>
+													<button
+														className="btn btn-danger btn-sm"
+														onClick={() => handleBookingCancellation(booking.bookingId)}>
+														Cancel
+													</button>
+												</td>
 											</tr>
 										))}
 									</tbody>
 								</table>
 							) : (
-								<p>You have not made any bookings yet.</p>
+								<div className="text-center">
+									<h1>You Haven't Make any reservation</h1>
+								</div>
 							)}
 
-							
+
 						</div>
 					</div>
 				</div>
